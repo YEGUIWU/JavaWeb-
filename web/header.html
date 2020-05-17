@@ -1,0 +1,65 @@
+<!-- 头部 start -->
+<!--导入布局js，共享header和footer-->
+<script src="./assets/js/amazeui.min.js"></script>
+
+<script>
+    $(function () {
+        // 查询用户信息
+        $.get("user/findOne",{},function (data) {
+            if (data)
+            {
+                var html_data =
+                    "<div class=\"am-topbar-right\">\n" +
+                    "    <a href=\"user/exit\"><button class=\"am-btn am-btn-secondary am-topbar-btn am-btn-sm\"><span class=\"am-icon-pencil\"></span> 退出</button></a>\n" +
+                    "</div>" +
+                    "<div class=\"am-topbar-right\">" +
+                    "    <div class=\"am-dropdown\" data-am-dropdown=\"{boundary: '.am-topbar'}\">" +
+                    "         <a href='userhome.html'>" +
+                    "         <button class=\"am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle\" data-am-dropdown-toggle>" + data.username +
+                    "             <span class=\"am-icon-caret-down\"></span>" +
+                    "         </button>" +
+                    "         </a>   " +
+                    "    </div>" +
+                    "</div>";
+
+                $("#header_user_info").html(html_data);
+
+            }
+        });
+
+    });
+
+</script>
+
+<header >
+    <div class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+        <div class="am-container">
+            <h1 class="am-topbar-brand">
+                <a href="index.html">YeGuiWu招聘网</a>
+            </h1>
+
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
+                    data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
+
+            <div class="am-collapse am-topbar-collapse" id="collapse-head">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li class="am-active"><a href="index.html">首页</a></li>
+                    <li><a href="job.html">工作职位</a></li>
+                    <li><a href="man.html">精英人才</a></li>
+                </ul>
+
+                <div id="header_user_info">
+                    <div class="am-topbar-right">
+                        <a href="register.html"><button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span> 注册</button></a>
+                    </div>
+
+                    <div class="am-topbar-right">
+                        <a href="login.html"><button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> 登录</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</header>

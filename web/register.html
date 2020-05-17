@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>注册</title>
+	<link rel="stylesheet" href="./assets/libs/particles/css/style.css">
+	<link rel="stylesheet" href="./assets/libs/sweetalert2/sweetalert2.min.css">
+	<link rel="stylesheet" href="./assets/css/base.css">
+	<link rel="stylesheet" href="./assets/css/login.css">
+    <link rel="alternate icon" type="image/png" href="./assets/icon/favicon.png">
+
+    <!--&lt;!&ndash;导入布局js，共享header和footer&ndash;&gt;-->
+    <!--<script type="text/javascript" src="js/include.js"></script>-->
+</head>
+<body>
+
+	<!-- particles.js container -->
+	<div id="particles-js"></div>
+	<div id="wrapper">
+		<div>
+			<img src="./assets/icon/yeguiwu_logo.png" />
+            <h2>欢迎注册YeGuiWu招聘网</h2>
+            <h2>Welcome to sign up for the YeGuiWu website</h2>
+		</div>
+		<nav class="switch_nav">
+			<a href="javascript:;" id="switch_signup" class="switch_btn on">注册</a>
+			<a href="login.html" id="switch_login" class="switch_btn">登陆</a>
+			<div class="switch_bottom" id="switch_bottom"></div>
+		</nav>
+		<form id="registerForm" method="post" action="user">
+			<ul class="group_input">
+				<li>
+					<input  name = "username" type="text" placeholder="用户名" class="name required" id="username" />
+                    <span id="errUsername" class = "msg onError"></span>
+				</li>
+				<li>
+					<input name="email" type="text" placeholder="邮箱" class="email required" id="email" />
+                    <span id="errEmail" class = "msg onError"></span>
+				</li>
+				<li>
+					<input name="password" type="password" placeholder="密码(不少于6位)" class="password required" id="password" />
+                    <span id="errPassword" class = "msg onError"></span>
+				</li>
+                <li>
+                    <div class="verify">
+                        <input name="check" type="text" placeholder="请输入验证码" autocomplete="off">
+                        <span><img src="checkCodeServlet" alt="" onclick="changeCheckCode(this)"></span>
+                        <span id="errCheckCode1" class = "msg onError"></span>
+                        <script type="text/javascript">
+                            //图片点击事件
+                            function changeCheckCode(img)
+                            {
+                                img.src="checkCodeServlet?"+new Date().getTime();
+                            }
+                        </script>
+                    </div>
+                </li>
+			</ul>
+
+
+                <div  style="margin-top: 32px">
+                    <label >
+                        <input type="radio"  value="personal" name="type" checked>求职者
+                    </label>
+                    <label >
+                        <input type="radio" value="enterprise" name="type">企业
+                    </label>
+                </div>
+
+
+			<button type="submit" class="submit_btn" id="btnSubmit">注册YeGuiWu-Blog</button>
+			<span class="agreement-tip">点击「注册」按钮，即代表你同意<a href="javascript:;">《协议》</a></span>
+		</form>
+  
+	
+		<div id="footer">
+			<span>&copy;2020YeGuiWu-Blog</span>
+		</div>
+	</div>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/libs/sweetalert2/sweetalert2.min.js"></script>
+	<script src="./assets/libs/particles/particles.min.js"></script>
+	<script src="./assets/libs/particles/js/app.js"></script>
+	<!-- <script src="./assets/libs/particles/js/lib/stats.js"></script> -->
+	<script>
+		var count_particles, stats, update;
+		stats = new Stats;
+		stats.setMode(0);
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.left = '0px';
+		stats.domElement.style.top = '0px';
+		document.body.appendChild(stats.domElement);
+		count_particles = document.querySelector('.js-count-particles');
+		update = function() {
+			stats.begin();
+			stats.end();
+			if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+				count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+			}
+			requestAnimationFrame(update);
+		};
+		requestAnimationFrame(update);
+	</script>	
+
+	<script>
+        //校验用户名
+        //单词字符，长度8到20位
+        function checkUsername() {
+            var nameVal = $("#username").val();
+            var regName = /[~#^$@%&!*()<>:;'"{}【】  ]/;
+            if(nameVal == "" || nameVal.length < 2 || regName.test(nameVal))
+            {
+                $("#errUsername").html(" 姓名非空，长度2-20位，不包含特殊字符！");
+                return false;
+            }
+            else
+			{
+                $("#errUsername").html("");
+                return true;
+			}
+        }
+
+        //校验密码
+        function checkPassword() {
+            var psdVal = $("#password").val();
+            var regPsd = /^[0-9A-Za-z]{6,20}$/;
+            if(psdVal== "" || !regPsd.test(psdVal))
+            {
+                $("#errPassword").html(" 密码为6-20位字母、数字的组合！");
+                return false;
+            }
+            else
+			{
+                $("#errPassword").html("");
+                return true;
+			}
+        }
+
+        //校验邮箱
+        function checkEmail(){
+            var emailVal =  $("#email").val();
+            var regEmail = /^\w+@\w+\.\w+$/;
+            if(emailVal == "" || !regEmail.test(emailVal))
+            {
+                $("#errEmail").html(" 请输入有效邮箱！");
+                return false;
+            }
+            else
+			{
+                $("#errEmail").html("");
+                return true;
+			}
+        }
+
+
+		$(function(){
+            //当表单提交时，调用所有的校验方法
+            //$("#btnSubmit").click(function(){
+            $("#registerForm").submit(function(){
+                //1.发送数据到服务器
+                if(checkUsername() && checkPassword() && checkEmail()){
+                    //校验通过,发送ajax请求，提交表单的数据   username=zhangsan&password=123
+                    $.post("user/register",$(this).serialize(),function(data)
+                    {
+                        //处理服务器响应的数据  data  {flag:true,errorMsg:"注册失败"}
+                        if(data.flag)
+                        {
+                            //注册成功，跳转成功页面
+                            location.href="register_success.html";
+                        }
+                        else
+                        {
+                            //登录失败
+                            if (data.errorMsg == "账号已存在")
+                            {
+                                $("#errUsername").html(data.errorMsg);
+                                $("#errCheckCode").html("");
+                            }
+                            else if (data.errorMsg == "验证码错误")
+                            {
+                                $("#errCheckCode").html(data.errorMsg);
+                                $("#errUsername").html("");
+                            }
+                        }
+                    });
+
+                }
+                //2.不让页面跳转
+                return false;
+                //如果这个方法没有返回值，或者返回为true，则表单提交，如果返回为false，则表单不提交
+            });
+
+            //当某一个组件失去焦点是，调用对应的校验方法
+            $("#username").blur(checkUsername);
+            $("#password").blur(checkPassword);
+            $("#email").blur(checkEmail);
+		});
+
+
+	</script>
+</body>
+</html>

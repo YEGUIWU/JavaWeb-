@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>用户主页</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="./assets/icon/favicon.png">
+  <link rel="stylesheet" href="./assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="./assets/css/personal.css"/>
+
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/amazeui.min.js"></script>
+	<!--导入布局js，共享header和footer-->
+	<script type="text/javascript" src="./assets/js/include.js"></script>
+	<script>
+
+        //校验姓名
+        //单词字符，长度8到20位
+        function checkName() {
+            //1.获取用户名值
+            var username = $("#name").val();
+            if(username.length > 0 && username.length <= 8){
+                //用户名合法
+                // $("#username").css("border","");
+				return true;
+            }else{
+                //用户名非法,加一个红色边框
+                // $("#username").css("border","1px solid red");
+                alert("请使用合法姓名")
+				return false;
+            }
+        }
+        //校验密码
+        function checkPassword() {
+            var psdVal = $("#password").val();
+            var regPsd = /^[0-9A-Za-z]{6,20}$/;
+            if(psdVal== "" || !regPsd.test(psdVal))
+            {
+                // $("#errPassword").html(" 密码为6-20位字母、数字的组合！");
+				alert(" 密码为6-20位字母、数字的组合！")
+                return false;
+            }
+            else
+            {
+                // $("#errPassword").html("");
+                return true;
+            }
+        }
+
+        //校验邮箱
+        function checkEmail(){
+            var emailVal =  $("#email").val();
+            var regEmail = /^\w+@\w+\.\w+$/;
+            if(emailVal == "" || !regEmail.test(emailVal))
+            {
+                // $("#errEmail").html(" 请输入有效邮箱！");
+                alert(" 请输入有效邮箱！")
+                return false;
+            }
+            else
+            {
+                // $("#errEmail").html("");
+                return true;
+            }
+        }
+		//------------------------------------------------------------------
+        //							工作经验
+		//------------------------------------------------------------------
+        var g_delWorkExpId_list = [];
+        var g_addWorkExp_list = [];
+        var g_workExp_list = [];
+		function FreshWorkExpList() {
+            var exp_list = "";
+			for (var i = 0; i < g_workExp_list.length; ++i)
+			{
+			    exp_list += g_workExp_list[i].expContent;
+			}
+            $("#user_work_exp_list").html(exp_list);
+        }
+        function AddWorkExp(id, title, content) {
+		    var exp = MakeWorkExp(id, title, content);
+            g_workExp_list.push({expId: id, expContent: exp});
+            g_addWorkExp_list.push({expId: id, title: title, content: content});
+            FreshWorkExpList();
+        }
+        function DelWorkExp(expId)
+		{
+		    if (expId > 0)
+			{
+                g_delWorkExpId_list.push(expId);
+			}
+			for (var i = 0; i < g_workExp_list.length; ++ i)
+			{
+			    if (g_workExp_list[i].expId == expId)
+				{
+					g_workExp_list.splice(i, 1);
+				    break;
+				}
+			}
+			for (var i = 0; i < g_addWorkExp_list.length; ++i)
+			{
+			    if (g_addWorkExp_list[i].expId == expId)
+				{
+				    g_addWorkExp_list.splice(i, 1);
+				    break;
+				}
+			}
+			FreshWorkExpList();
+		}
+
+		function MakeWorkExp(id, title, content)
+		{
+            var exp = "<li>" +
+                "<div class=\"admin-task-meta\"><h1>" + title + "</h1></div>" +
+                "<div class=\"admin-task-bd\">" + content + "</div>" +
+                "<div class=\"am-cf\">" +
+                " <div class=\"am-btn-toolbar am-fr\">" +
+                " <div class=\"am-btn-group am-btn-group-xs\">" +
+                // "  <button onclick='' \"button\" class=\"am-btn am-btn-default\"><span class=\"am-icon-pencil\"></span></button>" +
+                '  <button onclick="DelWorkExp(' + id + ')" type=\"button\" class=\"am-btn am-btn-default\"><span class=\"am-icon-times\"></span></button>' +
+                " </div>" +
+                " </div>" +
+                "</div>" +
+                "</li>";
+            return exp;
+		}
+
+        //------------------------------------------------------------------
+        //							项目经验
+        //------------------------------------------------------------------
+        var g_delProjectExpId_list = [];
+        var g_addProjectExp_list = [];
+        var g_ProjectExp_list = [];
+        function FreshProjectExpList() {
+            var exp_list = "";
+            for (var i = 0; i < g_ProjectExp_list.length; ++i)
+            {
+                exp_list += g_ProjectExp_list[i].expContent;
+            }
+            $("#user_project_exp_list").html(exp_list);
+        }
+        function AddProjectExp(id, title, content) {
+            var exp = MakeProjectExp(id, title, content);
+            g_ProjectExp_list.push({expId: id, expContent: exp});
+            g_addProjectExp_list.push({expId: id, title: title, content: content});
+            FreshProjectExpList();
+        }
+        function DelProjectExp(expId)
+        {
+            if (expId > 0)
+            {
+                g_delProjectExpId_list.push(expId);
+            }
+            for (var i = 0; i < g_ProjectExp_list.length; ++ i)
+            {
+                if (g_ProjectExp_list[i].expId == expId)
+                {
+                    g_ProjectExp_list.splice(i, 1);
+                    break;
+                }
+            }
+            for (var i = 0; i < g_addProjectExp_list.length; ++i)
+            {
+                if (g_addProjectExp_list[i].expId == expId)
+                {
+                    g_addProjectExp_list.splice(i, 1);
+                    break;
+                }
+            }
+            FreshProjectExpList();
+        }
+
+        function MakeProjectExp(id, title, content)
+        {
+            var exp = "<li>" +
+                "<div class=\"admin-task-meta\"><h1>" + title + "</h1></div>" +
+                "<div class=\"admin-task-bd\">" + content + "</div>" +
+                "<div class=\"am-cf\">" +
+                " <div class=\"am-btn-toolbar am-fr\">" +
+                " <div class=\"am-btn-group am-btn-group-xs\">" +
+                // "  <button onclick='' \"button\" class=\"am-btn am-btn-default\"><span class=\"am-icon-pencil\"></span></button>" +
+                '  <button onclick="DelProjectExp(' + id + ')" type=\"button\" class=\"am-btn am-btn-default\"><span class=\"am-icon-times\"></span></button>' +
+                " </div>" +
+                " </div>" +
+                "</div>" +
+                "</li>";
+            return exp;
+        }
+
+        $(function () {
+            //查询用户信息
+            $.get("user/findOne",{},function (data) {
+				if (data) {
+					$('#name').attr('value', data.name);
+					$('#birthday').attr('value', data.birthday);
+
+					if (data.sex == '男') {
+						$("#sex1").attr("checked", "checked");
+						$("#sex2").removeAttr("checked");
+					}
+					else {
+						$("#sex2").attr("checked", "checked");
+						$("#sex1").removeAttr("checked");
+					}
+					$('#telephone').attr('value', data.telephone);
+					$('#email').attr('value', data.email);
+					$('#school').attr('value', data.school);
+					$('#education').attr('value', data.education);
+					$('#password').attr('value', data.password);
+					$('#user_brief').html(data.brief);
+				}
+            });
+
+            //当表单提交时，调用所有的校验方法
+            $("#update_user_base_info").click(function(){
+                //1.发送数据到服务器
+                if(checkName() && checkPassword() && checkEmail()) {
+                    $.post("user/updatePersonalUser", $("#user_base_info").serialize(), function (data) {
+                        //处理服务器响应的数据  data  {flag:true,errorMsg:"注册失败"}
+                        if (data.flag) {
+                            //注册成功，跳转成功页面
+                            alert("修改成功");
+                            // location.href = "register_ok.html";
+                        } else {
+                            //注册失败,给errorMsg添加提示信息
+                            // $("#errorMsg").html(data.errorMsg);
+                            alert("修改成功");
+                            alert(data.errorMsg);
+                        }
+                    });
+                }
+                //2.不让页面跳转
+                return false;
+                //如果这个方法没有返回值，或者返回为true，则表单提交，如果返回为false，则表单不提交
+            });
+
+            //-------------------------------------------------------------------------------------
+            //查询工作经验
+            $.get("user/findWorkExp",{},function (data) {
+                if (data.length) {
+                    var exp_list = "";
+                    for (var i = 0; i < data.length; ++i)
+					{
+					    // exp_list += exp;
+						var exp = MakeWorkExp(data[i].expId, data[i].title, data[i].content);
+					    g_workExp_list.push({expId: data[i].expId, expContent: exp});
+					}
+					FreshWorkExpList();
+                    // $("#user_work_exp_list").html(exp_list);
+                }
+            });
+
+            var count = -1;
+            $("#add_new_work_exp").click(function ()
+			{
+				var title = $("#new_work_exp_title").val();
+				var content = $("#new_work_exp_content").val();
+                $("#new_work_exp_title").val("");
+                $("#new_work_exp_content").val("");
+				if (title.length && content.length)
+				{
+					AddWorkExp(count, title, content);
+					--count;
+				}
+            });
+
+            $("#update_work_exp").click(function () {
+					for (var i = 0; i < g_delWorkExpId_list.length; ++i)
+					{
+						$.post("user/delWorkExp", {expId : g_delWorkExpId_list[i]},function () {
+                        });
+					}
+					for (var i = 0; i < g_addWorkExp_list.length; ++i)
+					{
+						$.post("user/addWorkExp", g_addWorkExp_list[i],function () {
+						});
+					}
+                }
+			);
+
+            //-------------------------------------------------------------------------------------
+            //查询工作经验
+            $.get("user/findProjectExp",{},function (data) {
+                if (data.length) {
+                    var exp_list = "";
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        // exp_list += exp;
+                        var exp = MakeProjectExp(data[i].expId, data[i].title, data[i].content);
+                        g_ProjectExp_list.push({expId: data[i].expId, expContent: exp});
+                    }
+                    FreshProjectExpList();
+                    // $("#user_work_exp_list").html(exp_list);
+                }
+            });
+
+            var p_count = -1;
+            $("#add_new_project_exp").click(function ()
+            {
+                var title = $("#new_project_exp_title").val();
+                var content = $("#new_project_exp_content").val();
+                $("#new_project_exp_title").val("");
+                $("#new_project_exp_content").val("");
+                if (title.length && content.length)
+                {
+                    AddProjectExp(p_count, title, content);
+                    --p_count;
+                }
+            });
+
+            $("#update_project_exp").click(function () {
+
+                    for (var i = 0; i < g_delProjectExpId_list.length; ++i)
+                    {
+                        $.post("user/delProjectExp", {expId : g_delProjectExpId_list[i]},function () {
+                        });
+                    }
+                    for (var i = 0; i < g_addProjectExp_list.length; ++i)
+                    {
+                        console.log(g_addProjectExp_list[i]);
+                        $.post("user/addProjectExp", g_addProjectExp_list[i],function () {
+                        });
+                    }
+                }
+            );
+        });
+
+
+
+	</script>
+</head>
+
+<body>
+
+<div id="header"></div>
+
+		<div class="am-g am-g-fixed blog-g-fixed">
+		  <div class="am-cf admin-main">
+			<div class="am-u-md-3 blog-sidebar">
+
+		  <!-- sidebar start -->
+		  <div class="admin-sidebar">
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-bookmark"></span> 个人中心</p>
+					<div id="amz-offcanvas" class="am-offcanvas doc-offcanvas">
+					<section class="amz-sidebar am-offcanvas-bar">
+					<ul class="am-nav">
+						<li><a href="userhome.html">我的简历</a></li>
+						<li><a href="userqiuzhi.html">求职信息</a></li>
+						<li><a href="useremail.html">邮件中心</a></li>
+						</ul>
+					</section>
+				</div>
+
+			  </div>
+			</div>
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-bookmark"></span> 公告</p>
+				<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+			  </div>
+			</div>
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-tag"></span> 求职宣言</p>
+				<p id="user_brief">Welcome to the Amaze UI wiki!</p>
+			  </div>
+			</div>
+		  </div>
+		  <!-- sidebar end -->
+		  </div>
+
+		  <div class="am-u-md-9">
+		  <!-- content start -->
+		  <div class="admin-content">
+
+		  	<div class="am-g">
+			  <div class="am-u-md-12">
+
+
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-1'}">个人信息<span class="am-icon-chevron-down am-fr" ></span></div>
+				  <div id="collapse-panel-1" class="am-panel-bd am-collapse am-in">
+
+						<div class="admin-task-bd1">
+						<div class="am-u-md-4">
+							<ul>
+
+							<form id="user_base_info" action="user">
+								<!--提交处理请求的标识符-->
+								<input type="hidden" name="action" value="register">
+								<table style="margin-top: 25px;">
+									<tr>
+										<td class="td_left">
+											<label for="name">姓名</label>
+										</td>
+										<td class="td_right" id="tab_user_name">
+											<input type="text" id="name" name="name" placeholder="请输入真实姓名">
+										</td>
+									</tr>
+									<tr>
+										<td class="td_left">
+											<label for="birthday">生日</label>
+										</td>
+										<td class="td_right" id="tab_user_birthday">
+											<input type="date" id="birthday" name="birthday">
+										</td>
+									</tr>
+
+									<tr>
+										<td class="td_left">
+											<label for="sex1">性别</label>
+										</td>
+										<td class="td_right gender" id="tab_user_sex">
+											<input type="radio" id="sex1" name="sex" value="男" checked> 男
+											<input type="radio" id="sex2" name="sex" value="女" > 女
+										</td>
+									</tr>
+
+									<tr>
+										<td class="td_left">
+											<label for="telephone">手机</label>
+										</td>
+										<td class="td_right" id="tab_user_telephone">
+											<input type="text" id="telephone" name="telephone" placeholder="请输入您的手机号">
+										</td>
+									</tr>
+
+									<tr>
+										<td class="td_left">
+											<label for="email">Email</label>
+										</td>
+										<td class="td_right" id="tab_user_email">
+											<input type="text" id="email" name="email" placeholder="请输入Email">
+										</td>
+									</tr>
+
+									<tr>
+										<td class="td_left">
+											<label for="school">学校</label>
+										</td>
+										<td class="td_right" id="tab_user_school">
+											<input type="text" id="school" name="school" placeholder="请输入学校">
+										</td>
+									</tr>
+
+									<tr>
+										<td class="td_left">
+											<label for="education">学历</label>
+										</td>
+										<td class="td_right" id="tab_user_education">
+											<input type="text" id="education" name="education" placeholder="请输入学历">
+										</td>
+									</tr>
+									<tr>
+										<td class="td_left">
+											<label for="password">密码</label>
+										</td>
+										<td class="td_right" id="tab_user_password" class="password-field">
+											<input type="password" id="password" name="password" placeholder="请输入密码">
+										</td>
+									</tr>
+								</table>
+							</form>
+							</ul>
+						</div>
+
+						<div class="am-u-md-4">
+									<img src="./assets/img/users/1.jpeg" alt="..." class="am-img-thumbnail am-radius" width="130" height="180">
+						</div>
+						</div>
+
+						<div class="am-cf">
+						  <div class="am-btn-toolbar am-fr">
+						  	<div class="am-btn-group am-btn-group-xs">
+							  <button id="update_user_base_info" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
+							 </div>
+						  </div>
+						</div>
+
+
+				  </div>
+				</div>
+			</div>
+			</div>
+
+
+
+			<div class="am-g">
+			  <div class="am-u-md-12">
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-2'}">工作经历<span class="am-icon-chevron-down am-fr" ></span></div>
+				  <div id="collapse-panel-2" class="am-panel-bd am-collapse am-in">
+					<ul id="user_work_exp_list" class="am-list admin-content-task">
+
+
+					<hr>
+					</ul>
+					  <label>标题</label>
+					  <input id="new_work_exp_title" type="text" placeholder="请输入标题">
+					  <br>
+					  <br>
+					  <label>内容</label>
+					  <textarea id="new_work_exp_content" style="height: 100px" role="8" cols="70" placeholder="请输入内容"></textarea>
+					  <div class="am-cf">
+						  <div class="am-btn-toolbar am-fr">
+							  <div class="am-btn-group am-btn-group-xs">
+								  <button  id="add_new_work_exp" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">添加</span></button>
+								  <button  id="update_work_exp" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+
+
+				</div>
+			</div>
+			</div>
+
+			<div class="am-g">
+			  <div class="am-u-md-12">
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-3'}">项目经验<span class="am-icon-chevron-down am-fr" ></span></div>
+				  <div id="collapse-panel-3" class="am-panel-bd am-collapse am-in">
+					  <ul id="user_project_exp_list" class="am-list admin-content-task">
+						  <hr>
+					  </ul>
+					  <label>标题</label>
+					  <input id="new_project_exp_title" type="text" placeholder="请输入标题">
+					  <br>
+					  <br>
+					  <label>内容</label>
+					  <textarea id="new_project_exp_content" style="height: 100px" role="8" cols="70" placeholder="请输入内容"></textarea>
+					  <div class="am-cf">
+						  <div class="am-btn-toolbar am-fr">
+							  <div class="am-btn-group am-btn-group-xs">
+								  <button  id="add_new_project_exp" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">添加</span></button>
+								  <button  id="update_project_exp" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+				</div>
+			</div>
+			</div>
+
+
+		  </div>
+		  <!-- content end -->
+	</div>
+</div>
+</div>
+
+
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>

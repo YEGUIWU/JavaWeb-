@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>登陆</title>
+	<link rel="stylesheet" href="./assets/libs/particles/css/style.css">
+	<link rel="stylesheet" href="./assets/css/base.css">
+	<link rel="stylesheet" href="./assets/css/login.css" />
+</head>
+<body>
+	<!-- particles.js container -->
+	<div id="particles-js"></div>
+	<div id="wrapper">
+		<div>
+			<img src="./assets/icon/yeguiwu_logo.png" />
+			<h2>欢迎登陆YeGuiWu招聘网</h2>
+			<h2>Welcome to sign in into the YeGuiWu website</h2>
+		</div>
+		<nav class="switch_nav">
+			<a href="register.html" id="switch_signup" class="switch_btn">注册</a>
+			<a href="javascript:;" id="switch_login" class="switch_btn on">登陆</a>
+			<div class="switch_bottom" id="switch_bottom"></div>
+		</nav>
+		<div id="login">
+            <form id="loginForm" action="" method="post" accept-charset="utf-8">
+			<!--<form method="post" action="">-->
+				<ul class="group_input">
+					<li>
+						<input name="username" type="text" class="username required" id="username" placeholder="用户名" />
+                        <span id="errUsername" class = "msg onError"></span>
+					</li>
+					<li>
+						<input  name="password" type="password" class="psd required" id="psd" placeholder="密码" />
+                        <span id="errPassword" class = "msg onError"></span>
+					</li>
+				</ul>
+				<div  style="margin-top: 25px">
+					<label >
+						<input type="radio"  value="jobhunter" name="type" checked>求职者
+					</label>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					<label >
+						<input type="radio" value="enterprise" name="type">企业
+					</label>
+				</div>
+                <!--<button type="button"  id="btnSubmit">登录</button>-->
+				<button type="button" class="submit_btn" id="btnSubmit">登陆</button>
+			</form>
+		</div>
+		<div id="footer">
+			<span>&copy;2020YeGuiWu-Blog</span>
+		</div>
+	</div>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/libs/particles/particles.min.js"></script>
+	<script src="./assets/libs/particles/js/app.js"></script>
+	<!-- <script src="./assets/libs/particles/js/lib/stats.js"></script> -->
+	<script>
+		var count_particles, stats, update;
+		stats = new Stats;
+		stats.setMode(0);
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.left = '0px';
+		stats.domElement.style.top = '0px';
+		document.body.appendChild(stats.domElement);
+		count_particles = document.querySelector('.js-count-particles');
+		update = function() {
+			stats.begin();
+			stats.end();
+			if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+				count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+			}
+			requestAnimationFrame(update);
+		};
+		requestAnimationFrame(update);
+	</script>
+	<script>
+		$(function(){
+			$("#btnSubmit").click(function(){
+				$.post("loginServlet",$("#loginForm").serialize(),function (data) {
+					//data : {flag:false,errorMsg:''}
+					if(data.flag) {
+						//登录成功
+						location.href="login_success.html";
+					} else {
+						if (data.errorMsg.indexOf("密码错误") != -1) {
+							$("#errPassword").html(data.errorMsg);
+						} else {
+							$("#errUsername").html(data.errorMsg);
+						}
+					}
+				});
+			});
+		})
+	</script>
+</body>
+</html>
