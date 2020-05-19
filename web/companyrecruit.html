@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>招聘信息</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/amazeui.min.js"></script>
+	<!--导入布局js，共享header和footer-->
+	<script type="text/javascript" src="./assets/js/include.js"></script>
+
+	<script>
+
+        //------------------------------------------------------------------
+        //							工作经验
+        //------------------------------------------------------------------
+        var g_delRecruit_list = [];
+        var g_addRecruit_list = [];
+        var g_Recruit_list = [];
+        var g_ChangeIndex = 0;
+
+        function WillChangeRecruit(rid)
+        {
+            var i = -1;
+            for (i = 0; i < g_Recruit_list.length; ++i)
+            {
+                if (g_Recruit_list[i].rid == rid)
+                {
+                    break;
+                }
+            }
+            if (i > -1 &&  i < g_Recruit_list.length)
+            {
+                $('#title').attr('value', g_Recruit_list[i].title);
+                $('#position').attr('value', g_Recruit_list[i].position);
+                $('#salary').attr('value', g_Recruit_list[i].salary);
+                document.getElementById("description").value=g_Recruit_list[i].description;
+                document.getElementById("requirement").value=g_Recruit_list[i].requirement;
+                document.getElementById("priority").value=g_Recruit_list[i].priority;
+                document.getElementById("welfare").value=g_Recruit_list[i].welfare;
+                $('#add_recruit_btn').attr('disabled', true);
+                g_ChangeIndex = i;
+            }
+        }
+
+
+        function MakeRecruit(recruit)
+        {
+            var html_data = "<li>" +
+                "<div class=\"admin-task-meta\"><h2>" + recruit.title + "</h2></div>" +
+                "<div class=\"admin-task-bd\"><h3>地点：" + recruit.position + "</h3></div>" +
+                "<div class=\"admin-task-bd\"><h3>薪资：" + recruit.salary + "</h3></div>" +
+                "<div class=\"am-cf\">" +
+                " <div class=\"am-btn-toolbar am-fr\">" +
+                " <div class=\"am-btn-group am-btn-group-xs\">" +
+                '  <button onclick="WillChangeRecruit(' + recruit.rid + ')" type=\"button\" class=\"am-btn am-btn-default\"><span class=\"am-icon-pencil\"></span></button>' +
+                '  <button onclick="DelRecruit(' + recruit.rid + ')" type=\"button\" class=\"am-btn am-btn-default\"><span class=\"am-icon-times\"></span></button>' +
+                " </div>" +
+                " </div>" +
+                "</div>" +
+                "</li>";
+            return html_data;
+        }
+
+        function RefreshRecruitList()
+        {
+            var exp_list = "";
+            for (var i = 0; i < g_Recruit_list.length; ++i)
+            {
+                exp_list += MakeRecruit(g_Recruit_list[i]);
+            }
+            $("#recruit_list").html(exp_list);
+        }
+
+        function ClearInput() {
+            document.getElementById("title").value="";
+            document.getElementById("position").value="";
+            document.getElementById("salary").value="";
+            document.getElementById("description").value="";
+            document.getElementById("requirement").value="";
+            document.getElementById("priority").value="";
+            document.getElementById("welfare").value="";
+        }
+
+        function ChangeRecruit()
+        {
+            if (g_ChangeIndex > -1) // >0: 数据库有的; <0: 缓存的
+            {
+                g_Recruit_list[g_ChangeIndex].title = $('#title').val();
+                g_Recruit_list[g_ChangeIndex].position = $('#position').val();
+                g_Recruit_list[g_ChangeIndex].salary = $('#salary').val();
+                g_Recruit_list[g_ChangeIndex].description = document.getElementById("description").value;
+                g_Recruit_list[g_ChangeIndex].requirement = document.getElementById("requirement").value;
+                g_Recruit_list[g_ChangeIndex].priority = document.getElementById("priority").value;
+                g_Recruit_list[g_ChangeIndex].welfare = document.getElementById("welfare").value;
+
+                ClearInput();
+
+                $('#add_recruit_btn').attr('disabled', true);
+
+                RefreshRecruitList();
+                g_ChangeIndex = -1;
+                $('#add_recruit_btn').attr('disabled', false);
+            }
+        }
+
+        function AddRecruit(recruit)
+        {
+            g_Recruit_list.push(recruit);
+            g_addRecruit_list.push(recruit);
+            RefreshRecruitList();
+        }
+        //
+        function DelRecruit(rid)
+        {
+            if (rid > 0)
+            {
+                g_delRecruit_list.push(rid);
+            }
+            for (var i = 0; i < g_Recruit_list.length; ++ i)
+            {
+                if (g_Recruit_list[i].rid == rid)
+                {
+                    g_Recruit_list.splice(i, 1);
+                    break;
+                }
+            }
+            for (var i = 0; i < g_addRecruit_list.length; ++i)
+            {
+                if (g_addRecruit_list[i].rid == rid)
+                {
+                    g_addRecruit_list.splice(i, 1);
+                    break;
+                }
+            }
+            RefreshRecruitList();
+        }
+
+
+
+
+        $(function () {
+
+
+            //-------------------------------------------------------------------------------------
+            //查询工作经验
+            $.get("recruit/get",{},function (data) {
+                if (data.length) {
+                    var exp_list = "";
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        // exp_list += exp;
+                        // var exp = MakeRecruit(data[i].expId, data[i].title, data[i].content);
+                        g_Recruit_list.push(data[i]);
+                        // g_Recruit_list.push({
+                        //     rid: data[i].rid,
+                        //     eid: data[i].eid,
+                        //     title: data[i].title,
+                        //     position: data[i].position,
+                        //     salary: data[i].salary,
+                        //     description: data[i].description,
+                        //     requirement: data[i].requirement,
+                        //     priority: data[i].priority,
+                        //     welfare: data[i].welfare,
+                        //     issue: data[i].issue,
+                        //     status: data[i].status
+						// });
+                        console.log(data[i]);
+                    }
+                    RefreshRecruitList();
+                }
+            });
+
+            $("#confirm_change_btn").click(function () {
+                ChangeRecruit();
+            });
+
+            var count = -1;
+            $("#add_recruit_btn").click(function ()
+            {
+                console.log("onclick");
+                var recruit = {};
+                recruit.rid = count;
+                recruit.title = $('#title').val();
+                recruit.position = $('#position').val();
+                recruit.salary = $('#salary').val();
+                recruit.description = document.getElementById("description").value;
+                recruit.requirement = document.getElementById("requirement").value;
+                recruit.priority = document.getElementById("priority").value;
+                recruit.welfare = document.getElementById("welfare").value;
+
+                ClearInput();
+                console.log(recruit);
+                if (recruit.title.length)
+                {
+                    AddRecruit(recruit);
+                    --count;
+                }
+            });
+
+            $("#update_recruit_btn").click(function () {
+                    console.log(g_delRecruit_list);
+                    for (var i = 0; i < g_delRecruit_list.length; ++i)
+                    {
+                        $.post("recruit/del", {rid : g_delRecruit_list[i]},function () {
+                        });
+                    }
+                    console.log(g_addRecruit_list);
+                    for (var i = 0; i < g_addRecruit_list.length; ++i)
+                    {
+                        $.post("recruit/add", g_addRecruit_list[i],function () {
+                        });
+                    }
+                }
+            );
+        });
+
+	</script>
+
+</head>
+
+<body>
+<div id="header"></div>
+		<div class="am-g am-g-fixed blog-g-fixed">
+		  <div class="am-cf admin-main">
+			<div class="am-u-md-3 blog-sidebar">
+
+		  <!-- sidebar start -->
+		  <div class="admin-sidebar">
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-bookmark"></span> 企业主页</p>
+                <div id="amz-offcanvas" class="am-offcanvas doc-offcanvas">
+					<section class="amz-sidebar am-offcanvas-bar">
+						<ul class="am-nav">
+							<li><a href="companyhome.html">企业信息</a></li>
+							<li><a href="companyemail.html">邮件中心</a></li>
+						</ul>
+					</section>
+				</div>
+			  </div>
+			</div>
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-bookmark"></span> 公告</p>
+				<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+			  </div>
+			</div>
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-tag"></span> 招聘宣言</p>
+				<p>Welcome to the Amaze UI wiki!</p>
+			  </div>
+			</div>
+
+		  </div>
+		  <!-- sidebar end -->
+		  </div>
+
+		  <div class="am-u-md-9">
+		  <!-- content start -->
+		  <div class="admin-content">
+
+			<div class="am-g">
+			  <div class="am-u-md-12">
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-2'}">招聘消息<span class="am-icon-chevron-down am-fr" ></span></div>
+				  <div id="collapse-panel-2" class="am-panel-bd am-collapse am-in">
+					<ul id="recruit_list" class="am-list admin-content-task">
+
+					  <li>
+						<div class="admin-task-meta">软件开发工程师</div>
+						<div class="am-cf">
+						  <div class="am-btn-toolbar am-fr">
+							<div class="am-btn-group am-btn-group-xs">
+							    <button type="button" class="am-btn am-btn-default"><span class="am-icon-pencil"></span></button>
+							    <button type="button" class="am-btn am-btn-default"><span class="am-icon-times"></span></button>
+							    <button type="button" class="am-btn am-btn-default">发布</button>
+							    <button type="button" class="am-btn am-btn-default">关闭</button>
+							</div>
+						  </div>
+						</div>
+					  </li>
+
+					</ul>
+                      <label>职位名称</label>
+                      <input id="title" type="text" placeholder="请输入标题">
+                      <br>
+                      <br>
+                      <!--<br>-->
+					  <label>工作地点</label>
+					  <input id="position" type="text" placeholder="请输入标题">
+					  <br>
+					  <br>
+					  <label>薪资待遇</label>
+					  <input id="salary" type="text" placeholder="请输入标题">
+					  <br>
+					  <br>
+                      <label>职位描述</label>
+                      <textarea id="description" style="height: 100px" role="8" cols="70" placeholder="请输入职位负责"></textarea>
+                      <br>
+                      <br>
+                      <label>职位要求</label>
+                      <textarea id="requirement" style="height: 100px" role="8" cols="70" placeholder="请输入职位要求"></textarea>
+                      <br>
+                      <br>
+                      <label>求职加分</label>
+                      <textarea id="priority" style="height: 100px" role="8" cols="70" placeholder="请输入求职加分"></textarea>
+					  <br>
+					  <br>
+                      <label>福利待遇</label>
+                      <textarea id="welfare" style="height: 100px" role="8" cols="70" placeholder="请输入求职加分"></textarea>
+					  <br>
+					  <br>
+                      <div class="am-cf">
+                          <div class="am-btn-toolbar am-fr">
+                              <div class="am-btn-group am-btn-group-xs">
+								  <button id="add_recruit_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-plus" ></span>添加</button>
+								  <button id="confirm_change_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-check"></span>确认</button>
+                              </div>
+                          </div>
+                      </div>
+				  </div>
+
+
+				</div>
+				  <button id="update_recruit_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
+			</div>
+			</div>
+
+		
+
+			</div>
+			</div>
+
+
+		  </div>
+		  <!-- content end -->
+	</div>
+</div>
+</div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

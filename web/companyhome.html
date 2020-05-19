@@ -9,47 +9,113 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="i/favicon.png">
-  <link rel="stylesheet" href="css/amazeui.min.css"/>
-  <link rel="stylesheet" href="css/personal.css"/>
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/amazeui.min.js"></script>
+    <!--导入布局js，共享header和footer-->
+    <script type="text/javascript" src="./assets/js/include.js"></script>
+
+    <script>
+
+        //校验名字
+        //单词字符，长度8到20位
+        function checkName() {
+            //1.获取用户名值
+            var username = $("#name").val();
+            if(username.length > 0 && username.length <= 8){
+                //用户名合法
+                // $("#username").css("border","");
+                return true;
+            }else{
+                //用户名非法,加一个红色边框
+                // $("#username").css("border","1px solid red");
+                alert("请使用合法姓名")
+                return false;
+            }
+        }
+
+        //校验密码
+        function checkPassword() {
+            var psdVal = $("#password").val();
+            var regPsd = /^[0-9A-Za-z]{6,20}$/;
+            if(psdVal== "" || !regPsd.test(psdVal))
+            {
+                // $("#errPassword").html(" 密码为6-20位字母、数字的组合！");
+                alert(" 密码为6-20位字母、数字的组合！")
+                return false;
+            }
+            else
+            {
+                // $("#errPassword").html("");
+                return true;
+            }
+        }
+
+        //校验邮箱
+        function checkEmail(){
+            var emailVal =  $("#email").val();
+            var regEmail = /^\w+@\w+\.\w+$/;
+            if(emailVal == "" || !regEmail.test(emailVal))
+            {
+                // $("#errEmail").html(" 请输入有效邮箱！");
+                alert(" 请输入有效邮箱！")
+                return false;
+            }
+            else
+            {
+                // $("#errEmail").html("");
+                return true;
+            }
+        }
+
+        $(function () {
+            //查询用户信息
+            $.get("user/findOne",{},function (data) {
+                if (data) {
+                    console.log(data);
+                    $('#name').attr('value', data.name);
+                    $('#email').attr('value', data.email);
+                    $('#size').attr('value', data.size);
+                    $('#location').attr('value', data.location);
+                    $('#password').attr('value', data.password);
+                    $('#user_brief').html(data.brief);
+                }
+            });
+
+            //当表单提交时，调用所有的校验方法
+            $("#update_user_base_info").click(function(){
+                //1.发送数据到服务器
+                if(checkName() && checkPassword() && checkEmail()) {
+                    $.post("user/updateEnterpriseUser", $("#user_base_info").serialize(), function (data) {
+                        //处理服务器响应的数据  data  {flag:true,errorMsg:"注册失败"}
+                        if (data.flag) {
+                            //注册成功，跳转成功页面
+                            alert("修改成功");
+                            // location.href = "register_ok.html";
+                        } else {
+                            //注册失败,给errorMsg添加提示信息
+                            // $("#errorMsg").html(data.errorMsg);
+                            alert("修改成功");
+                            alert(data.errorMsg);
+                        }
+                    });
+                }
+                //2.不让页面跳转
+                return false;
+                //如果这个方法没有返回值，或者返回为true，则表单提交，如果返回为false，则表单不提交
+            });
+        });
+
+
+
+    </script>
 </head>
 
 <body>
-<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
-  <div class="am-container">
-    <h1 class="am-topbar-brand">
-      <a href="index.html">猎聘招聘网</a>
-    </h1>
+<div id="header"></div>
 
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
-            data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">导航切换</span> <span
-        class="am-icon-bars"></span>
-    </button>
-
-    <div class="am-collapse am-topbar-collapse" id="collapse-head">
-      <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li ><a href="index.html">首页</a></li>
-        <li><a href="job.html">工作职位</a></li>
-		<li><a href="man.html">精英人才</a></li>
-      </ul>
-
-	<div class="am-topbar-right">
-      <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
-        	百度<span class="am-icon-caret-down"></span>
-        </button>
-        <ul class="am-dropdown-content">
-          <li><a href="#"><span class="am-icon-user"></span>企业主页</a></li>
-		  <li ><a href="#"><span class="am-icon-power-off"></span>退出</a></li>
-        </ul>
-      </div>
-    </div>
-
-    </div>
-  </div>
-</header>
-
-	<br>
 
 	<div class="am-g am-g-fixed blog-g-fixed">
 		 <div class="am-cf admin-main">
@@ -63,7 +129,7 @@
 								<section class="amz-sidebar am-offcanvas-bar">
 									<ul class="am-nav">
 										<li><a href="companyhome.html">企业信息</a></li>
-										<li><a href="companyzhaopin.html">招聘信息</a></li>
+										<li><a href="companyrecruit.html">招聘信息</a></li>
 										<li><a href="companyemail.html">邮件中心</a></li>
 									</ul>
 								</section>
@@ -71,22 +137,25 @@
 			  			</div>
 					</div>
 
+					<!--<div class="am-panel am-panel-default admin-sidebar-panel">-->
+			  			<!--<div class="am-panel-bd">-->
+							<!--<p><span class="am-icon-bookmark"></span> 公告</p>-->
+							<!--<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>-->
+			  			<!--</div>-->
+					<!--</div>-->
+
+                    <!--简介-->
 					<div class="am-panel am-panel-default admin-sidebar-panel">
 			  			<div class="am-panel-bd">
-							<p><span class="am-icon-bookmark"></span> 公告</p>
-							<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+							<p><span class="am-icon-tag"></span> 简介</p>
+							<p id="user_brief">Welcome!</p>
 			  			</div>
 					</div>
 
-					<div class="am-panel am-panel-default admin-sidebar-panel">
-			  			<div class="am-panel-bd">
-							<p><span class="am-icon-tag"></span> 招聘宣言</p>
-							<p>Welcome to the Amaze UI wiki!</p>
-			  			</div>
-					</div>
 		  		</div>
 		  		<!-- sidebar end -->
 		  	</div>
+
 
 		  	<div class="am-u-md-9">
 		  		<!-- content start -->
@@ -100,30 +169,68 @@
 				  				<div id="collapse-panel-1" class="am-panel-bd am-collapse am-in">
 									<div class="admin-task-bd">
 										<div class="am-u-md-4">
-											姓名：庄金鑫<br>
-											手机：18202509468<br>
-											邮箱：987762324@qq.com<br>
-											出生年月：1991-10-12<br>
-											姓名：庄金鑫<br>
-											手机：18202509468<br>
-										</div>
-										<div class="am-u-md-4">
-											姓名：庄金鑫<br>
-											手机：18202509468<br>
-											邮箱：987762324@qq.com<br>
-											出生年月：1991-10-12<br>
-											姓名：庄金鑫<br>
-											手机：18202509468<br>
+                                            <ul>
+
+                                                <form id="user_base_info" action="user">
+                                                    <!--提交处理请求的标识符-->
+                                                    <input type="hidden" name="action" value="register">
+                                                    <table style="margin-top: 25px;">
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="name">名字</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_name">
+                                                                <input type="text" id="name" name="name" placeholder="请输入企业名字">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="email">Email</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_email">
+                                                                <input type="text" id="email" name="email" placeholder="请输入Email">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="size">规模</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_size">
+                                                                <input type="text" id="size" name="size" placeholder="请输入企业规模">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="location">位置</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_location">
+                                                                <input type="text" id="location" name="location" placeholder="请输入位置">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="password">密码</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_password" class="password-field">
+                                                                <input type="password" id="password" name="password" placeholder="请输入密码">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </ul>
 										</div>
 									<div class="am-u-md-4">
-										<img src="img/company/baidu.png" alt="..." class="am-img-thumbnail am-radius" width="130" height="180">
+										<img src="./assets/img/company/baidu.png" alt="..." class="am-img-thumbnail am-radius" width="130" height="180">
 									</div>
 								</div>
 
 								<div class="am-cf">
 						  			<div class="am-btn-toolbar am-fr">
 						  				<div class="am-btn-group am-btn-group-xs">
-							  				<button type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">编辑</span></button>
+							  				<button id="update_user_base_info" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
 							 			</div>
 						  			</div>
 								</div>
@@ -136,24 +243,9 @@
 	</div>
 	<!-- content end -->
 </div>
+</div>
 
-<footer class="my-footer">
-<br>
-		<p>2015年天津工业大学 毕业设计 <br><small>© Copyright 庄金鑫. 版权所有，禁止转载.</small></p>
-  </div>
-</footer>
-
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="/js/polyfill/rem.min.js"></script>
-<script src="/js/polyfill/respond.min.js"></script>
-<script src="/js/amazeui.legacy.js"></script>
-<![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="js/jquery.min.js"></script>
-<script src="js/amazeui.min.js"></script>
-<!--<![endif]-->
+<div id="footer"></div>
 </body>
+
 </html>

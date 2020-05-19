@@ -6,11 +6,10 @@ import org.junit.Test;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
 
 /*
 	1. 声明静态数据源成员变量
@@ -103,4 +102,41 @@ public class JDBCUtils {
 	public static void close(Connection conn, Statement stmt) {
 		close(conn, stmt, null);
 	}
+
+
+	//--------------------------------------------------------------------------------
+//    public static ResultSet getResultSet(String sql) throws SQLException
+//    {
+//        return ds.getConnection().createStatement().executeQuery(sql);
+//    }
+//    public static ResultSet getAll(String tableName) throws SQLException
+//    {
+//        return getResultSet("select * from " + tableName);
+//    }
+    public static ResultSet getResultSet(String sql,  Lock lock) throws SQLException
+    {
+        lock.lock();
+        Connection connection = ds.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        lock.unlock();
+        return  resultSet;
+    }
+    public static ResultSet getAll(String tableName,  Lock lock) throws SQLException
+    {
+        return getResultSet("select * from " + tableName, lock);
+    }
+    public static void executeUpdate(PreparedStatement pstmt) throws SQLException
+    {
+        pstmt.executeUpdate();
+    }
+    public static void executeUpdate(PreparedStatement pstmt, Lock lock) throws SQLException
+    {
+        //---------------------
+        //上个锁
+        lock.lock();
+        pstmt.executeUpdate();
+        lock.unlock();
+        //---------------------
+    }
 }

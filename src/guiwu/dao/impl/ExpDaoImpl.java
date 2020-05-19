@@ -1,5 +1,6 @@
 package guiwu.dao.impl;
 
+import com.sun.org.apache.regexp.internal.RE;
 import guiwu.dao.ExpDao;
 import guiwu.domain.PersonalUser;
 import guiwu.domain.Exp;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import guiwu.util.JDBCUtils;
+import jdk.nashorn.internal.scripts.JD;
 
 import java.sql.*;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -15,7 +17,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ExpDaoImpl implements ExpDao
 {
-    final private static int kExpIdIndex = 2;
+    final private static int kExpIdIndex = 1;
     final private static int kPidIndex = 2;
 
     final private static String workExpTableName = "tab_work_exp";
@@ -33,32 +35,14 @@ public class ExpDaoImpl implements ExpDao
                 resultSet.getString(4)
         );
     }
-//    private Exp toWorkExp(ResultSet resultSet) throws SQLException
-//    {
-//        return toExp(resultSet);
-//    }
-//    private Exp toProjectExp(ResultSet resultSet) throws SQLException
-//    {
-//        return toExp(resultSet);
-//    }
 
-    private ResultSet getResultSet(String sql) throws SQLException
-    {
-        Statement stmt = JDBCUtils.getDataSource().getConnection().createStatement();
-        return stmt.executeQuery(sql);
-    }
-    private ResultSet getAll(String tableName) throws SQLException
-    {
-        return getResultSet("select * from " + tableName);
-    }
-
-
-    private List<Exp> getExp(int pid, String tableName)
+    private List<Exp> getExp(int pid, String tableName, ReadWriteLock lock)
     {
         List<Exp> expList = new ArrayList<Exp>();
         try
         {
-            ResultSet resultSet = getAll(tableName);
+            ResultSet resultSet = JDBCUtils.getAll(tableName, lock.readLock());
+
             while (resultSet.next())
             {
                 //System.out.println(PersonalUser.kPidIndex + " " + pid + " " + resultSet.getString("2"));
@@ -87,12 +71,7 @@ public class ExpDaoImpl implements ExpDao
             pstmt.setInt(1, pid);
             pstmt.setString(2, title);
             pstmt.setString(3, content);
-            //---------------------
-            //上个写锁
-            lock.writeLock().lock();
-            pstmt.executeUpdate();
-            lock.writeLock().unlock();
-            //---------------------
+            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
         }
         catch (SQLException e)
         {
@@ -108,12 +87,7 @@ public class ExpDaoImpl implements ExpDao
         {
             PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
             pstmt.setInt(1, expId);
-            //---------------------
-            //上个写锁
-            lock.writeLock().lock();
-            pstmt.executeUpdate();
-            lock.writeLock().unlock();
-            //---------------------
+            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
         }
         catch (SQLException e)
         {
@@ -130,7 +104,7 @@ public class ExpDaoImpl implements ExpDao
     @Override
     public List<Exp> getWorkExp(int pid)
     {
-        return getExp(pid, workExpTableName);
+        return getExp(pid, workExpTableName, workExpLock);
     }
     //-----------------------------------------------------------------------
     @Override
@@ -141,7 +115,7 @@ public class ExpDaoImpl implements ExpDao
     @Override
     public List<Exp> getProjectExp(int pid)
     {
-        return getExp(pid, projectExpTableName);
+        return getExp(pid, projectExpTableName, projectExpLock);
     }
 
 

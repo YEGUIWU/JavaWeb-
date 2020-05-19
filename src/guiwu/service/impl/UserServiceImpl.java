@@ -81,18 +81,7 @@ public class UserServiceImpl implements UserService
     @Override
     public boolean activeEnterpriseUser(String code)
     {
-        //1.根据激活码查询用户对象
-        EnterpriseUser user = userDao.findEnterpriseUserByCode(code);
-        if(user != null)
-        {
-            //2.调用dao的修改激活状态的方法
-            userDao.updateStatus(user);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**
@@ -109,14 +98,12 @@ public class UserServiceImpl implements UserService
     @Override
     public  EnterpriseUser login(EnterpriseUser user) throws Exception
     {
-        //return userDao.findEnterpriseUser(user.getUsername(),user.getPassword());
-        return null;
+        return userDao.findEnterpriseUser(user.getUsername(),user.getPassword());
     }
     @Override
     public AdminUser login(AdminUser user) throws Exception
     {
-        //return userDao.findPersonalUser(user.getUsername(),user.getPassword());
-        return null;
+        return userDao.findAdminUser(user.getUsername(),user.getPassword());
     }
 
 
@@ -142,77 +129,5 @@ public class UserServiceImpl implements UserService
         userDao.updateInfo(user);
     }
 
-    @Override
-    public List<Exp> getWorkExp(PersonalUser user)
-    {
-        return expDao.getWorkExp(user);
-    }
-
-    @Override
-    public List<Exp> getWorkExp(int pid)
-    {
-        return expDao.getWorkExp(pid);
-    }
-
-    @Override
-    public void addWorkExp(PersonalUser personalUser, Exp workExp)
-    {
-        expDao.addWorkExp(personalUser, workExp);
-    }
-
-    @Override
-    public void addWorkExp(int pid, Exp workExp)
-    {
-        expDao.addWorkExp(pid, workExp);
-    }
-
-    @Override
-    public void addWorkExp(int pid,String title, String content)
-    {
-        expDao.addWorkExp(pid, title, content);
-    }
-
-    @Override
-    public void delWorkExp(int expId)
-    {
-        expDao.delWorkExp(expId);
-    }
-
-
-
-    /**
-     * 项目经验
-     */
-    @Override
-    public List<Exp> getProjectExp(PersonalUser user)
-    {
-        return expDao.getProjectExp(user);
-    }
-    @Override
-    public List<Exp> getProjectExp(int pid)
-    {
-        return expDao.getProjectExp(pid);
-    }
-    @Override
-    public void addProjectExp(PersonalUser personalUser, Exp workExp)
-    {
-        expDao.addProjectExp(personalUser, workExp);
-    }
-    @Override
-    public void addProjectExp(int pid, Exp workExp)
-    {
-        expDao.addProjectExp(pid, workExp);
-    }
-    @Override
-    public void addProjectExp(int pid, String title, String content)
-    {
-        expDao.addProjectExp(pid, title, content);
-    }
-
-    @Override
-    public void delProjectExp(int expId)
-    {
-        expDao.delProjectExp(expId);
-    }
 
 }

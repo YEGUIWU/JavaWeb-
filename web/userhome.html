@@ -35,6 +35,7 @@
 				return false;
             }
         }
+
         //校验密码
         function checkPassword() {
             var psdVal = $("#password").val();
@@ -241,7 +242,7 @@
 
             //-------------------------------------------------------------------------------------
             //查询工作经验
-            $.get("user/findWorkExp",{},function (data) {
+            $.get("exp/findWorkExp",{},function (data) {
                 if (data.length) {
                     var exp_list = "";
                     for (var i = 0; i < data.length; ++i)
@@ -272,12 +273,12 @@
             $("#update_work_exp").click(function () {
 					for (var i = 0; i < g_delWorkExpId_list.length; ++i)
 					{
-						$.post("user/delWorkExp", {expId : g_delWorkExpId_list[i]},function () {
+						$.post("exp/delWorkExp", {expId : g_delWorkExpId_list[i]},function () {
                         });
 					}
 					for (var i = 0; i < g_addWorkExp_list.length; ++i)
 					{
-						$.post("user/addWorkExp", g_addWorkExp_list[i],function () {
+						$.post("exp/addWorkExp", g_addWorkExp_list[i],function () {
 						});
 					}
                 }
@@ -285,7 +286,7 @@
 
             //-------------------------------------------------------------------------------------
             //查询工作经验
-            $.get("user/findProjectExp",{},function (data) {
+            $.get("exp/findProjectExp",{},function (data) {
                 if (data.length) {
                     var exp_list = "";
                     for (var i = 0; i < data.length; ++i)
@@ -317,13 +318,13 @@
 
                     for (var i = 0; i < g_delProjectExpId_list.length; ++i)
                     {
-                        $.post("user/delProjectExp", {expId : g_delProjectExpId_list[i]},function () {
+                        $.post("exp/delProjectExp", {expId : g_delProjectExpId_list[i]},function () {
                         });
                     }
                     for (var i = 0; i < g_addProjectExp_list.length; ++i)
                     {
                         console.log(g_addProjectExp_list[i]);
-                        $.post("user/addProjectExp", g_addProjectExp_list[i],function () {
+                        $.post("exp/addProjectExp", g_addProjectExp_list[i],function () {
                         });
                     }
                 }
@@ -362,16 +363,16 @@
 			  </div>
 			</div>
 
-			<div class="am-panel am-panel-default admin-sidebar-panel">
-			  <div class="am-panel-bd">
-				<p><span class="am-icon-bookmark"></span> 公告</p>
-				<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
-			  </div>
-			</div>
+			<!--<div class="am-panel am-panel-default admin-sidebar-panel">-->
+			  <!--<div class="am-panel-bd">-->
+				<!--<p><span class="am-icon-bookmark"></span> 公告</p>-->
+				<!--<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>-->
+			  <!--</div>-->
+			<!--</div>-->
 
 			<div class="am-panel am-panel-default admin-sidebar-panel">
 			  <div class="am-panel-bd">
-				<p><span class="am-icon-tag"></span> 求职宣言</p>
+				<p><span class="am-icon-tag"></span> 个性签名</p>
 				<p id="user_brief">Welcome to the Amaze UI wiki!</p>
 			  </div>
 			</div>

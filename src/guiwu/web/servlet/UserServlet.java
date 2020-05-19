@@ -1,7 +1,9 @@
 package guiwu.web.servlet;
 
 import guiwu.domain.*;
+import guiwu.service.ExpService;
 import guiwu.service.UserService;
+import guiwu.service.impl.ExpServiceImpl;
 import guiwu.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -16,7 +18,8 @@ import java.util.List;
 public class UserServlet extends BaseServlet {
 
     //声明UserService业务对象
-    private UserService service = new UserServiceImpl();
+    private UserService userService = new UserServiceImpl();
+    private ExpService expService = new ExpServiceImpl();
     /**
      * 注册功能
      * @param request
@@ -65,11 +68,11 @@ public class UserServlet extends BaseServlet {
             {
                 if (type.equals("personal"))
                 {
-                    service.register((PersonalUser)user);
+                    userService.register((PersonalUser)user);
                 }
                 else if (type.equals("enterprise"))
                 {
-                    service.register((EnterpriseUser)user);
+                    userService.register((EnterpriseUser)user);
                 }
 
                 info.setFlag(true);
@@ -102,15 +105,19 @@ public class UserServlet extends BaseServlet {
             personalUser.setUsername(request.getParameter("username"));
             personalUser.setPassword(request.getParameter("password"));
             user = personalUser;
-            System.out.println("个人用户登陆");
+            System.out.println("个人用户");
         }
         else if (type.equals("enterprise"))
         {
-            System.out.println("企业用户登陆");
+            EnterpriseUser enterpriseUser = new EnterpriseUser();
+            enterpriseUser.setUsername(request.getParameter("username"));
+            enterpriseUser.setPassword(request.getParameter("password"));
+            user = enterpriseUser;
+            System.out.println("企业用户");
         }
         else if (type.equals("admin"))
         {
-            System.out.println("管理用户登陆");
+            System.out.println("管理用户");
         }
         else // do nothing
         {
@@ -120,16 +127,49 @@ public class UserServlet extends BaseServlet {
         //调用Service查询
         UserService service = new UserServiceImpl();
         ResultInfo info = new ResultInfo();
-        PersonalUser u = null;
+        //Object u = null;
         try
         {
             if (type.equals("personal"))
             {
-                u  = service.login((PersonalUser)user);
+                PersonalUser u  = service.login((PersonalUser)user);
+                System.out.println(u);
+                if(u != null && !"Y".equals(u.getStatus()))
+                {
+                    //用户尚未激活
+                    info.setFlag(false);
+                    info.setErrorMsg("您尚未激活，请激活");
+                    System.out.println("您尚未激活，请激活");
+                }
+                if(u != null && "Y".equals(u.getStatus()))
+                {
+                    request.getSession().setAttribute("user",u);//登录成功标记
+                    System.out.println("登录成功");
+                    //登录成功
+                    info.setFlag(true);
+                    info.setData("userhome.html");
+                }
             }
             else if (type.equals("enterprise"))
             {
-
+                System.out.println("企业用户登陆");
+                EnterpriseUser u  = service.login((EnterpriseUser) user);
+                System.out.println(u);
+                if(u != null && !"Y".equals(u.getStatus()))
+                {
+                    //用户尚未激活
+                    info.setFlag(false);
+                    info.setErrorMsg("您尚未激活，请激活");
+                    System.out.println("您尚未激活，请激活");
+                }
+                if(u != null && "Y".equals(u.getStatus()))
+                {
+                    request.getSession().setAttribute("user",u);//登录成功标记
+                    System.out.println("登录成功");
+                    //登录成功
+                    info.setFlag(true);
+                    info.setData("companyhome.html");
+                }
             }
         }
         catch (Exception e)
@@ -138,22 +178,6 @@ public class UserServlet extends BaseServlet {
             System.out.println(e.toString().substring(20));
             info.setFlag(false);
             info.setErrorMsg(e.toString().substring(20));
-        }
-
-        //判断用户是否激活
-        if(u != null && !"Y".equals(u.getStatus())){
-            //用户尚未激活
-            info.setFlag(false);
-            info.setErrorMsg("您尚未激活，请激活");
-            System.out.println("您尚未激活，请激活");
-        }
-        //判断登录成功
-        if(u != null && "Y".equals(u.getStatus()))
-        {
-            request.getSession().setAttribute("user",u);//登录成功标记
-            System.out.println("登录成功");
-            //登录成功
-            info.setFlag(true);
         }
 
         writeValue(info, response);
@@ -251,7 +275,7 @@ public class UserServlet extends BaseServlet {
 //            personalUser.setPid(curUser.getPid());
 //            personalUser.setUsername(curUser.getUsername());
             System.out.println(personalUser);
-            service.update(personalUser);
+            userService.update(personalUser);
 //            user  = service.login(personalUser);
             info.setFlag(true);
             System.out.println("更新成功");
@@ -277,64 +301,46 @@ public class UserServlet extends BaseServlet {
 
 
     /**
-     * 查询工作经历
+     * 更新企业用户
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
      */
-    public void findWorkExp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
-        List<Exp> workExps = service.getWorkExp(personalUser);
-        writeValue(workExps,response);
-    }
+    public void updateEnterpriseUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    /**
-     * 删除工作经历
-     */
-    public void delWorkExp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int expId = Integer.parseInt(request.getParameter("expId"));
-        System.out.println("del: " + expId);
-        service.delWorkExp(expId);
-//        writeValue(workExps,response);
-    }
-    /**
-     * 添加工作经历
-     */
-    public void addWorkExp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        System.out.println("add " + "title: " + title + " content: " + content);
-        service.addWorkExp(personalUser.getPid(), title, content);
-//        writeValue(workExps,response);
-    }
+        EnterpriseUser user = (EnterpriseUser) request.getSession().getAttribute("user");
+        String srcPassword = user.getPassword();
+        user.setPassword(request.getParameter("password"));
+        user.setName(request.getParameter("name"));
+        user.setEmail(request.getParameter("email"));
+        user.setSize(request.getParameter("size"));
+        user.setLocation(request.getParameter("location"));
+        ResultInfo info = new ResultInfo();
+        try
+        {
+            System.out.println(user);
+            userService.update(user);
+            info.setFlag(true);
+            System.out.println("更新成功");
+        }
+        catch (Exception e)
+        {
+            //用户名密码或错误
+            System.out.println(e.toString().substring(20));
+            info.setFlag(false);
+            info.setErrorMsg(e.toString().substring(20));
+        }
 
-
-    /**
-     * 查询项目经验
-     */
-    public void findProjectExp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
-        List<Exp> projectExps = service.getProjectExp(personalUser);
-        writeValue(projectExps,response);
-    }
-
-    /**
-     * 删除项目经验
-     */
-    public void delProjectExp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int expId = Integer.parseInt(request.getParameter("expId"));
-        System.out.println("del: " + expId);
-        service.delProjectExp(expId);
-//        writeValue(workExps,response);
-    }
-    /**
-     * 添加项目经验
-     */
-    public void addProjectExp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        System.out.println("add " + "title: " + title + " content: " + content);
-        service.addProjectExp(personalUser.getPid(), title, content);
-//        writeValue(workExps,response);
+        if (srcPassword.equals(user.getPassword())) //没有修改密码
+        {
+            request.getSession().setAttribute("user",user);//登录成功标记
+            writeValue(info, response);
+        }
+        else //修改了密码
+        {
+            exit(request,response);
+        }
     }
 
 }

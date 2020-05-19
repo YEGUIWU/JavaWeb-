@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>登陆</title>
+	<link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
 	<link rel="stylesheet" href="./assets/libs/particles/css/style.css">
 	<link rel="stylesheet" href="./assets/css/base.css">
 	<link rel="stylesheet" href="./assets/css/login.css" />
@@ -81,7 +82,7 @@
 					//data : {flag:false,errorMsg:''}
 					if(data.flag) {
 						//登录成功
-						location.href="userhome.html";
+						location.href=data.data;
 					} else {
 						if (data.errorMsg.indexOf("密码错误") != -1) {
 							$("#errPassword").html(data.errorMsg);

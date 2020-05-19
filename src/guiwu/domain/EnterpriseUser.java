@@ -4,40 +4,82 @@ import java.io.Serializable;
 
 public class EnterpriseUser implements Serializable
 {
-    private int companyId;
-    private String companyName;
+    public static final int kEidIndex = 1;
+    public static final int kUsernameIndex = 2;
+    public static final int kPasswordIndex = 3;
+    public static final int kNameIndex = 4;
+    private int eid;
+    private String username;
     private String password;
+    private String name;
     private String email;
+    private String size;
+    private String location;
     private String logo;
     private String brief;
-    private int size;
-    private String location;
+    private String status;
 
     public EnterpriseUser()
     {
 
     }
 
-    public EnterpriseUser(int companyId, String companyName, String password, String email, String logo, String brief, int size, String location)
+    public EnterpriseUser(String username, String email, String password)
     {
-        this.companyId = companyId;
-        this.companyName = companyName;
-        this.password = password;
+        this.username = username;
         this.email = email;
-        this.logo = logo;
-        this.brief = brief;
+        this.password = password;
+    }
+
+    public EnterpriseUser(int eid, String username, String password, String name, String email, String size, String location, String logo, String brief, String status)
+    {
+        this.eid = eid;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
         this.size = size;
         this.location = location;
+        this.logo = logo;
+        this.brief = brief;
+        this.status = status;
     }
 
-    public void setCompanyId(int companyId)
+    public int getEid()
     {
-        this.companyId = companyId;
+        return eid;
     }
 
-    public void setCompanyName(String companyName)
+    public void setEid(int eid)
     {
-        this.companyName = companyName;
+        this.eid = eid;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+
+
+    public String getPassword()
+    {
+        return password;
     }
 
     public void setPassword(String password)
@@ -45,64 +87,24 @@ public class EnterpriseUser implements Serializable
         this.password = password;
     }
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public void setLogo(String logo)
-    {
-        this.logo = logo;
-    }
-
-    public void setBrief(String brief)
-    {
-        this.brief = brief;
-    }
-
-    public void setSize(int size)
-    {
-        this.size = size;
-    }
-
-    public void setLocation(String location)
-    {
-        this.location = location;
-    }
-
-    public int getCompanyId()
-    {
-        return companyId;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
     public String getEmail()
     {
         return email;
     }
 
-    public String getLogo()
+    public void setEmail(String email)
     {
-        return logo;
+        this.email = email;
     }
 
-    public String getBrief()
-    {
-        return brief;
-    }
-
-    public int getSize()
+    public String getSize()
     {
         return size;
+    }
+
+    public void setSize(String size)
+    {
+        this.size = size;
     }
 
     public String getLocation()
@@ -110,13 +112,54 @@ public class EnterpriseUser implements Serializable
         return location;
     }
 
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
+
+    public String getLogo()
+    {
+        return logo;
+    }
+
+    public void setLogo(String logo)
+    {
+        this.logo = logo;
+    }
+
+    public String getBrief()
+    {
+        return brief;
+    }
+
+    public void setBrief(String brief)
+    {
+        this.brief = brief;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public static int getkUsernameIndex()
+    {
+        return kUsernameIndex;
+    }
+
+    public static int getkPasswordIndex()
+    {
+        return kPasswordIndex;
+    }
 
     @Override
     public String toString()
     {
-        return "Company{" + "companyId=" + companyId + ", companyName='" + companyName + '\''
-                + ", password='" + password + '\'' + ", email='" + email + '\''
-                + ", logo='" + logo + '\'' + ", brief='" + brief + '\''
-                + ", size=" + size + ", location='" + location + '\'' + '}';
+        return "EnterpriseUser{" + "eid=" + eid + ", username='" + username + '\'' + ", name='" + name + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + ", size='" + size + '\'' + ", location='" + location + '\'' + ", logo='" + logo + '\'' + ", brief='" + brief + '\'' + ", status='" + status + '\'' + '}';
     }
 }

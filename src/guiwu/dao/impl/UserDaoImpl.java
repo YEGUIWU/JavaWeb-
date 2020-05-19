@@ -44,7 +44,18 @@ public class UserDaoImpl implements UserDao
 
     EnterpriseUser toEnterpriseUser(ResultSet resultSet) throws SQLException
     {
-        return null;
+        return new EnterpriseUser(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getString(4),
+                resultSet.getString(5),
+                resultSet.getString(6),
+                resultSet.getString(7),
+                resultSet.getString(8),
+                resultSet.getString(9),
+                resultSet.getString(10)
+        );
     }
 
     AdminUser toAdminUser(ResultSet resultSet) throws SQLException
@@ -52,15 +63,46 @@ public class UserDaoImpl implements UserDao
         return null;
     }
 
-    ResultSet getResultSet(String sql) throws SQLException
-    {
-        Statement stmt = JDBCUtils.getDataSource().getConnection().createStatement();
-        return stmt.executeQuery(sql);
-    }
 
-    ResultSet getAll(String tableName) throws SQLException
+
+    private ResultSet findUser(String username, String password, ReadWriteLock lock, String tableName, int userIndex, int passwordIndex) throws Exception
     {
-        return getResultSet("select * from " + tableName);
+        boolean hasUsername = false;
+        ResultSet user = null;
+        try
+        {
+            System.out.println("run-----------------");
+            ResultSet resultSet = JDBCUtils.getAll(tableName, lock.readLock());
+            System.out.println("run-----------------");
+            while(resultSet.next())
+            {
+                if (resultSet.getString(userIndex).equals(username))
+                {
+                    hasUsername = true;
+                    if (resultSet.getString(passwordIndex).equals(password))
+                    {
+                        user = resultSet;
+                    }
+                    break;
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        if (user == null)
+        {
+            if (hasUsername)
+            {
+                throw new Exception("密码错误");
+            }
+            else
+            {
+                throw new Exception("账号不存在");
+            }
+        }
+        return user;
     }
 
     //--------------------------------------------------------------------------------
@@ -72,12 +114,7 @@ public class UserDaoImpl implements UserDao
         PersonalUser user = null;
         try
         {
-            //-----------------------------
-            //加个读锁
-            personalUserLock.readLock().lock();
-            ResultSet resultSet = getAll(personalUserTableName);
-            personalUserLock.readLock().unlock();
-            //-----------------------------
+            ResultSet resultSet = JDBCUtils.getAll(personalUserTableName, personalUserLock.readLock());
             while (resultSet.next())
             {
                 if (resultSet.getString(PersonalUser.kUsernameIndex).equals(username))
@@ -100,12 +137,8 @@ public class UserDaoImpl implements UserDao
         EnterpriseUser user = null;
         try
         {
-            //-----------------------------
-            //加个读锁
             enterpriseUserLock.readLock().lock();
-            ResultSet resultSet = getAll(enterpriseUserTableName);
-            enterpriseUserLock.readLock().unlock();
-            //-----------------------------
+            ResultSet resultSet = JDBCUtils.getAll(enterpriseUserTableName, enterpriseUserLock.readLock());
             while (resultSet.next())
             {
                 if (resultSet.getString(2).equals(username))
@@ -129,12 +162,7 @@ public class UserDaoImpl implements UserDao
         AdminUser user = null;
         try
         {
-            //-----------------------------
-            //加个读锁
-            adminUserLock.readLock().lock();
-            ResultSet resultSet = getAll(adminUserTableName);
-            adminUserLock.readLock().unlock();
-            //-----------------------------
+            ResultSet resultSet = JDBCUtils.getAll(adminUserTableName, adminUserLock.readLock());
             while (resultSet.next())
             {
                 if (resultSet.getString(2).equals(username))
@@ -167,12 +195,8 @@ public class UserDaoImpl implements UserDao
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getStatus());
             pstmt.setString(5, user.getCode());
-            //---------------------
-            //上个写锁
-            personalUserLock.writeLock().lock();
-            pstmt.executeUpdate();
-            personalUserLock.writeLock().unlock();
-            //---------------------
+
+            JDBCUtils.executeUpdate(pstmt, personalUserLock.writeLock());
         }
         catch (SQLException e)
         {
@@ -181,19 +205,43 @@ public class UserDaoImpl implements UserDao
     }
 
     @Override
-    public void saveEnterprise(EnterpriseUser enterprise)
+    public void saveEnterprise(EnterpriseUser user)
     {
-
+        String sql = "insert into " + enterpriseUserTableName + " (username,password,email) values(?,?,?)";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getEmail());
+            JDBCUtils.executeUpdate(pstmt, enterpriseUserLock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void saveAdmin(AdminUser admin)
+    public void saveAdmin(AdminUser user)
     {
-
+        String sql = "insert into " + adminUserTableName + " (username,password,name) values(?,?,?)";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getName());
+            JDBCUtils.executeUpdate(pstmt, adminUserLock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     //--------------------------------------------------------------------------------
-    //                               save user
+    //                               find user by code
     //--------------------------------------------------------------------------------
     @Override
     public PersonalUser findPersonalUserByCode(String code)
@@ -201,7 +249,7 @@ public class UserDaoImpl implements UserDao
         PersonalUser user = null;
         try
         {
-            ResultSet resultSet = getAll(personalUserTableName);
+            ResultSet resultSet = JDBCUtils.getAll(personalUserTableName, personalUserLock.readLock());
             while(resultSet.next())
             {
                 if (resultSet.getString(PersonalUser.kCodeIndex).equals(code))
@@ -218,38 +266,22 @@ public class UserDaoImpl implements UserDao
         return user;
     }
 
-    @Override
-    public EnterpriseUser findEnterpriseUserByCode(String code)
-    {
-        return null;
-    }
-
-
-    @Override
-    public AdminUser findAdminUserByCode(String code)
-    {
-        return null;
-    }
 
 
 
     //--------------------------------------------------------------------------------
-    //                               save user
+    //                               update status
     //--------------------------------------------------------------------------------
     @Override
     public void updateStatus(PersonalUser personalUser)
     {
-        String sql = " update tab_user set status = 'Y' where pid=?";
+        String sql = " update " + personalUserTableName + " set status = 'Y' where pid=?";
         try
         {
             PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
             pstmt.setInt(1, personalUser.getPid());
-            //---------------------
-            //上个写锁
-            personalUserLock.writeLock().lock();
-            pstmt.executeUpdate();
-            personalUserLock.writeLock().unlock();
-            //---------------------
+
+            JDBCUtils.executeUpdate(pstmt, personalUserLock.writeLock());
         }
         catch (SQLException e)
         {
@@ -260,17 +292,25 @@ public class UserDaoImpl implements UserDao
     @Override
     public void updateStatus(EnterpriseUser enterpriseUser)
     {
+        String sql = " update " + enterpriseUserTableName + " set status = 'Y' where eid=?";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setInt(1, enterpriseUser.getEid());
 
+            JDBCUtils.executeUpdate(pstmt, enterpriseUserLock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void updateStatus(AdminUser adminUser)
-    {
-
-    }
 
 
-
+    //--------------------------------------------------------------------------------
+    //                               update info
+    //--------------------------------------------------------------------------------
     @Override
     public void updateInfo(PersonalUser personalUser)
     {
@@ -289,12 +329,8 @@ public class UserDaoImpl implements UserDao
             pstmt.setString(7, personalUser.getSchool());
             pstmt.setString(8, personalUser.getEducation());
             pstmt.setString(9, personalUser.getUsername());
-            //---------------------
-            //上个写锁
-            personalUserLock.writeLock().lock();
-            pstmt.executeUpdate();
-            personalUserLock.writeLock().unlock();
-            //---------------------
+
+            JDBCUtils.executeUpdate(pstmt, personalUserLock.writeLock());
         }
         catch (SQLException e)
         {
@@ -304,7 +340,26 @@ public class UserDaoImpl implements UserDao
     @Override
     public void updateInfo(EnterpriseUser enterpriseUser)
     {
+        String sql = " update " + enterpriseUserTableName +
+                " set password=?,name=?,email=?,size=?,location=?" +
+                " where username=?";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setString(1, enterpriseUser.getPassword());
+            pstmt.setString(2, enterpriseUser.getName());
+            pstmt.setString(3, enterpriseUser.getEmail());
+            pstmt.setString(4, enterpriseUser.getSize());
+            pstmt.setString(5, enterpriseUser.getLocation());
+            pstmt.setString(6, enterpriseUser.getUsername());
+            //pstmt.setString(6, enterpriseUser.getBrief());
 
+            JDBCUtils.executeUpdate(pstmt, personalUserLock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
     @Override
     public void updateInfo(AdminUser adminUser)
@@ -312,59 +367,44 @@ public class UserDaoImpl implements UserDao
 
     }
 
-
+    //--------------------------------------------------------------------------------
+    //                               find user
+    //--------------------------------------------------------------------------------
     @Override
     public PersonalUser findPersonalUser(String username, String password) throws Exception
     {
-        PersonalUser user = null;
-        boolean hasUsername = false;
-        try
-        {
-            //-----------------------------
-            //加个读锁
-            personalUserLock.readLock().lock();
-            ResultSet resultSet = getAll(personalUserTableName);
-            personalUserLock.readLock().unlock();
-            //-----------------------------
-            while(resultSet.next())
-            {
-                if (resultSet.getString(PersonalUser.kUsernameIndex).equals(username))
-                {
-                    hasUsername = true;
-                    if (resultSet.getString(PersonalUser.kPasswordIndex).equals(password))
-                    {
-                        user = toPersonalUser(resultSet);
-                    }
-                    break;
-                }
-            }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-        if (user == null)
-        {
-            if (hasUsername)
-            {
-                throw new Exception("密码错误");
-            }
-            else
-            {
-                throw new Exception("账号不存在");
-            }
-        }
-        return user;
+        return toPersonalUser(findUser(username, password,
+                personalUserLock, personalUserTableName,
+                PersonalUser.kUsernameIndex, PersonalUser.kPasswordIndex));
     }
     @Override
     public EnterpriseUser findEnterpriseUser(String username, String password) throws Exception
     {
-        return null;
+//        System.out.println(username + " " + password);
+//        ResultSet resultSet = findUser(username, password,
+//                enterpriseUserLock, enterpriseUserTableName,
+//                EnterpriseUser.kUsernameIndex, EnterpriseUser.kPasswordIndex);
+//        if (resultSet == null)
+//        {
+//            System.out.println("找不到");
+//        }
+//        else
+//        {
+//            System.out.println("找到了");
+//        }
+//        System.out.println(resultSet.getInt(1) + resultSet.getString(2));
+//        return toEnterpriseUser(resultSet);
+        return toEnterpriseUser(findUser(username, password,
+                enterpriseUserLock, enterpriseUserTableName,
+                EnterpriseUser.kUsernameIndex, EnterpriseUser.kPasswordIndex));
     }
     @Override
     public AdminUser findAdminUser(String username, String password) throws Exception
     {
-        return null;
+
+        return toAdminUser(findUser(username, password,
+                adminUserLock, adminUserTableName,
+                AdminUser.kUsernameIndex, AdminUser.kPasswordIndex));
     }
 
 
