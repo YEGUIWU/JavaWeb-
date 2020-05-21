@@ -15,8 +15,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class RecruitDaoImpl implements RecruitDao
 {
-    private final static String recruitTableName = "tab_recruit";
-    final private static int kEidIndex = 2;
+    final public static String recruitTableName = "tab_recruit";
+    final public static int kEidIndex = 2;
 
     final private ReadWriteLock lock = new ReentrantReadWriteLock();//搞个读写锁：读多写少
 
@@ -119,6 +119,40 @@ public class RecruitDaoImpl implements RecruitDao
     {
         //1.定义sql
         String sql = "delete from  " + recruitTableName + " where rid = ?";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setInt(1, rid);
+            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void updateStatus(int rid, String status)
+    {
+        String sql = " update " + recruitTableName + " set status = ? where rid=?";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setString(1, status);
+            pstmt.setInt(2, rid);
+            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void issueRecruit(int rid)
+    {
+        String sql = "update " + recruitTableName + " set issue = date(now()) where rid = ?";
         try
         {
             PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);

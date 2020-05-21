@@ -17,8 +17,8 @@ public class RecruitServlet extends BaseServlet
 
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        EnterpriseUser personalUser = (EnterpriseUser) request.getSession().getAttribute("user");
-        List<Recruit> recruits = recruitService.getRecruit(personalUser.getEid());
+        EnterpriseUser enterpriseUser = (EnterpriseUser) request.getSession().getAttribute("user");
+        List<Recruit> recruits = recruitService.getRecruit(enterpriseUser.getEid());
         writeValue(recruits, response);
     }
 
@@ -43,6 +43,13 @@ public class RecruitServlet extends BaseServlet
 
     public void update(HttpServletRequest request, HttpServletResponse response)
     {
-
+        EnterpriseUser personalUser = (EnterpriseUser) request.getSession().getAttribute("user");
+        String status =  request.getParameter("status");
+        int rid = Integer.parseInt(request.getParameter("rid"));
+        if (status.equals("已发布"))
+        {
+            recruitService.issueRecruit(rid);
+        }
+        recruitService.updateStatus(rid, status);
     }
 }

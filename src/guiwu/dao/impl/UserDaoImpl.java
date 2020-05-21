@@ -10,14 +10,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class UserDaoImpl implements UserDao
 {
-    final private static String personalUserTableName = "tab_personal_user";
-    final private static String enterpriseUserTableName = "tab_enterprise_user";
-    final private static String adminUserTableName = "tab_admin_user";
+    final public static String personalUserTableName = "tab_personal_user";
+    final public static String enterpriseUserTableName = "tab_enterprise_user";
+    final public static String adminUserTableName = "tab_admin_user";
     final private ReadWriteLock personalUserLock = new ReentrantReadWriteLock();//搞个读写锁：读多写少
     final private ReadWriteLock enterpriseUserLock = new ReentrantReadWriteLock();//搞个读写锁：读多写少
     final private ReadWriteLock adminUserLock = new ReentrantReadWriteLock();//搞个读写锁：读多写少
 
-    /**
+     /**
      * @param resultSet
      * @return PersonalUser Object
      * @Breif 数据接记录转个人用户对象
@@ -71,9 +71,7 @@ public class UserDaoImpl implements UserDao
         ResultSet user = null;
         try
         {
-            System.out.println("run-----------------");
             ResultSet resultSet = JDBCUtils.getAll(tableName, lock.readLock());
-            System.out.println("run-----------------");
             while(resultSet.next())
             {
                 if (resultSet.getString(userIndex).equals(username))

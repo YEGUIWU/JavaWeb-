@@ -45,4 +45,16 @@ public class RecruitServiceImpl implements RecruitService
         recruitDao.delRecruit(rid);
     }
 
+    @Override
+    public void updateStatus(int rid, String status)
+    {
+        recruitDao.updateStatus(rid, status);
+    }
+
+    @Override
+    public void issueRecruit(int rid)
+    {
+        recruitDao.issueRecruit(rid);
+    }
+
 }

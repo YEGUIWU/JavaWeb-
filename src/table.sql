@@ -29,6 +29,8 @@ select * from tab_personal_user;
 -- update tab_personal_user set sex='男' where pid=1;
 insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
 values("yeguiwu", "a123456", "叶贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "709394");
+insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
+values("guiwu", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848");
 -- delete from tab_user where uid = 3 or uid = 4; 
 
 
@@ -139,5 +141,42 @@ create table tab_recruit
 select * from tab_recruit;
 insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
 value (1, "Java实习生", "北京", "3-5k", "打杂", "熟练使用各种Java技术", "英语6级优先", "五险一金");
+insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
+value (1, "C++实习生", "北京", "3-5k", "打杂", "熟练使用各种C++技术", "英语6级优先", "五险一金");
+insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
+value (1, "前端实习生", "北京", "3-5k", "打杂", "熟练使用各种前端技术", "英语6级优先", "五险一金");
+insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
+value (1, "php实习生", "北京", "3-5k", "打杂", "熟练使用各种php技术", "英语6级优先", "五险一金");
+insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
+value (1, "C#实习生", "北京", "3-5k", "打杂", "熟练使用各种C#技术", "英语6级优先", "五险一金");
+insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
+value (1, "go实习生", "北京", "3-5k", "打杂", "熟练使用各种Go技术", "英语6级优先", "五险一金");
 
+-- ------------------------------------------------------------------------------
+-- 									应聘信息表								   --
+-- ------------------------------------------------------------------------------
+create table tab_apply
+(
+   aid                  int not null auto_increment,
+   pid 					int not null,
+   rid 					int not null,
+   time             	datetime default now(),
+   status				varchar(16) default "待接受",
+   primary key (aid), 
+   FOREIGN KEY (pid) REFERENCES tab_personal_user(pid),
+   FOREIGN KEY (rid) REFERENCES tab_recruit(rid) 
+);
+insert into tab_apply(pid, rid) value(1, 1);
+insert into tab_apply(pid, rid) value(1, 3);
+insert into tab_apply(pid, rid) value(2, 1);
+insert into tab_apply(pid, rid) value(2, 3);
+
+select ta.aid, ta.pid,  ta.rid, tr.eid, ta.time ,ta.status, tr.title, tpu.name
+from tab_apply ta
+join tab_personal_user tpu on ta.pid = tpu.pid
+join tab_recruit tr on tr.rid = ta.rid; 
+
+select ta.aid, ta.pid, ta.rid, ta.status, tr.title, tpu.name from tab_apply ta join tab_personal_user tpu on ta.pid = tpu.pid join tab_recruit tr on tr.rid = ta.rid;
+-- select date(now());
+-- select curdate();
 

@@ -9,47 +9,395 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="i/favicon.png">
-  <link rel="stylesheet" href="css/amazeui.min.css"/>
-  <link rel="stylesheet" href="css/personal.css"/>
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/amazeui.min.js"></script>
+	<!--导入布局js，共享header和footer-->
+	<script type="text/javascript" src="./assets/js/include.js"></script>
+    <script>
+
+        //------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------
+        var g_Recruit_list = [];
+        var g_ApplyInfo_list = [];
+        var g_ChangeRecruit_list = [];
+        var g_ChangeApply_list = [];
+        var g_PerPage = 15;     //  每页15项
+        var g_TotalPage = 0;
+        var g_ApplyInfoTotalPages = 0;
+        var g_CurRecruitPage = 0;
+        var g_CurApplyInfoPage = 0;
+
+        function GetPageInfo1()
+        {
+            var pages =  0 | g_Recruit_list.length / g_PerPage;
+            if (g_Recruit_list.length % g_PerPage)
+            {
+                pages += 1;
+            }
+            g_TotalPage = pages;
+        }
+        function GetPageInfo2()
+        {
+            var pages =  0 | g_ApplyInfo_list.length / g_PerPage;
+            if (g_ApplyInfo_list.length % g_PerPage)
+            {
+                pages += 1;
+            }
+            g_ApplyInfoTotalPages = pages;
+        }
+        //---------------------------------------------------------------------------------
+        //                  page 1
+        function MakeRecruit(recruit)
+        {
+            var html_data = "";
+            if (recruit.status == '已完成')
+            {
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-success am-radius\">已完成</span></td></tr>';
+
+            }
+            else if (recruit.status == '已关闭')
+            {
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge am-radius\">已关闭</span></td><td>' +
+                    '<div class="am-dropdown" data-am-dropdown>\n' +
+                    "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已发布\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '               发布' +
+                    '           </button>' +
+                    '           <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
+                    '           -----' +
+                    '           </button>' +
+                    '       </div>' +
+                    '</td></tr>';
+            }
+            else if (recruit.status == '已发布')
+            {
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-secondary am-radius\">已发布</span></td>' +
+                    '<td>' +
+                    '<div class="am-dropdown" data-am-dropdown>' +
+                    "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已关闭\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '           关闭' +
+                    '           </button>' +
+                    "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已完成\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '           完成' +
+                    '           </button>' +
+                    '</div>' +
+                    '</td>' +
+                    '</tr>';
+            }
+            else if (recruit.status == '未发布')
+            {
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-warning am-radius\">未发布</span></td><td>' +
+                    '<div class="am-dropdown" data-am-dropdown>\n' +
+                    "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已发布\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
+                    '               发布' +
+                    '           </button>' +
+                    '           <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
+                    '           -----' +
+                    '           </button>' +
+                    '       </div>' +
+                    '</td></tr>';
+            }
+            return html_data;
+        }
+
+        function MakeRecruits(ib, ie)
+        {
+            // console.log("make" + ib  + " " + ie);
+            var html_data = "";
+            for (var i = ib; i < ie; ++i)
+            {
+                html_data += MakeRecruit(g_Recruit_list[i]);
+            }
+            return html_data;
+        }
+        function MakePage1(index)
+        {
+            var html_data = "";
+            if (index == 0) // 首页
+            {
+                html_data  = "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetPage1(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            for (var i = 0; i < g_TotalPage; ++i)
+            {
+                if (i == index)
+                {
+                    html_data +=
+                        "<li class=\"am-active\"><a href=\"#\">" + (i + 1) + "</a></li>";
+                }
+                else
+                {
+                    html_data +=
+                        '<li onclick="GetPage1(' + i + ')"><a href="#">'  + (i + 1) + '</a></li>';
+                }
+            }
+            if (index == g_TotalPage - 1) // 尾页
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetPage1(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#page1').html(html_data);
+            // console.log(html_data);
+        }
+        function GetPage1(index)
+        {
+            g_CurRecruitPage = index;
+            if (index >= g_TotalPage || index < 0)
+            {
+                return;
+            }
+            var ie = 0;
+            if ((index + 1) * g_PerPage > g_Recruit_list.length)
+            {
+                ie = g_Recruit_list.length;
+            }
+            else
+            {
+                ie = (index + 1) * g_PerPage;
+            }
+            var html_data = MakeRecruits(index * g_PerPage, ie);
+            // console.log(html_data);
+            $('#page_info_1').html(html_data);
+            MakePage1(index);
+        }
+
+        function ChangeRecruitInfo(rid, status)
+        {
+            console.log("change: " + rid + " " + status);
+            var i;
+            for (i = 0; i < g_ChangeRecruit_list.length; ++i)
+            {
+                if (g_ChangeRecruit_list[i].rid == rid)
+                {
+                    console.log("change: " + i + " " +  rid + " " + status);
+                    g_ChangeRecruit_list[i].status = status;
+                }
+            }
+            if (i == g_ChangeRecruit_list.length)
+            {
+                g_ChangeRecruit_list.push({rid: rid, status: status});
+            }
+            for (i = 0; i < g_Recruit_list.length; ++i)
+            {
+                if (g_Recruit_list[i].rid == rid)
+                {
+                    g_Recruit_list[i].status = status;
+                }
+            }
+            GetPage1(g_CurRecruitPage);
+        }
+
+        //---------------------------------------------------------------------------------
+        //                  page 2
+        function MakeApplyInfo(applyInfo)
+        {
+            console.log(applyInfo);
+            var html_data = "<tr>" +
+                "<td>" + applyInfo.time +"</td>" +
+                "<td><a href=\"\"> " + applyInfo.name +" </a></td>" +
+                "<td><a href=\"#\">" + applyInfo.title + "</a></td>" +
+                "<td><a href=\"#\">" + applyInfo.status + "</a></td>" +
+                "<td>" +
+                "  <div class=\"am-dropdown\" data-am-dropdown>";
+            if (applyInfo.status == "待接受")
+            {
+                html_data +=
+                    "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'待面试\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '接受' +
+                    '</button>' +
+                    "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'被拒绝\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '拒绝' +
+                    '</button>'
+            }
+            else if (applyInfo.status == "待面试")
+            {
+                html_data +=
+                    "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'面试中\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '面试' +
+                    '</button>' +
+                    "<button onclick=\"ChangeApplyInfo1(" + applyInfo.aid + ",\'已完成\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '----' +
+                    '</button>'
+            }
+            else if (applyInfo.status == "面试中")
+            {
+                html_data +=
+                    "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'已通过\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '通过' +
+                    '</button>' +
+                    "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'未通过\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '失败' +
+                    '</button>'
+            }
+
+
+            html_data += " </div>" +
+                "  </td>" +
+                "</tr>";
+
+            return html_data;
+        }
+
+        function MakeApplyInfos(ib, ie)
+        {
+            var html_data = "";
+            for (var i = ib; i < ie; ++i)
+            {
+                html_data += MakeApplyInfo(g_ApplyInfo_list[i]);
+            }
+            return html_data;
+        }
+        function MakePage2(index)
+        {
+            var g_CurApplyInfoPage = index;
+            var html_data = "";
+            if (index == 0) // 首页
+            {
+                html_data  = "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetPage2(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            for (var i = 0; i < g_ApplyInfoTotalPages; ++i)
+            {
+                if (i == index)
+                {
+                    html_data +=
+                        "<li class=\"am-active\"><a href=\"#\">" + (i + 1) + "</a></li>";
+                }
+                else
+                {
+                    html_data +=
+                        '<li onclick="GetPage2(' + i + ')"><a href="#">'  + (i + 1) + '</a></li>';
+                }
+            }
+            if (index == g_ApplyInfoTotalPages - 1) // 尾页
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetPage2(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#page2').html(html_data);
+            // console.log(html_data);
+        }
+        function GetPage2(index)
+        {
+            if (index >= g_ApplyInfoTotalPages || index < 0)
+            {
+                return;
+            }
+            var ie = 0;
+            if ((index + 1) * g_PerPage > g_ApplyInfo_list.length)
+            {
+                ie = g_ApplyInfo_list.length;
+            }
+            else
+            {
+                ie = (index + 1) * g_PerPage;
+            }
+            var html_data = MakeApplyInfos(index * g_PerPage, ie);
+            $('#page_info_2').html(html_data);
+            MakePage2(index);
+        }
+
+        function ChangeApplyInfo(aid, status)
+        {
+            console.log("change: " + aid + " " + status);
+            var i;
+            for (i = 0; i < g_ChangeApply_list.length; ++i)
+            {
+                if (g_ChangeApply_list[i].aid == aid)
+                {
+                    console.log("change: " + i + " " +  rid + " " + status);
+                    g_ChangeApply_list[i].status = status;
+                }
+            }
+            if (i == g_ChangeApply_list.length)
+            {
+                g_ChangeApply_list.push({aid: aid, status: status});
+            }
+            for (i = 0; i < g_ApplyInfo_list.length; ++i)
+            {
+                if (g_ApplyInfo_list[i].aid == aid)
+                {
+                    g_ApplyInfo_list[i].status = status;
+                }
+            }
+            GetPage2(g_CurApplyInfoPage);
+        }
+
+
+        $(function () {
+            //-------------------------------------------------------------------------------------
+            //
+            $.get("recruit/get",{},function (data) {
+                if (data.length) {
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        g_Recruit_list.push(data[i]);
+                        g_Recruit_list[i].status = data[i].status;
+                        // console.log(data[i].status);
+                        // console.log(data[i]);
+                        console.log(g_Recruit_list[i]);
+                        console.log(data[i].status);
+                        console.log(g_Recruit_list[i].status);
+                    }
+                    GetPageInfo1();
+                    GetPage1(0);
+                    //GetPage2(0);
+                }
+            });
+            //-------------------------------------------------------------------------------------
+            //
+            $.get("apply/getApplyInfo",{},function (data) {
+                if (data.length) {
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        g_ApplyInfo_list.push(data[i]);
+                        console.log(data[i].status);
+                    }
+                    GetPageInfo2();
+                    GetPage2(0);
+                }
+            });
+
+            $("#update_recruit_btn").click(function ()
+            {
+                for (var i = 0; i < g_ChangeRecruit_list.length; ++i)
+                {
+                    $.post("recruit/update", g_ChangeRecruit_list[i],function () {
+                    });
+                }
+            });
+
+            $("#update_apply_btn").click(function ()
+            {
+                console.log(g_ChangeApply_list.length);
+                for (var i = 0; i < g_ChangeApply_list.length; ++i)
+                {
+                    $.post("apply/updateApply", g_ChangeApply_list[i],function () {
+                    });
+                }
+            });
+        });
+
+    </script>
 </head>
-
+<div id="header"></div>
 <body>
-<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
-  <div class="am-container">
-    <h1 class="am-topbar-brand">
-      <a href="index.html">猎聘招聘网</a>
-    </h1>
 
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
-            data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">导航切换</span> <span
-        class="am-icon-bars"></span>
-    </button>
-
-    <div class="am-collapse am-topbar-collapse" id="collapse-head">
-      <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li ><a href="index.html">首页</a></li>
-        <li><a href="job.html">工作职位</a></li>
-		<li><a href="man.html">精英人才</a></li>
-      </ul>
-
-	<div class="am-topbar-right">
-      <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
-        	百度<span class="am-icon-caret-down"></span>
-        </button>
-        <ul class="am-dropdown-content">
-          <li><a href="#"><span class="am-icon-user"></span>企业主页</a></li>
-		  <li ><a href="#"><span class="am-icon-power-off"></span>退出</a></li>
-        </ul>
-      </div>
-    </div>
-
-    </div>
-  </div>
-</header>
-
-<br>
 
 	<div class="am-g am-g-fixed blog-g-fixed">
 		<div class="am-cf admin-main">
@@ -65,7 +413,7 @@
 								<section class="amz-sidebar am-offcanvas-bar">
 									<ul class="am-nav">
 										<li><a href="companyhome.html">企业信息</a></li>
-										<li><a href="companyzhaopin.html">招聘信息</a></li>
+										<li><a href="companyrecruit.html">招聘信息</a></li>
 										<li><a href="companyemail.html">邮件中心</a></li>
 									</ul>
 								</section>
@@ -101,171 +449,159 @@
 				       		<!---选项卡-->
 							<div class="am-tabs" data-am-tabs>
 				  				<ul class="am-tabs-nav am-nav am-nav-tabs">
-									<li class="am-active"><a href="#tab1">发出的邀请函</a></li>
-									<li ><a href="#tab2">收到的求职信</a></li>
+									<li class="am-active"><a href="#tab1">招聘信息</a></li>
+									<li ><a href="#tab2">求职信息</a></li>
 				  				</ul>
 
 				  				<div class="am-tabs-bd">
 									<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 										<table class="am-table am-table-bd am-table-striped admin-content-table">
-				  							<thead><tr><th>发送时间</th><th>求职者姓名</th><th>职位名称</th><th>状态</th></tr></thead>
-											<tbody>
-											  <tr><td>2015.06.01</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.03.24 </td><td><a href="#">路飞</a></td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-radius">没兴趣</span></td></tr>
-											  <tr><td>2015.02.26</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.01.14</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-radius">没兴趣</span></td></tr>
-											  <tr><td>2014.12.25</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-success am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.06.01</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-radius">没兴趣</span></td></tr>
-											  <tr><td>2015.03.24 </td><td><a href="#">路飞</a></td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-badge-success am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.02.26</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.01.14</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-success am-radius">感兴趣</span></td></tr>
-											  <tr><td>2014.12.25</td><td><a href="#">路飞</a></td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-radius">没兴趣</span></td></tr>
+				  							<thead><tr><th>发布时间</th><th>职位名称</th><th>状态</th><th>管理</th></tr></thead>
+											<tbody id="page_info_1">
+
+
 											</tbody>
 										</table>
 										<br>
-										<ul class="am-pagination am-pagination-centered">
-										  <li class="am-disabled"><a href="#">&laquo;</a></li>
-										  <li class="am-active"><a href="#">1</a></li>
-										  <li><a href="#">2</a></li>
-										  <li><a href="#">3</a></li>
-										  <li><a href="#">4</a></li>
-										  <li><a href="#">5</a></li>
-										  <li><a href="#">&raquo;</a></li>
+										<ul id="page1" class="am-pagination am-pagination-centered">
+
 										</ul>
+                                        <button id="update_recruit_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
 									</div>
 
 
 									<div class="am-tab-panel am-fade" id="tab2">
 										<table class="am-table am-table-bd am-table-striped admin-content-table">
-				  							<thead><tr><th>接收时间</th><th>求职者姓名</th><th>职位名称</th><th>管理</th></tr></thead>
-											<tbody>
-												 <tr>
-												 	<td>2014.12.25</td>
-												 	<td><a href="">路飞</a></td>
-												 	<td><a href="#">软件工程师</a></td>
-												 	<td>
-												 		<div class="am-dropdown" data-am-dropdown>
-											                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
-											                	<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>
-											                </button>
-											                <ul class="am-dropdown-content">
-											                  <li><a href="#">1. HR已阅</a></li>
-											                  <li><a href="#">2. 感兴趣</a></li>
-											                  <li><a href="#">3. 面试中</a></li>
-											                  <li><a href="#">4. 通过</a></li>
-											                  <li><a href="#">5. 未通过</a></li>
-											                </ul>
-											            </div>
-												 	</td>
-												 </tr>
-												 <tr>
-												 	<td>2015.06.01</td>
-												 	<td><a href="">路飞</a></td>
-												 	<td><a href="#">软件工程师</a></td> 
-												 	<td>
-												 		<div class="am-dropdown" data-am-dropdown>
-											                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
-											                	<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>
-											                </button>
-											                <ul class="am-dropdown-content">
-											                  <li><a href="#">1. HR已阅</a></li>
-											                  <li><a href="#">2. 感兴趣</a></li>
-											                  <li><a href="#">3. 面试中</a></li>
-											                  <li><a href="#">4. 通过</a></li>
-											                  <li><a href="#">5. 未通过</a></li>
-											                </ul>
-											            </div>
-												 	</td>
-												 </tr>
-												 <tr>
-												 	<td>2015.03.24 </td>
-												 	<td><a href="">路飞</a></td>
-												 	<td><a href="#">Java工程师</a></td>
-												 	<td>
-												 		<div class="am-dropdown" data-am-dropdown>
-											                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
-											                	<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>
-											                </button>
-											                <ul class="am-dropdown-content">
-											                  <li><a href="#">1. HR已阅</a></li>
-											                  <li><a href="#">2. 感兴趣</a></li>
-											                  <li><a href="#">3. 面试中</a></li>
-											                  <li><a href="#">4. 通过</a></li>
-											                  <li><a href="#">5. 未通过</a></li>
-											                </ul>
-											            </div>
-												 	</td>
-												 </tr>
-												 <tr>
-												 	<td>2015.02.26</td>
-												 	<td><a href="">路飞</a></td>
-												 	<td><a href="#">软件工程师</a></td>
-												 	<td>
-												 		<div class="am-dropdown" data-am-dropdown>
-											                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
-											                	<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>
-											                </button>
-											                <ul class="am-dropdown-content">
-											                  <li><a href="#">1. HR已阅</a></li>
-											                  <li><a href="#">2. 感兴趣</a></li>
-											                  <li><a href="#">3. 面试中</a></li>
-											                  <li><a href="#">4. 通过</a></li>
-											                  <li><a href="#">5. 未通过</a></li>
-											                </ul>
-											            </div>
-												 	</td>
-												 </tr>
-												 <tr>
-												 	<td>2015.01.14</td>
-												 	<td><a href="">路飞</a></td>
-												 	<td><a href="#">软件工程师</a></td>
-												 	<td>
-												 		<div class="am-dropdown" data-am-dropdown>
-											                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
-											                	<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>
-											                </button>
-											                <ul class="am-dropdown-content">
-											                  <li><a href="#">1. HR已阅</a></li>
-											                  <li><a href="#">2. 感兴趣</a></li>
-											                  <li><a href="#">3. 面试中</a></li>
-											                  <li><a href="#">4. 通过</a></li>
-											                  <li><a href="#">5. 未通过</a></li>
-											                </ul>
-											            </div>
-												 	</td>
-												 </tr>
-												 <tr>
-												 	<td>2014.12.25</td>
-												 	<td><a href="">路飞</a></td>
-												 	<td><a href="#">软件工程师</a></td>
-												 	<td>
-												 		<div class="am-dropdown" data-am-dropdown>
-											                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
-											                	<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>
-											                </button>
-											                <ul class="am-dropdown-content">
-											                  <li><a href="#">1. HR已阅</a></li>
-											                  <li><a href="#">2. 感兴趣</a></li>
-											                  <li><a href="#">3. 面试中</a></li>
-											                  <li><a href="#">4. 通过</a></li>
-											                  <li><a href="#">5. 未通过</a></li>
-											                </ul>
-											            </div>
-												 	</td>
-												 </tr>
+				  							<thead><tr><th>接收时间</th><th>求职者姓名</th><th>职位名称</th><th>状态</th><th>管理</th></tr></thead>
+											<tbody id="page_info_2">
+												 <!--<tr>-->
+												 	<!--<td>2014.12.25</td>-->
+												 	<!--<td><a href="">路飞</a></td>-->
+												 	<!--<td><a href="#">软件工程师</a></td>-->
+												 	<!--<td>-->
+												 		<!--<div class="am-dropdown" data-am-dropdown>-->
+											                <!--<button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>-->
+																<!--发布-->
+																<!--&lt;!&ndash;<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>&ndash;&gt;-->
+											                <!--</button>-->
+											                <!--&lt;!&ndash;<ul class="am-dropdown-content">&ndash;&gt;-->
+											                  <!--&lt;!&ndash;<li><a href="#">1. HR已阅</a></li>&ndash;&gt;-->
+											                  <!--&lt;!&ndash;<li><a href="#">2. 感兴趣</a></li>&ndash;&gt;-->
+											                  <!--&lt;!&ndash;<li><a href="#">3. 面试中</a></li>&ndash;&gt;-->
+											                  <!--&lt;!&ndash;<li><a href="#">4. 通过</a></li>&ndash;&gt;-->
+											                  <!--&lt;!&ndash;<li><a href="#">5. 未通过</a></li>&ndash;&gt;-->
+											                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+											            <!--</div>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+												 <!--<tr>-->
+												 	<!--<td>2015.06.01</td>-->
+												 	<!--<td><a href="">路飞</a></td>-->
+												 	<!--<td><a href="#">软件工程师</a></td> -->
+												 	<!--<td>-->
+												 		<!--<div class="am-dropdown" data-am-dropdown>-->
+											                <!--<button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>-->
+											                	<!--<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>-->
+											                <!--</button>-->
+											                <!--<ul class="am-dropdown-content">-->
+											                  <!--<li><a href="#">1. HR已阅</a></li>-->
+											                  <!--<li><a href="#">2. 感兴趣</a></li>-->
+											                  <!--<li><a href="#">3. 面试中</a></li>-->
+											                  <!--<li><a href="#">4. 通过</a></li>-->
+											                  <!--<li><a href="#">5. 未通过</a></li>-->
+											                <!--</ul>-->
+											            <!--</div>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+												 <!--<tr>-->
+												 	<!--<td>2015.03.24 </td>-->
+												 	<!--<td><a href="">路飞</a></td>-->
+												 	<!--<td><a href="#">Java工程师</a></td>-->
+												 	<!--<td>-->
+												 		<!--<div class="am-dropdown" data-am-dropdown>-->
+											                <!--<button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>-->
+											                	<!--<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>-->
+											                <!--</button>-->
+											                <!--<ul class="am-dropdown-content">-->
+											                  <!--<li><a href="#">1. HR已阅</a></li>-->
+											                  <!--<li><a href="#">2. 感兴趣</a></li>-->
+											                  <!--<li><a href="#">3. 面试中</a></li>-->
+											                  <!--<li><a href="#">4. 通过</a></li>-->
+											                  <!--<li><a href="#">5. 未通过</a></li>-->
+											                <!--</ul>-->
+											            <!--</div>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+												 <!--<tr>-->
+												 	<!--<td>2015.02.26</td>-->
+												 	<!--<td><a href="">路飞</a></td>-->
+												 	<!--<td><a href="#">软件工程师</a></td>-->
+												 	<!--<td>-->
+												 		<!--<div class="am-dropdown" data-am-dropdown>-->
+											                <!--<button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>-->
+											                	<!--<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>-->
+											                <!--</button>-->
+											                <!--<ul class="am-dropdown-content">-->
+											                  <!--<li><a href="#">1. HR已阅</a></li>-->
+											                  <!--<li><a href="#">2. 感兴趣</a></li>-->
+											                  <!--<li><a href="#">3. 面试中</a></li>-->
+											                  <!--<li><a href="#">4. 通过</a></li>-->
+											                  <!--<li><a href="#">5. 未通过</a></li>-->
+											                <!--</ul>-->
+											            <!--</div>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+												 <!--<tr>-->
+												 	<!--<td>2015.01.14</td>-->
+												 	<!--<td><a href="">路飞</a></td>-->
+												 	<!--<td><a href="#">软件工程师</a></td>-->
+												 	<!--<td>-->
+												 		<!--<div class="am-dropdown" data-am-dropdown>-->
+											                <!--<button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>-->
+											                	<!--<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>-->
+											                <!--</button>-->
+											                <!--<ul class="am-dropdown-content">-->
+											                  <!--<li><a href="#">1. HR已阅</a></li>-->
+											                  <!--<li><a href="#">2. 感兴趣</a></li>-->
+											                  <!--<li><a href="#">3. 面试中</a></li>-->
+											                  <!--<li><a href="#">4. 通过</a></li>-->
+											                  <!--<li><a href="#">5. 未通过</a></li>-->
+											                <!--</ul>-->
+											            <!--</div>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+												 <!--<tr>-->
+												 	<!--<td>2014.12.25</td>-->
+												 	<!--<td><a href="">路飞</a></td>-->
+												 	<!--<td><a href="#">软件工程师</a></td>-->
+												 	<!--<td>-->
+												 		<!--<div class="am-dropdown" data-am-dropdown>-->
+											                <!--<button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>-->
+											                	<!--<span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span>-->
+											                <!--</button>-->
+											                <!--<ul class="am-dropdown-content">-->
+											                  <!--<li><a href="#">1. HR已阅</a></li>-->
+											                  <!--<li><a href="#">2. 感兴趣</a></li>-->
+											                  <!--<li><a href="#">3. 面试中</a></li>-->
+											                  <!--<li><a href="#">4. 通过</a></li>-->
+											                  <!--<li><a href="#">5. 未通过</a></li>-->
+											                <!--</ul>-->
+											            <!--</div>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
 											</tbody>
 										</table>
 										<br>
-										<ul class="am-pagination am-pagination-centered">
-										  <li class="am-disabled"><a href="#">&laquo;</a></li>
-										  <li class="am-active"><a href="#">1</a></li>
-										  <li><a href="#">2</a></li>
-										  <li><a href="#">3</a></li>
-										  <li><a href="#">4</a></li>
-										  <li><a href="#">5</a></li>
-										  <li><a href="#">&raquo;</a></li>
+										<ul id="page2" class="am-pagination am-pagination-centered">
+										  <!--<li class="am-disabled"><a href="#">&laquo;</a></li>-->
+										  <!--<li class="am-active"><a href="#">1</a></li>-->
+										  <!--<li><a href="#">2</a></li>-->
+										  <!--<li><a href="#">3</a></li>-->
+										  <!--<li><a href="#">4</a></li>-->
+										  <!--<li><a href="#">5</a></li>-->
+										  <!--<li><a href="#">&raquo;</a></li>-->
 										</ul>
-
+                                        <button id="update_apply_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
 		  							</div>
 								</div>
 							</div>
@@ -278,22 +614,6 @@
 	</div>
 
 
-<footer class="my-footer">
-	<br>
-	<p>2015年天津工业大学 毕业设计 <br><small>© Copyright 庄金鑫. 版权所有，禁止转载.</small></p>
-</footer>
-
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="/js/polyfill/rem.min.js"></script>
-<script src="/js/polyfill/respond.min.js"></script>
-<script src="/js/amazeui.legacy.js"></script>
-<![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="js/jquery.min.js"></script>
-<script src="js/amazeui.min.js"></script>
-<!--<![endif]-->
+<div id="footer"></div>
 </body>
 </html>

@@ -13,4 +13,6 @@ public interface RecruitService
                     String description, String requirement,
                     String priority, String welfare);
     void delRecruit(int rid);
+    void updateStatus(int rid, String status);
+    void issueRecruit(int rid);
 }
