@@ -2,6 +2,7 @@ package guiwu.dao.impl;
 
 import guiwu.dao.ApplyDao;
 import guiwu.dao.RecruitDao;
+import guiwu.dao.UserDao;
 import guiwu.domain.Apply;
 import guiwu.domain.ApplyInfo;
 import guiwu.domain.PersonalUser;
@@ -47,7 +48,8 @@ public class ApplyDaoImpl implements ApplyDao
                 resultSet.getString(5),
                 resultSet.getString(6),
                 resultSet.getString(7),
-                resultSet.getString(8)
+                resultSet.getString(8),
+                resultSet.getString(9)
         );
     }
 
@@ -77,9 +79,11 @@ public class ApplyDaoImpl implements ApplyDao
         List<ApplyInfo> applyInfos = new ArrayList<ApplyInfo>();
         try
         {
-            String sql = "select ta.aid, ta.pid, ta.rid, tr.eid, ta.time, ta.status, tr.title, tpu.name from " + applyTableName + " ta " +
+            String sql = "select ta.aid, ta.pid, ta.rid, tr.eid, ta.time, ta.status, tr.title, tpu.name, teu.name from " + applyTableName + " ta " +
                     "join " + UserDaoImpl.personalUserTableName +  " tpu on ta.pid = tpu.pid " +
-                    "join " + RecruitDaoImpl.recruitTableName + " tr on tr.rid = ta.rid";
+                    "join " + RecruitDaoImpl.recruitTableName + " tr on tr.rid = ta.rid " +
+                    "join " + UserDaoImpl.enterpriseUserTableName +" teu on tr.eid = teu.eid " +
+                    "order by ta.time desc";
 //            System.out.println(sql);
             ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
             while (resultSet.next())
@@ -190,5 +194,26 @@ public class ApplyDaoImpl implements ApplyDao
         {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Apply getPersonalApply(int pid, int rid)
+    {
+        String sql = "select * from " + applyTableName + " where pid = " + pid + " and rid = " + rid;
+        //System.out.println(sql);
+        try
+        {
+            ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
+            if (resultSet.next())
+            {
+                //System.out.println("hello" + resultSet.getInt(1));
+                return toApply(resultSet);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

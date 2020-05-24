@@ -63,4 +63,10 @@ public class ApplyServiceImpl implements ApplyService
     {
         applyDao.delApply(aid);
     }
+
+    @Override
+    public Apply getPersonalApply(int pid, int rid)
+    {
+        return applyDao.getPersonalApply(pid, rid);
+    }
 }

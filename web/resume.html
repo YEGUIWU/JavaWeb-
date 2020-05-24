@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>用户主页</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/amazeui.min.js"></script>
+	<script src="./assets/js/getParameter.js"></script>
+	<!--导入布局js，共享header和footer-->
+	<script type="text/javascript" src="./assets/js/include.js"></script>
+    <script>
+        var pid = getParameter("pid");
+
+        $(function () {
+            //-------------------------------------------------------------------------------------
+            //2.发送请求请求 route/findOne
+            $.get("resume/get",{pid:pid},function (data)
+            {
+                console.log(data);
+                if (data)
+                {
+                    var html_data =
+                        "用户名: " + data.username + "<br>" +
+                        "姓名: " + data.name +"<br>" +
+                        "生日：" + data.birthday +"<br>" +
+                        "性别：" + data.sex +"<br>" +
+                        "手机：" + data.telephone +"<br>" +
+                        "邮箱：" + data.email +"<br>" +
+                        "毕业学校：" + data.school +"<br>" +
+                        "学历：" + data.education;
+                    $('#base_info').html(html_data);
+
+                    var workExp = "";
+                    if (data.workExpList && data .workExpList.length)
+                    {
+                        for (var i = 0 ; i < data.workExpList.length; ++i)
+                        {
+                            workExp +=
+                                "<li>" +
+                                "<h2>" + data.workExpList[i].title + "</h2>" +
+                                "<p>" +
+                                data.workExpList[i].content +
+                                "</p>" +
+                                "</li>"
+                        }
+                        $('#work_exp').html(workExp);
+                    }
+
+                    var projectExp = "";
+                    if (data.projectExpList && data.projectExpList.length)
+                    {
+                        for (var i = 0 ; i < data.projectExpList.length; ++i)
+                        {
+                            workExp +=
+                                "<li>" +
+                                "<h2>" + data.projectExpList[i].title + "</h2>" +
+                                "<p>" +
+                                data.projectExpList[i].content +
+                                "</p>" +
+                                "</li>"
+                        }
+                        $('#project_exp').html(workExp);
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div id="header"></div>
+
+<br>
+
+		<div class="am-g am-g-fixed blog-g-fixed">
+		  <div class="am-cf admin-main">
+			<div class="am-u-md-3 blog-sidebar">
+
+		  <!-- sidebar start -->
+		  <div class="admin-sidebar">
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-tag"></span> 求职宣言</p>
+				<p>Welcome to the Amaze UI wiki!</p>
+			  </div>
+			</div>
+		  </div>
+		  <!-- sidebar end -->
+		  </div>
+
+		  <div class="am-u-md-9">
+		  <!-- content start -->
+		  <div class="admin-content">
+
+		  	<div class="am-g">
+			  <div class="am-u-md-12">
+
+
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-1'}">个人信息</div>
+				  <div id="collapse-panel-1" class="am-panel-bd am-collapse am-in">
+
+						<div class="admin-task-bd">
+						<div id="base_info" class="am-u-md-4">
+
+						</div>
+						<!--<div class="am-u-md-4">-->
+									<!--<img src="img/person/lufei.jpg" alt="..." class="am-img-thumbnail am-radius" width="130" height="180">-->
+						<!--</div>-->
+
+						</div>
+
+						<div class="am-cf">
+						  <div class="am-btn-toolbar am-fr">
+						  	<div class="am-btn-group am-btn-group-xs">
+							  <!--<button type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">编辑</span></button>-->
+							 </div>
+						  </div>
+						</div>
+
+
+				  </div>
+				</div>
+			</div>
+			</div>
+
+
+
+			<div class="am-g">
+			  <div class="am-u-md-12">
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-2'}">工作经历</div>
+				  <div id="collapse-panel-2" class="am-panel-bd am-collapse am-in">
+					<ul id="work_exp" class="am-list admin-content-task">
+					</ul>
+				  </div>
+				</div>
+			</div>
+			</div>
+
+			<div class="am-g">
+			  <div class="am-u-md-12">
+				<div class="am-panel am-panel-default">
+				  <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-3'}">项目经验</div>
+				  <div id="collapse-panel-3" class="am-panel-bd am-collapse am-in">
+					<ul id="project_exp" class="am-list admin-content-task">
+
+					</ul>
+				  </div>
+				</div>
+
+			</div>
+			</div>
+
+
+		  </div>
+		  <!-- content end -->
+	</div>
+</div>
+</div>
+
+
+  </div>
+<div id="footer"></div>
+
+</body>
+</html>

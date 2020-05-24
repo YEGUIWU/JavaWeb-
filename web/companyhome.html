@@ -79,8 +79,13 @@
                     $('#email').attr('value', data.email);
                     $('#size').attr('value', data.size);
                     $('#location').attr('value', data.location);
+                    $('#logo').attr('value', data.logo);
                     $('#password').attr('value', data.password);
                     $('#user_brief').html(data.brief);
+                    document.getElementById("brief").value=data.brief;
+                    //var logo_img= "<img src=\"./assets/img/company/" + data.logo  + ".png\" alt=\"...\" class=\"am-img-thumbnail am-radius\" width=\"130\" height=\"180\">";
+                    //$('#user_logo').html(logo_img);
+                    $("#user_logo").attr("src", "./assets/img/company/" + data.logo  + ".png");
                 }
             });
 
@@ -88,7 +93,17 @@
             $("#update_user_base_info").click(function(){
                 //1.发送数据到服务器
                 if(checkName() && checkPassword() && checkEmail()) {
-                    $.post("user/updateEnterpriseUser", $("#user_base_info").serialize(), function (data) {
+                    var user_info = {
+                      name:   $('#name').val(),
+                      email:  $('#email').val(),
+                      size:  $('#size').val(),
+                      location:  $('#location').val(),
+                      logo: $('#logo').val(),
+                      password:  $('#password').val(),
+                      brief:  $('#brief').val()
+                    };
+                    //$.post("user/updateEnterpriseUser", $("#user_base_info").serialize(), function (data) {
+                    $.post("user/updateEnterpriseUser", user_info, function (data) {
                         //处理服务器响应的数据  data  {flag:true,errorMsg:"注册失败"}
                         if (data.flag) {
                             //注册成功，跳转成功页面
@@ -210,6 +225,15 @@
                                                                 <input type="text" id="location" name="location" placeholder="请输入位置">
                                                             </td>
                                                         </tr>
+
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="logo">logo</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_logo">
+                                                                <input type="text" id="logo" name="logo" placeholder="请输入logo名">
+                                                            </td>
+                                                        </tr>
                                                         <tr>
                                                             <td class="td_left">
                                                                 <label for="password">密码</label>
@@ -218,13 +242,27 @@
                                                                 <input type="password" id="password" name="password" placeholder="请输入密码">
                                                             </td>
                                                         </tr>
+                                                        <tr>
+                                                            <td class="td_left">
+                                                                <label for="brief">简介</label>
+                                                            </td>
+                                                            <td class="td_right" id="tab_user_brief">
+                                                                <textarea id="brief" cols="40" rows="4"></textarea>
+                                                            </td>
+                                                        </tr>
                                                     </table>
                                                 </form>
                                             </ul>
 										</div>
-									<div class="am-u-md-4">
-										<img src="./assets/img/company/baidu.png" alt="..." class="am-img-thumbnail am-radius" width="130" height="180">
+									<div class="am-u-md-4" >
+										<img id="user_logo" src="./assets/img/company/baidu.png" alt="..." class="am-img-thumbnail am-radius" width="130" height="180">
+                                        <div class="am-form-group am-from-file">
+                                            <button type="button" class="am-btn am-btn-default am-btn-sm" style="width: 130px;">
+                                                <i class="am-icon-cloud-upload"></i> 修改头像</button>
+                                            <input type="file" multiple>
+                                        </div>
 									</div>
+
 								</div>
 
 								<div class="am-cf">

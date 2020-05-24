@@ -9,45 +9,136 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="i/favicon.png">
-  <link rel="stylesheet" href="css/amazeui.min.css"/>
-  <link rel="stylesheet" href="css/personal.css"/>
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/amazeui.min.js"></script>
+	<!--导入布局js，共享header和footer-->
+	<script type="text/javascript" src="./assets/js/include.js"></script>
+    <script>
+
+        var g_Apply_list = [];
+        var g_PerPage = 5;
+        var g_MaxPages = 5;
+        var g_CurPage = 0;
+
+
+
+        function MakeApplyInfo(applyInfo) {
+            var html_data = "<tr><td>" + applyInfo.time + "</td><td><a href='enterprise.html?eid=" + applyInfo.eid +"'>" + applyInfo.enterprise +"</a> </td><td><a href=\"jobdetail.html?rid="+applyInfo.rid+"\">" + applyInfo.title + "</a></td> <td>";
+            if (applyInfo.status == "被拒绝")
+            {
+                html_data += "<span class=\"am-badge am-badge-danger am-radius\">";
+            }
+            else if (applyInfo.status == "已通过")
+            {
+                html_data += "<span class=\"am-badge am-badge-success am-radius\">";
+            }
+            else if (applyInfo.status == "待接受")
+            {
+                html_data += "<span class=\"am-badge am-badge-secondary am-radius\">";
+            }
+            else if (applyInfo.status == "待面试")
+            {
+                html_data += "<span class=\"am-badge am-badge-primary am-radius\">";
+            }
+
+
+            html_data += applyInfo.status + "</span></td></tr>";
+            return html_data;
+        }
+
+        function MakeList(offset)
+        {
+            var html_data = "";
+            var iend = 0;
+            if (offset + g_PerPage < g_Apply_list.length)
+            {
+                iend = offset + g_PerPage;
+            }
+            else
+            {
+                iend = g_Apply_list.length;
+            }
+            for (var i = offset; i < iend; ++i)
+            {
+                html_data += MakeApplyInfo(g_Apply_list[i]);
+            }
+            $('#apply_info').html(html_data);
+        }
+
+
+        function MakePageInfo(index) {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetThePage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_Apply_list.length - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetThePage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetThePage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#page_info').html(html_data);
+        }
+
+        function GetThePage(index)
+        {
+            if (index * g_PerPage > g_Apply_list.length)
+            {
+                return;
+            }
+            g_CurPage = index;
+            MakeList(index * g_PerPage);
+            MakePageInfo(index);
+        }
+
+        $(function () {
+            //-------------------------------------------------------------------------------------
+            //
+            $.get("apply/getAllApply",{},function (data) {
+                if (data.length)
+                {
+                    g_Apply_list = data;
+                    MakeList(0);
+                    MakePageInfo(0);
+                }
+            });
+
+        });
+    </script>
 </head>
 
 <body>
-<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
-  <div class="am-container">
-    <h1 class="am-topbar-brand">
-      <a href="index.html">猎聘招聘网</a>
-    </h1>
-
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
-            data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">导航切换</span> <span
-        class="am-icon-bars"></span>
-    </button>
-
-    <div class="am-collapse am-topbar-collapse" id="collapse-head">
-      <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li ><a href="index.html">首页</a></li>
-        <li><a href="job.html">工作职位</a></li>
-		<li><a href="man.html">精英人才</a></li>
-      </ul>
-
-	<div class="am-topbar-right">
-      <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
-        	庄金鑫<span class="am-icon-caret-down"></span>
-        </button>
-        <ul class="am-dropdown-content">
-          <li><a href="#"><span class="am-icon-user"></span>个人中心</a></li>
-		  <li ><a href="#"><span class="am-icon-power-off"></span>退出</a></li>
-        </ul>
-      </div>
-    </div>
-
-    </div>
-  </div>
-</header>
+<div id="header"></div>
 
 <br>
 
@@ -101,7 +192,7 @@
 				       		<!---选项卡-->
 							<div class="am-tabs" data-am-tabs>
 				  				<ul class="am-tabs-nav am-nav am-nav-tabs">
-									<li class="am-active"><a href="#tab1">已发送求职信</a></li>
+									<li class="am-active"><a href="#tab1">已发送求职请求</a></li>
 									<li ><a href="#tab2">收到的邀请函</a></li>
 				  				</ul>
 
@@ -109,7 +200,7 @@
 									<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 										<table class="am-table am-table-bd am-table-striped admin-content-table">
 				  							<thead><tr><th>发送时间</th><th>公司名称</th><th>职位名称</th><th>状态</th></tr></thead>
-											<tbody>
+											<tbody id="apply_info">
 											  <tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td></tr>
 											  <tr><td>2015.03.24 </td><td>谷歌</td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-badge-danger am-radius">面试中</span></td></tr>
 											  <tr><td>2015.02.26</td><td>腾讯</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>
@@ -123,14 +214,8 @@
 											</tbody>
 										</table>
 										<br>
-										<ul class="am-pagination am-pagination-centered">
-										  <li class="am-disabled"><a href="#">&laquo;</a></li>
-										  <li class="am-active"><a href="#">1</a></li>
-										  <li><a href="#">2</a></li>
-										  <li><a href="#">3</a></li>
-										  <li><a href="#">4</a></li>
-										  <li><a href="#">5</a></li>
-										  <li><a href="#">&raquo;</a></li>
+										<ul id="page_info" class="am-pagination am-pagination-centered">
+
 										</ul>
 									</div>
 
@@ -260,22 +345,7 @@
 	</div>
 
 
-<footer class="my-footer">
-	<br>
-	<p>2015年天津工业大学 毕业设计 <br><small>© Copyright 庄金鑫. 版权所有，禁止转载.</small></p>
-</footer>
+<div id="footer"></div>
 
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="/js/polyfill/rem.min.js"></script>
-<script src="/js/polyfill/respond.min.js"></script>
-<script src="/js/amazeui.legacy.js"></script>
-<![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="js/jquery.min.js"></script>
-<script src="js/amazeui.min.js"></script>
-<!--<![endif]-->
 </body>
 </html>

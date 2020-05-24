@@ -4,6 +4,8 @@ import guiwu.dao.RecruitDao;
 import guiwu.dao.impl.RecruitDaoImpl;
 import guiwu.domain.EnterpriseUser;
 import guiwu.domain.Recruit;
+import guiwu.domain.RecruitBrief;
+import guiwu.domain.RecruitInfo;
 import guiwu.service.RecruitService;
 
 import java.util.List;
@@ -57,4 +59,51 @@ public class RecruitServiceImpl implements RecruitService
         recruitDao.issueRecruit(rid);
     }
 
+    @Override
+    public Recruit getARecruit(int rid)
+    {
+        return recruitDao.getARecruit(rid);
+    }
+
+    @Override
+    public RecruitInfo getARecruitInfo(int rid, String status)
+    {
+        return recruitDao.getARecruitInfo(rid, status);
+    }
+    @Override
+    public RecruitInfo getARecruitInfo(int rid)
+    {
+        return recruitDao.getARecruitInfo(rid);
+    }
+    @Override
+    public List<RecruitBrief> getAllRecruitBrief()
+    {
+        return recruitDao.getAllRecruitBrief();
+    }
+    @Override
+    public List<RecruitBrief> getRecruitBrief(int start, int pageSize)
+    {
+        return recruitDao.getRecruitBrief(start, pageSize);
+    }
+    @Override
+    public List<RecruitBrief> getTheLatestRecruitBrief(int start, int pageSize)
+    {
+        return recruitDao.getTheLatestRecruitBrief(start, pageSize);
+    }
+    @Override
+    public List<RecruitBrief> getTheHottestRecruitBrief(int start, int pageSize)
+    {
+        return recruitDao.getTheHottestRecruitBrief(start, pageSize);
+    }
+    @Override
+    public int getTotalCount()
+    {
+        return recruitDao.getTotalCount();
+    }
+
+    @Override
+    public int getTotatlCountOfStatus(String status)
+    {
+        return recruitDao.getTotalCountByStatus(status);
+    }
 }

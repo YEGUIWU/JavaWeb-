@@ -5,7 +5,9 @@ import guiwu.domain.*;
 public interface UserDao {
 
     PersonalUser findPersonalUser(String username);
+    PersonalUser findPersonalUser(int pid);
     EnterpriseUser findEnterpriseUser(String username);
+    EnterpriseUser findEnterpriseUser(int eid);
     AdminUser findAdminUser(String username);
 
     void savePersonalUser(PersonalUser user);

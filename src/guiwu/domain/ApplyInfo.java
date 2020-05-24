@@ -12,12 +12,13 @@ public class ApplyInfo implements Serializable
     private String status;
     private String title;
     private String name;
+    private String enterprise;
 
     public  ApplyInfo()
     {
 
     }
-    public ApplyInfo(int aid, int pid, int rid, int eid, String time, String status, String title, String name)
+    public ApplyInfo(int aid, int pid, int rid, int eid, String time, String status, String title, String name, String enterprise)
     {
         this.aid = aid;
         this.pid = pid;
@@ -27,6 +28,7 @@ public class ApplyInfo implements Serializable
         this.status = status;
         this.title = title;
         this.name = name;
+        this.enterprise = enterprise;
     }
 
     public int getAid()
@@ -109,9 +111,19 @@ public class ApplyInfo implements Serializable
         this.name = name;
     }
 
+    public String getEnterprise()
+    {
+        return enterprise;
+    }
+
+    public void setEnterprise(String enterprise)
+    {
+        this.enterprise = enterprise;
+    }
+
     @Override
     public String toString()
     {
-        return "ApplyInfo{" + "aid=" + aid + ", pid=" + pid + ", rid=" + rid + ", eid=" + eid + ", time='" + time + '\'' + ", status='" + status + '\'' + ", title='" + title + '\'' + ", name='" + name + '\'' + '}';
+        return "ApplyInfo{" + "aid=" + aid + ", pid=" + pid + ", rid=" + rid + ", eid=" + eid + ", time='" + time + '\'' + ", status='" + status + '\'' + ", title='" + title + '\'' + ", name='" + name + '\'' + ", enterprise='" + enterprise + '\'' + '}';
     }
 }

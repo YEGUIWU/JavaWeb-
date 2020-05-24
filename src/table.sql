@@ -151,7 +151,7 @@ insert into tab_recruit(eid, title, position, salary, description, requirement,p
 value (1, "C#实习生", "北京", "3-5k", "打杂", "熟练使用各种C#技术", "英语6级优先", "五险一金");
 insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
 value (1, "go实习生", "北京", "3-5k", "打杂", "熟练使用各种Go技术", "英语6级优先", "五险一金");
-
+update tab_recruit set issue = date(now()) where rid = 1;
 -- ------------------------------------------------------------------------------
 -- 									应聘信息表								   --
 -- ------------------------------------------------------------------------------
@@ -171,12 +171,47 @@ insert into tab_apply(pid, rid) value(1, 3);
 insert into tab_apply(pid, rid) value(2, 1);
 insert into tab_apply(pid, rid) value(2, 3);
 
-select ta.aid, ta.pid,  ta.rid, tr.eid, ta.time ,ta.status, tr.title, tpu.name
+select * from tab_apply;
+-- --------------------------------------------
+-- 					apply info
+-- --------------------------------------------
+select ta.aid, ta.pid, ta.rid, tr.eid, ta.time ,ta.status, tr.title, tpu.name, teu.name
 from tab_apply ta
 join tab_personal_user tpu on ta.pid = tpu.pid
-join tab_recruit tr on tr.rid = ta.rid; 
+join tab_recruit tr on tr.rid = ta.rid
+join tab_enterprise_user teu on tr.eid = teu.eid
+order by ta.time desc; 
 
-select ta.aid, ta.pid, ta.rid, ta.status, tr.title, tpu.name from tab_apply ta join tab_personal_user tpu on ta.pid = tpu.pid join tab_recruit tr on tr.rid = ta.rid;
+-- select ta.aid, ta.pid, ta.rid, ta.status, tr.title, tpu.name 
+-- from tab_apply ta 
+-- join tab_personal_user tpu on ta.pid = tpu.pid 
+-- join tab_recruit tr on tr.rid = ta.rid;
+
+
 -- select date(now());
 -- select curdate();
+
+-- --------------------------------------------
+-- 					RecruitInfo(detail)
+-- --------------------------------------------
+select tr.rid, tr.title, tr.position, tr.salary, tr.description, tr.requirement, tr.priority, tr.welfare, tr.issue, tr.status, teu.brief
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid 
+where tr.status = '已发布'
+order by tr.rid desc, tr.issue desc;
+
+
+select count(*) from tab_recruit where tab_recruit.status = "已发布";
+-- limit 0,11;
+
+-- --------------------------------------------
+-- 					 RecruitBrief
+-- --------------------------------------------
+select count(*) from tab_recruit;
+
+select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid 
+where tr.status = '已发布' 
+limit 0,11; 
 

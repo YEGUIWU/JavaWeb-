@@ -2,11 +2,8 @@ package guiwu.domain;
 
 import java.io.Serializable;
 
-public class Recruit implements Serializable
+public class RecruitInfo implements Serializable
 {
-    private int rid;
-    private int eid;
-
     private String title;
     private String position;
     private String salary;
@@ -16,16 +13,15 @@ public class Recruit implements Serializable
     private String welfare;
     private String issue;
     private String status;
+    private String brief;
 
-    public Recruit()
+    public RecruitInfo()
     {
 
     }
 
-    public Recruit(int rid, int eid, String title, String position, String salary, String description, String requirement, String priority, String welfare, String issue, String status)
+    public RecruitInfo(String title, String position, String salary, String description, String requirement, String priority, String welfare, String issue, String status, String brief)
     {
-        this.rid = rid;
-        this.eid = eid;
         this.title = title;
         this.position = position;
         this.salary = salary;
@@ -35,6 +31,17 @@ public class Recruit implements Serializable
         this.welfare = welfare;
         this.issue = issue;
         this.status = status;
+        this.brief = brief;
+    }
+
+    public String getBrief()
+    {
+        return brief;
+    }
+
+    public void setBrief(String brief)
+    {
+        this.brief = brief;
     }
 
     public String getIssue()
@@ -55,28 +62,6 @@ public class Recruit implements Serializable
     public void setStatus(String status)
     {
         this.status = status;
-    }
-
-    public int getRid()
-    {
-        return rid;
-    }
-
-    public void setRid(int rid)
-    {
-        this.rid = rid;
-    }
-
-
-
-    public int getEid()
-    {
-        return eid;
-    }
-
-    public void setEid(int eid)
-    {
-        this.eid = eid;
     }
 
     public String getTitle()
@@ -152,6 +137,6 @@ public class Recruit implements Serializable
     @Override
     public String toString()
     {
-        return "Recruit{" + "rid=" + rid + ", eid=" + eid + ", title='" + title + '\'' + ", position='" + position + '\'' + ", salary='" + salary + '\'' + ", description='" + description + '\'' + ", requirement='" + requirement + '\'' + ", priority='" + priority + '\'' + ", welfare='" + welfare + '\'' + ", issue='" + issue + '\'' + ", status='" + status + '\'' + '}';
+        return "RecruitInfo{" + "title='" + title + '\'' + ", position='" + position + '\'' + ", salary='" + salary + '\'' + ", description='" + description + '\'' + ", requirement='" + requirement + '\'' + ", priority='" + priority + '\'' + ", welfare='" + welfare + '\'' + ", issue='" + issue + '\'' + ", status='" + status + '\'' + ", brief='" + brief + '\'' + '}';
     }
 }

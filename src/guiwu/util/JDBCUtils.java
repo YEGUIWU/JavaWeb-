@@ -116,12 +116,24 @@ public class JDBCUtils {
     public static ResultSet getResultSet(String sql,  Lock lock) throws SQLException
     {
         lock.lock();
-        Connection connection = ds.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
+//        Connection connection = ds.getConnection();
+//        Statement statement = connection.createStatement();
+        ResultSet resultSet = ds.getConnection().createStatement().executeQuery(sql);
         lock.unlock();
         return  resultSet;
     }
+    public static int getCount(String tableName, Lock lock) throws SQLException
+	{
+		String sql = "select count(*) from " + tableName;
+		lock.lock();
+		ResultSet resultSet = ds.getConnection().createStatement().executeQuery(sql);
+		lock.unlock();
+		if (resultSet.next())
+		{
+			return resultSet.getInt(1);
+		}
+		return 0;
+	}
     public static ResultSet getAll(String tableName,  Lock lock) throws SQLException
     {
         return getResultSet("select * from " + tableName, lock);

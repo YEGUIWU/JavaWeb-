@@ -13,6 +13,8 @@ public interface ApplyService
     List<ApplyInfo> getPersonalApplyInfo(int pid);
     List<ApplyInfo> getRecruitApplyInfo(int rid);
     List<ApplyInfo> getApplyInfo(int eid);
+
+    Apply getPersonalApply(int pid, int rid);
     void updateStatus(int aid, String status);
     void addApply(PersonalUser personalUser, Apply apply);
     void addApply(int pid, Apply apply);

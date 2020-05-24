@@ -3,6 +3,7 @@ import guiwu.domain.*;
 import guiwu.service.RecruitService;
 import guiwu.service.impl.RecruitServiceImpl;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,4 +53,57 @@ public class RecruitServlet extends BaseServlet
         }
         recruitService.updateStatus(rid, status);
     }
+
+    public void  findOne(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String userType = (String) request.getSession().getAttribute("userType");
+        if (userType == null)
+        {
+            System.out.println("还没登陆");
+            RecruitInfo recruitInfo = recruitService.getARecruitInfo(Integer.parseInt(request.getParameter("rid")), "已发布");
+            writeValue(recruitInfo, response);
+        }
+        else
+        {
+            if (userType.equals("enterprise"))
+            {
+                RecruitInfo recruitInfo = recruitService.getARecruitInfo(Integer.parseInt(request.getParameter("rid")));
+                writeValue(recruitInfo, response);
+            }
+            else
+            {
+                RecruitInfo recruitInfo = recruitService.getARecruitInfo(Integer.parseInt(request.getParameter("rid")), "已发布");
+                writeValue(recruitInfo, response);
+            }
+
+        }
+    }
+
+    public void  getTotalCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        //int rid = Integer.parseInt(request.getParameter("rid"));
+        //Recruit recruit = recruitService.getARecruit(Integer.parseInt(request.getParameter("rid")));
+        int size = recruitService.getTotalCount();
+        writeValue(size , response);
+    }
+    public void  getTotalCountOfReleased(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        //int rid = Integer.parseInt(request.getParameter("rid"));
+        //Recruit recruit = recruitService.getARecruit(Integer.parseInt(request.getParameter("rid")));
+        int size = recruitService.getTotatlCountOfStatus("已发布");
+        writeValue(size , response);
+    }
+    public void  getLatestByPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        //int rid = Integer.parseInt(request.getParameter("rid"));
+        //Recruit recruit = recruitService.getARecruit(Integer.parseInt(request.getParameter("rid")));
+        List<RecruitBrief> recruitBriefs = recruitService.getTheLatestRecruitBrief(
+                Integer.parseInt(request.getParameter("begin")),
+                Integer.parseInt(request.getParameter("size")));
+        writeValue(recruitBriefs , response);
+    }
+
+
+
+
 }

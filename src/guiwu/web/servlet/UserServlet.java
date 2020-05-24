@@ -144,6 +144,7 @@ public class UserServlet extends BaseServlet {
                 if(u != null && "Y".equals(u.getStatus()))
                 {
                     request.getSession().setAttribute("user",u);//登录成功标记
+                    request.getSession().setAttribute("userType", "personal");//登录成功标记
                     System.out.println("登录成功");
                     //登录成功
                     info.setFlag(true);
@@ -165,6 +166,7 @@ public class UserServlet extends BaseServlet {
                 if(u != null && "Y".equals(u.getStatus()))
                 {
                     request.getSession().setAttribute("user",u);//登录成功标记
+                    request.getSession().setAttribute("userType", "enterprise");//登录成功标记
                     System.out.println("登录成功");
                     //登录成功
                     info.setFlag(true);
@@ -316,6 +318,9 @@ public class UserServlet extends BaseServlet {
         user.setEmail(request.getParameter("email"));
         user.setSize(request.getParameter("size"));
         user.setLocation(request.getParameter("location"));
+        user.setLogo(request.getParameter("logo"));
+        user.setBrief(request.getParameter("brief"));
+        System.out.println(user.getLogo());
         ResultInfo info = new ResultInfo();
         try
         {

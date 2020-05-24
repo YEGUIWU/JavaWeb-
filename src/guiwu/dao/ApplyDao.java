@@ -13,6 +13,7 @@ public interface ApplyDao
     List<ApplyInfo> getApplyInfo(int eid);
     List<ApplyInfo> getPersonalApplyInfo(int pid);
     List<ApplyInfo> getRecruitApplyInfo(int rid);
+    Apply getPersonalApply(int pid, int rid);
     void updateStatus(int aid, String status);
     void addApply(PersonalUser personalUser, Apply apply);
     void addApply(int pid, Apply apply);

@@ -7,6 +7,15 @@ public interface RecruitService
 {
     List<Recruit> getRecruit(EnterpriseUser enterpriseUser);
     List<Recruit> getRecruit(int eid);
+    Recruit getARecruit(int rid);
+    RecruitInfo getARecruitInfo(int rid, String status);
+    RecruitInfo getARecruitInfo(int rid);
+    List<RecruitBrief> getAllRecruitBrief();
+    List<RecruitBrief> getRecruitBrief(int start, int pageSize);
+    List<RecruitBrief> getTheLatestRecruitBrief(int start, int pageSize);
+    List<RecruitBrief> getTheHottestRecruitBrief(int start, int pageSize);
+    int getTotalCount();
+    int getTotatlCountOfStatus(String status);
     void addRecruit(EnterpriseUser enterpriseUser, Recruit recruit);
     void addRecruit(int eid, Recruit recruit);
     void addRecruit(int eid, String title, String position, String salary,

@@ -16,6 +16,133 @@
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/amazeui.min.js"></script>
     <script type="text/javascript" src="./assets/js/include.js"></script>
+	<script>
+		var g_TheLatestRecruitBrief_list = [];
+        function MakeRecruitBrief(recruitBrief) {
+            var html_data = "<div class=\"doc-example\">" +
+                "          <article class=\"am-comment\">" +
+                "<a href=\"enterprise.html?eid=" + recruitBrief.eid +"\"><img src=\"./assets/img/company/"+ recruitBrief.logo +".png\" alt=\"\" class=\"am-comment-avatar\" width=\"48\" height=\"48\"/></a>" +
+                "<div class=\"am-comment-main\">" +
+                "<header class=\"am-comment-hd\">" +
+                "<div class=\"am-comment-meta\">" +
+                " <a href=\"#link-to-user\" class=\"am-comment-author\">" + recruitBrief.enterprise + "</a> 发布于 <time>" + recruitBrief.issue +"</time>" +
+                "</div>" +
+                "<div class=\"am-comment-actions\">" +
+                "              <a href=\"jobdetail.html?rid=" + recruitBrief.rid +"\"><font color=\"blue\">详细信息</font></a>" +
+                "              <a href=\"\"><i class=\"am-icon-thumbs-up\"></i></a>" +
+                " <a href=\"\"><i class=\"am-icon-thumbs-down\"></i></a>" +
+                "</div>" +
+                "</header>" +
+                "<div class=\"am-comment-bd\">" +
+                "              <table  class=\"am-table am-table-bordered\">" +
+                "                  <tr>" +
+                "                      <td>职位名称：" + recruitBrief.title + " </td><td> 工作地点："+recruitBrief.position+"</td>  <td> 薪资："+recruitBrief.salary+" </td>" +
+                "                  </tr>" +
+                "              </table>" +
+                "          </div>" +
+                "</div>" +
+                "</article>" +
+                "</div><br>";
+            return html_data;
+        }
+
+		function RefreshTheLatestRecruitBriefList()
+		{
+		    console.log("refresh: " + g_TheLatestRecruitBrief_list.length);
+		    var html_data = "";
+            for (var i = 0; i < g_TheLatestRecruitBrief_list.length; ++i)
+            {
+
+                html_data += MakeRecruitBrief(g_TheLatestRecruitBrief_list[i]);
+            }
+            //console.log(html_data);
+            $('#the_latest_recruit_list').html(html_data);
+		}
+
+
+		var g_TotalCount = 0;
+		var g_PerPage = 5;
+		var g_MaxPages = 5;
+		var g_CurTheLatestPageIndex = 0;
+		var g_CurTheHottestPageIndex = 0;
+        function MakeTheLatestPageInfo(index)
+        {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetTheLatestPage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_TotalCount - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetTheLatestPage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetTheLatestPage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#the_latest_pages_info').html(html_data);
+            // g_TheLatestPageInfo = html_data;
+        }
+		function GetTheLatestPage(index)
+        {
+            console.log("index: " + index);
+            if (index * g_PerPage > g_TotalCount)
+            {
+                return;
+            }
+            $.get("recruit/getLatestByPage",{begin: index * g_PerPage, size: g_PerPage}, function (data) {
+                if (data)
+                {
+                    g_TheLatestRecruitBrief_list = data;
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        console.log(data[i]);
+                    }
+                    RefreshTheLatestRecruitBriefList();
+                    MakeTheLatestPageInfo(index);
+                }
+            });
+
+        }
+
+        $(function () {
+            //-------------------------------------------------------------------------------------
+            // 获取数据总量
+            $.get("recruit/getTotalCountOfReleased",{}, function (size) {
+                g_TotalCount = size;
+                console.log("total: " + size);
+                //MakeTheLatestPageInfo(0);
+                GetTheLatestPage(0);
+            });
+        });
+
+
+	</script>
 </head>
 
 <body>
@@ -24,263 +151,61 @@
 <div class="am-g am-g-fixed blog-g-fixed">
   <div class="am-u-md-8">
     <article class="blog-main">
-		<!-- 图片轮播-->
-		<div class="am-slider am-slider-default" data-am-flexslider>
-		  <ul class="am-slides">
-			<li><img src="http://www.neitui.me/module/spe/images/company/header_tencent.png?123" /></li>
-			<li><img src="http://www.neitui.me/module/spe/images/company/header_tencent.png?123" /></li>
-			<li><img src="http://www.neitui.me/module/spe/images/v/banner11.gif?123" /></li>
-		  </ul>
-		  </div>
 		  <br>
 		<!--搜索框-->
 		  <div class="am-input-group am-input-group-primary">
-			  <input type="text" class="am-form-field" placeholder="输入职位名称、公司名称试试！">
+			  <input type="text" class="am-form-field" placeholder="职位名称 or 公司名称">
 			  <span class="am-input-group-btn">
 				<button class="am-btn am-btn-primary" type="button">搜索</button>
 			  </span>
 			</div>
 		<br>
+
 		<!---选项卡-->
 		<div class="am-tabs" data-am-tabs>
 		  <ul class="am-tabs-nav am-nav am-nav-tabs">
-			<li class="am-active"><a href="#tab1">热门职位</a></li>
-			<li><a href="#tab2">最新职位</a></li>
+			<!--<li class="am-active" ><a href="#tab1">热门职位</a></li>-->
+			<!--<li ><a href="#tab2">最新职位</a></li>-->
+              <li  class="am-active" ><a href="#tab2">最新职位</a></li>
 		  </ul>
 
 		  <div class="am-tabs-bd">
-			<div class="am-tab-panel am-fade am-in am-active" id="tab1">
+              <!--最热岗位-->
+			<!--<div class="am-tab-panel am-fade am-in am-active" id="tab1">-->
+                <!--<div id="the_hottest_recruit_list">-->
 
-				<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/baidu.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">百度</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-				</div>
-                </article>
-			</div>
+                <!--</div>-->
+                <!--<div class="doc-example">-->
+                    <!--<ul id="the_hottest_pages_info" class="am-pagination am-pagination-centered">-->
+                    <!--</ul>-->
+                <!--</div>-->
+	        <!--</div>-->
 
-			<br>
+              <!--最新岗位-->
+          <!--<div id="tab2" class="am-tab-panel am-fade am-in">-->
+          <div id="tab2" class="am-tab-panel am-fade am-in am-in am-active">
+              <div id="the_latest_recruit_list">
 
-			<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/xinlang.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">新浪</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a> 
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-			</div>
+              </div>
+              <div class="doc-example">
+                  <ul id="the_latest_pages_info" class="am-pagination am-pagination-centered">
 
-			<br>
+                  </ul>
+              </div>
+          </div>
 
-			<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/aiqiyi.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">爱奇艺</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a> 
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-				</div>
-            </article>
-			</div>
-
-			<br>
-
-			<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/google.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">谷歌</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a> 
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-				</div>
-            </article>
-			</div>
-
-			<br>
-			<ul class="am-pagination am-pagination-centered">
-			  <li class="am-disabled"><a href="#">&laquo;</a></li>
-			  <li class="am-active"><a href="#">1</a></li>
-			  <li><a href="#">2</a></li>
-			  <li><a href="#">3</a></li>
-			  <li><a href="#">4</a></li>
-			  <li><a href="#">5</a></li>
-			  <li><a href="#">&raquo;</a></li>
-			</ul>
-
-            </article>
-		</div>
-	</div>
-
-
-			<div class="am-tab-panel am-fade" id="tab2">
-			  <div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/baidu.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">百度</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a>
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-				</div>
-              </article>
-			</div>
-
-			<br>
-
-			<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/xinlang.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">新浪</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a> 
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-			</div>
-
-			<br>
-
-			<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/aiqiyi.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">爱奇艺</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a> 
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-				</div>
-            </article>
-			</div>
-
-			<br>
-
-			<div class="doc-example"><article class="am-comment">
-				<a href="#link-to-user-home"><img src="./assets/img/company/google.png" alt="" class="am-comment-avatar" width="48" height="48"/></a>
-				<div class="am-comment-main">
-				<header class="am-comment-hd">
-					<div class="am-comment-meta">
-						<a href="#link-to-user" class="am-comment-author">谷歌</a> 发布于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">2014-7-12 15:30</time>
-					</div>
-					<div class="am-comment-actions">
-						<a href=""><i class="am-icon-thumbs-up"></i></a> 
-						<a href=""><i class="am-icon-thumbs-down"></i></a>
-					</div>
-				</header>
-				<div class="am-comment-bd">
-					<p>那，那是一封写给南部母亲的信。我茫然站在骑楼下，我又看到永远的樱子走到街心。其实雨下得并不大，却是一生一世中最大的一场雨。而那封信是这样写的，年轻的樱子知不知道呢？</p>
-				</div>
-				</div>
-            </article>
-			</div>
-
-			<br>
-			<ul class="am-pagination am-pagination-centered">
-			  <li class="am-disabled"><a href="#">&laquo;</a></li>
-			  <li class="am-active"><a href="#">1</a></li>
-			  <li><a href="#">2</a></li>
-			  <li><a href="#">3</a></li>
-			  <li><a href="#">4</a></li>
-			  <li><a href="#">5</a></li>
-			  <li><a href="#">&raquo;</a></li>
-			</ul>
-            </article>
-		  </div>
-		</div>
 		</div>
     </div>
     </article>
   </div>
 
+
+
+
   <div class="am-u-md-4 blog-sidebar">
     <div class="am-panel-group">
-	  <section class="am-panel am-panel-default">
-        <div class="am-panel-hd">热门职位</div>
-        <div class="am-panel-bd">
-			<table class="am-table">
-				<tr>
-					<td>百度</td>
-					<td>产品经理</td>
-					<td>8K~15K</td>
-					<td><span class="am-badge am-badge-danger am-round">1</span></td>
-				</tr>
-				<tr>
-					<td>百度</td>
-					<td>产品经理</td>
-					<td>8K~15K</td>
-					<td><span class="am-badge am-badge-warning am-round">2</span></td>
-				</tr>
-				<tr>
-					<td>百度</td>
-					<td>产品经理</td>
-					<td>8K~15K</td>
-					<td><span class="am-badge am-badge-success am-round">3</span></td>
-				</tr>
-				<tr>
-					<td>百度</td>
-					<td>产品经理</td>
-					<td>8K~15K</td>
-					<td><span class="am-badge am-badge-secondary am-round">4</span></td>
-				</tr>
-				<tr>
-					<td>百度</td>
-					<td>产品经理</td>
-					<td>8K~15K</td>
-					<td><span class="am-badge am-round">5</span></td>
-				</tr>
-			  </table>
-        </div>
-      </section>
+
+
 	 <section class="am-panel am-panel-default">
         <div class="am-panel-hd">热门公司</div>
         <div class="am-panel-bd">
@@ -320,6 +245,7 @@
           </ul>
         </div>
       </section>
+
 	  <section class="am-panel am-panel-default">
         <div class="am-panel-hd">更多机会</div>
         <div class="am-panel-bd">
@@ -366,7 +292,7 @@
     </div>
   </div>
 
-  <button data-am-smooth-scroll class="am-btn am-btn-success">滚动到顶部</button>
+  <!--<button data-am-smooth-scroll class="am-btn am-btn-success">滚动到顶部</button>-->
 
 </div>
 
