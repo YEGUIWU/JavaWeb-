@@ -133,18 +133,19 @@ public class ApplyDaoImpl implements ApplyDao
     @Override
     public void updateStatus(int aid, String status)
     {
-        String sql = " update " + applyTableName + " set status = ? where aid=?";
-        try
-        {
-            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
-            pstmt.setString(1, status);
-            pstmt.setInt(2, aid);
-            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+//        String sql = " update " + applyTableName + " set status = ? where aid=?";
+//        try
+//        {
+//            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+//            pstmt.setString(1, status);
+//            pstmt.setInt(2, aid);
+//            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+        JDBCUtils.updateOneById(applyTableName, "status", status, "aid", aid, lock.writeLock());
     }
 
     @Override

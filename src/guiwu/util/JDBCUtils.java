@@ -151,4 +151,42 @@ public class JDBCUtils {
         lock.unlock();
         //---------------------
     }
+    public static void delById(String tableName, String idName,  int id, Lock lock)
+    {
+        String sql = "delete from  " + tableName + " where " + idName + " = ?";
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setInt(1, id);
+            lock.lock();
+            pstmt.executeUpdate();
+            lock.unlock();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static void updateOneById(String tableName, String field, String val, String idName, int id, Lock lock)
+    {
+        String sql = "update " + tableName + " set "+ field +" = ? where " + idName + " = ?";
+        System.out.println(sql);
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setString(1, val);
+            pstmt.setInt(2, id);
+            lock.lock();
+            pstmt.executeUpdate();
+            lock.unlock();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -15,9 +15,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class RecruitDaoImpl implements RecruitDao
 {
     final public static String recruitTableName = "tab_recruit";
-    final public static String enterpriseUserTableName = "tab_enterprise_user";
+//    final public static String enterpriseUserTableName = "tab_enterprise_user";
 
     final public static int kEidIndex = 2;
+
 
     final private ReadWriteLock lock = new ReentrantReadWriteLock();//搞个读写锁：读多写少
 
@@ -151,35 +152,40 @@ public class RecruitDaoImpl implements RecruitDao
     public void delRecruit(int rid)
     {
         //1.定义sql
-        String sql = "delete from  " + recruitTableName + " where rid = ?";
-        try
-        {
-            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
-            pstmt.setInt(1, rid);
-            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+//        String sql = "delete from  " + recruitTableName + " where rid = ?";
+//        try
+//        {
+//            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+//            pstmt.setInt(1, rid);
+//            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+
+        JDBCUtils.delById(recruitTableName, "rid", rid, lock.writeLock());
     }
 
 
     @Override
     public void updateStatus(int rid, String status)
     {
-        String sql = " update " + recruitTableName + " set status = ? where rid=?";
-        try
-        {
-            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
-            pstmt.setString(1, status);
-            pstmt.setInt(2, rid);
-            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+//        String sql = "run: update " + recruitTableName + " set status = ? where rid=?";
+//        System.out.println(sql);
+//        try
+//        {
+//            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+//            pstmt.setString(1, status);
+//            pstmt.setInt(2, rid);
+//            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+
+        JDBCUtils.updateOneById(recruitTableName, "status", status, "rid", rid, lock.writeLock());
     }
 
     @Override
@@ -222,9 +228,11 @@ public class RecruitDaoImpl implements RecruitDao
         try
         {
             ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
-            resultSet.next();
-            //System.out.println("hello" + resultSet.getInt(1));
-            return toRecruitInfo(resultSet);
+            if (resultSet.next())
+            {
+                //System.out.println("hello" + resultSet.getInt(1));
+                return toRecruitInfo(resultSet);
+            }
         }
         catch (SQLException e)
         {
@@ -238,7 +246,7 @@ public class RecruitDaoImpl implements RecruitDao
     {
         String sql = "select tr.title, tr.position, tr.salary, tr.description, tr.requirement, tr.priority, tr.welfare, tr.issue, tr.status, teu.brief " +
                 "from " + recruitTableName +" tr " +
-                "join " + enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
 //                "where tr.rid = " + rid;
                 "where tr.status = '" +  status +"' and tr.rid = " + rid;
         return getARecruitInfo(sql);
@@ -249,7 +257,7 @@ public class RecruitDaoImpl implements RecruitDao
     {
         String sql = "select tr.title, tr.position, tr.salary, tr.description, tr.requirement, tr.priority, tr.welfare, tr.issue, tr.status, teu.brief " +
                 "from " + recruitTableName +" tr " +
-                "join " + enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
                 "where tr.rid = " + rid;
         return getARecruitInfo(sql);
     }
@@ -279,7 +287,7 @@ public class RecruitDaoImpl implements RecruitDao
             System.out.println(sql  );
             lock.readLock().lock();
             ResultSet resultSet = JDBCUtils.getDataSource() .getConnection().createStatement().executeQuery(sql);
-            lock.readLock().lock();
+            lock.readLock().unlock();
             if (resultSet.next())
             {
                 return resultSet.getInt(1);
@@ -319,7 +327,7 @@ public class RecruitDaoImpl implements RecruitDao
     {
         String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
                 "from " + recruitTableName +" tr " +
-                "join " + enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
                 "where tr.status = '已发布'";
         return getRecruitBrief(sql);
     }
@@ -329,7 +337,7 @@ public class RecruitDaoImpl implements RecruitDao
     {
         String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
                 "from " + recruitTableName +" tr " +
-                "join " + enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
                 "where tr.status = '已发布' " +
                 "limit " + start + "," + pageSize;
         return getRecruitBrief(sql);
@@ -340,7 +348,7 @@ public class RecruitDaoImpl implements RecruitDao
     {
         String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
                 "from " + recruitTableName +" tr " +
-                "join " + enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
                 "where tr.status = '已发布' " +
                 "order by tr.rid desc, tr.issue desc "  +
                 "limit " + start + "," + pageSize;
@@ -360,6 +368,54 @@ public class RecruitDaoImpl implements RecruitDao
         return null;
     }
 
+
+    @Override
+    public List<RecruitBrief> searchBecruitBrief(String searchStr)
+    {
+        String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
+                "from " + recruitTableName +" tr " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "where tr.status = '已发布' " +
+                "order by tr.rid desc, tr.issue desc " ;
+        List<RecruitBrief> recruitList = new ArrayList<>();
+        try
+        {
+            ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
+            while (resultSet.next())
+            {
+                if ( (resultSet.getString(3).equals(searchStr)) || (resultSet.getString(5).indexOf(searchStr) !=-1) )
+                {
+                    recruitList.add(toRecruitBrief(resultSet));
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return recruitList;
+    }
+
+
+    @Override
+    public List<RecruitBrief> getSomeRecruitBrief(List<Integer> rids)
+    {
+        if (rids.size() > 0)
+        {
+            String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
+                    "from " + recruitTableName +" tr " +
+                    "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                    "where tr.status = '已发布' and (tr.rid=" + rids.get(0);
+            for (int ib = 1, ie = rids.size(); ib < ie; ++ib)
+            {
+                sql += " or tr.rid = " + rids.get(ib);
+            }
+            sql += ")";
+            System.out.println(sql);
+            return getRecruitBrief(sql);
+        }
+        return null;
+    }
 
 
 //    /**

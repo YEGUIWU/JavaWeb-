@@ -5,6 +5,7 @@ import guiwu.domain.*;
 import guiwu.util.JDBCUtils;
 
 import java.sql.*;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -54,6 +55,7 @@ public class UserDaoImpl implements UserDao
                 resultSet.getString(7),
                 resultSet.getString(8),
                 resultSet.getString(9),
+                resultSet.getString(10),
                 resultSet.getString(10)
         );
     }
@@ -69,14 +71,16 @@ public class UserDaoImpl implements UserDao
     {
         boolean hasUsername = false;
         ResultSet user = null;
-        String sql = "select * from " + tableName + " where username = '" + username + "' and password = '" + password +"'";
-        System.out.println(sql);
+        String sql = "select * from " + tableName + " where username = '" + username + "'"; //and password = '" + password +"'";
+        //System.out.println(sql);
+        //System.out.println(sql);
         try
         {
             //ResultSet resultSet = JDBCUtils.getAll(tableName, lock.readLock());
             ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
             while(resultSet.next())
             {
+                System.out.println(resultSet.getString(userIndex) + ": " + resultSet.getString(passwordIndex));
                 if (resultSet.getString(userIndex).equals(username))
                 {
                     hasUsername = true;
@@ -264,13 +268,15 @@ public class UserDaoImpl implements UserDao
     @Override
     public void saveEnterprise(EnterpriseUser user)
     {
-        String sql = "insert into " + enterpriseUserTableName + " (username,password,email) values(?,?,?)";
+        String sql = "insert into " + enterpriseUserTableName + " (username,password,email,status,code) values(?,?,?,?,?)";
         try
         {
             PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, user.getStatus());
+            pstmt.setString(5, user.getCode());
             JDBCUtils.executeUpdate(pstmt, enterpriseUserLock.writeLock());
         }
         catch (SQLException e)
@@ -312,6 +318,30 @@ public class UserDaoImpl implements UserDao
                 if (resultSet.getString(PersonalUser.kCodeIndex).equals(code))
                 {
                     user = toPersonalUser(resultSet);
+                    break;
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+
+    @Override
+    public EnterpriseUser findEnterpriseUserByCode(String code)
+    {
+        EnterpriseUser user = null;
+        try
+        {
+            ResultSet resultSet = JDBCUtils.getAll(enterpriseUserTableName, enterpriseUserLock.readLock());
+            while(resultSet.next())
+            {
+                if (resultSet.getString(EnterpriseUser.kCodeIndex).equals(code))
+                {
+                    user = toEnterpriseUser(resultSet);
                     break;
                 }
             }

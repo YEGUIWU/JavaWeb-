@@ -8,6 +8,9 @@ public class EnterpriseUser implements Serializable
     public static final int kUsernameIndex = 2;
     public static final int kPasswordIndex = 3;
     public static final int kNameIndex = 4;
+    public static final int kCodeIndex = 11;
+    public static final String kDisabled = "N";
+    public static final String kWell = "W";
     private int eid;
     private String username;
     private String password;
@@ -18,6 +21,7 @@ public class EnterpriseUser implements Serializable
     private String logo;
     private String brief;
     private String status;
+    private String code;        //激活码（要求唯一）
 
     public EnterpriseUser()
     {
@@ -31,7 +35,7 @@ public class EnterpriseUser implements Serializable
         this.password = password;
     }
 
-    public EnterpriseUser(int eid, String username, String password, String name, String email, String size, String location, String logo, String brief, String status)
+    public EnterpriseUser(int eid, String username, String password, String name, String email, String size, String location, String logo, String brief, String status, String code)
     {
         this.eid = eid;
         this.username = username;
@@ -43,6 +47,7 @@ public class EnterpriseUser implements Serializable
         this.logo = logo;
         this.brief = brief;
         this.status = status;
+        this.code = code;
     }
 
     public int getEid()
@@ -157,9 +162,19 @@ public class EnterpriseUser implements Serializable
         return kPasswordIndex;
     }
 
+    public String getCode()
+    {
+        return code;
+    }
+
+    public void setCode(String code)
+    {
+        this.code = code;
+    }
+
     @Override
     public String toString()
     {
-        return "EnterpriseUser{" + "eid=" + eid + ", username='" + username + '\'' + ", name='" + name + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + ", size='" + size + '\'' + ", location='" + location + '\'' + ", logo='" + logo + '\'' + ", brief='" + brief + '\'' + ", status='" + status + '\'' + '}';
+        return "EnterpriseUser{" + "eid=" + eid + ", username='" + username + '\'' + ", password='" + password + '\'' + ", name='" + name + '\'' + ", email='" + email + '\'' + ", size='" + size + '\'' + ", location='" + location + '\'' + ", logo='" + logo + '\'' + ", brief='" + brief + '\'' + ", status='" + status + '\'' + ", code='" + code + '\'' + '}';
     }
 }

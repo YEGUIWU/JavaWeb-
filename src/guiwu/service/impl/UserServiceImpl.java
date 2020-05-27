@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService
      * @param user
      * @return
      */
+
+
     @Override
     public void register(PersonalUser user) throws Exception
     {
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService
         userDao.savePersonalUser(user);
 
         //激活邮件发送，邮件正文
-        String content="<a href='http://localhost:8080/activeUserServlet?code="+user.getCode()+"'>点击激活【YeGuiWu-Blog】</a>";
+        String content="<a href='http://localhost:8080/user/active?code="+user.getCode()+"&type=personal'>点击激活【YeGuiWu-Blog】</a>";
         System.out.println("发送邮件：" + user.getEmail());
         MailUtils.sendMail(user.getEmail(),content,"激活邮件");
         System.out.println("发送成功：" + user.getEmail());
@@ -47,7 +49,21 @@ public class UserServiceImpl implements UserService
     @Override
     public void register(EnterpriseUser user) throws Exception
     {
+        //根据用户名查询用户对象
+        EnterpriseUser u = userDao.findEnterpriseUser(user.getUsername());
+        if(u != null){
+            throw new Exception("用户名已存在");
+        }
+        //保存用户信息
+        user.setCode(UuidUtil.getUuid()); //2.1设置激活码，唯一字符串
+        user.setStatus("N");//2.2设置激活状态
+        userDao.saveEnterprise(user);
 
+        //激活邮件发送，邮件正文
+        String content="<a href='http://localhost:8080/user/active?code="+user.getCode()+"&type=enterprise'>点我激活【YeGuiWu-招聘网】</a>";
+        System.out.println("发送邮件：" + user.getEmail());
+        MailUtils.sendMail(user.getEmail(),content,"激活邮件");
+        System.out.println("发送成功：" + user.getEmail());
     }
 
     @Override
@@ -80,8 +96,18 @@ public class UserServiceImpl implements UserService
     }
     @Override
     public boolean activeEnterpriseUser(String code)
-    {
-        return false;
+    {        //1.根据激活码查询用户对象
+        EnterpriseUser user = userDao.findEnterpriseUserByCode(code);
+        if(user != null)
+        {
+            //2.调用dao的修改激活状态的方法
+            userDao.updateStatus(user);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**

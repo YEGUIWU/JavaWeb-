@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>求职信息</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="./assets/icon/favicon.png">
+  <link rel="stylesheet" href="./assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="./assets/css/personal.css"/>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/amazeui.min.js"></script>
+	<!--导入布局js，共享header和footer-->
+	<script type="text/javascript" src="./assets/js/include.js"></script>
+    <script>
+        var g_TotalCount = 0;
+        var g_Complain_list = [];
+        var g_PerPage = 15;
+        var g_MaxPages = 5;
+        function MakeComplain(complain) {
+            // var html_data = "<tr><td>"+complain.time+"</td><td>" +complain.enterprise + "</td><td><a href=\"jobdetail.html?rid=" + complain.rid +"\">" + complain.recruit  +"</a></td> <td><span class=\"am-badge am-badge-success am-radius\">" + complain.status +"</span></td><td>" + complain.result +"</td></tr>";
+            // return html_data;
+            return "<tr><td>"+complain.time+"</td><td>" +complain.enterprise + "</td><td><a href=\"jobdetail.html?rid=" + complain.rid +"\">" + complain.recruit  +"</a></td> <td><span class=\"am-badge am-badge-success am-radius\">" + complain.status +"</span></td><td>" + complain.result +"</td></tr>";
+        }
+
+        function RefreshTheComplainList(offset, size)
+        {
+            console.log("refresh: " + g_Complain_list.length);
+            var html_data = "";
+            for (var i = offset; i < g_Complain_list.length && i < size; ++i)
+            {
+                html_data += MakeComplain(g_Complain_list[i]);
+            }
+            //console.log(html_data);
+            $('#complain_info').html(html_data);
+        }
+        function MakeThePageInfo(index)
+        {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetThePage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_TotalCount - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetThePage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetThePage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#page_info').html(html_data);
+            // g_TheLatestPageInfo = html_data;
+        }
+        function GetThePage(index)
+        {
+            console.log("index: " + index);
+            if (index * g_PerPage > g_TotalCount)
+            {
+                return;
+            }
+            RefreshTheComplainList(index * g_PerPage, g_PerPage);
+            MakeThePageInfo(index);
+        }
+
+        $(function () {
+
+            $.get("complain/getComplainInfo",{}, function (data) {
+                if (data)
+                {
+                    g_Complain_list = data;
+                    GetThePage(0);
+                }
+            });
+
+
+
+        });
+    </script>
+</head>
+
+<body>
+<div id="header"></div>
+
+<br>
+    <div class="am-g am-g-fixed blog-g-fixed">
+      <div class="am-cf admin-main">
+        <div class="am-u-md-3 blog-sidebar">
+
+      <!-- sidebar start -->
+      <div class="admin-sidebar">
+
+        <div class="am-panel am-panel-default admin-sidebar-panel">
+          <div class="am-panel-bd">
+            <p><span class="am-icon-bookmark"></span> 个人中心</p>
+                <div id="amz-offcanvas" class="am-offcanvas doc-offcanvas">
+                <section class="amz-sidebar am-offcanvas-bar">
+                <ul class="am-nav">
+                    <li><a href="userhome.html">我的简历</a></li>
+                    <li><a href="userapply.html">求职管理</a></li>
+                    <li><a href="usercomplain.html">投诉结果</a></li>
+                    </ul>
+                </section>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- sidebar end -->
+      </div>
+
+          <div class="am-u-md-9">
+              <!-- content start -->
+              <div class="admin-content">
+                  <div class="am-g">
+                      <div class="am-u-md-12">
+
+                          <!---选项卡-->
+                          <div class="am-tabs" data-am-tabs>
+                              <ul class="am-tabs-nav am-nav am-nav-tabs">
+                                  <li class="am-active"><a href="#tab1">已发送投诉</a></li>
+                              </ul>
+
+                              <div class="am-tabs-bd">
+                                  <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                                      <table class="am-table am-table-bd am-table-striped admin-content-table">
+                                          <thead><tr><th>发送时间</th><th>公司名称</th><th>职位名称</th><th>状态</th><th>结果</th></tr></thead>
+                                          <tbody id="complain_info">
+                                          <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td><td>已删除该招聘信息</td></tr>-->
+                                          <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td><td>已删除该招聘信息</td></tr>-->
+                                          <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td><td>已删除该招聘信息</td></tr>-->
+                                          <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td><td>已删除该招聘信息</td></tr>-->
+                                          <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td><td>已删除该招聘信息</td></tr>-->
+                                          </tbody>
+                                      </table>
+                                      <br>
+                                      <ul id="page_info" class="am-pagination am-pagination-centered">
+                                          <!--<li class="am-disabled"><a href="#">&laquo;</a></li>-->
+                                          <!--<li class="am-active"><a href="#">1</a></li>-->
+                                          <!--<li><a href="#">2</a></li>-->
+                                          <!--<li><a href="#">3</a></li>-->
+                                          <!--<li><a href="#">4</a></li>-->
+                                          <!--<li><a href="#">5</a></li>-->
+                                          <!--<li><a href="#">&raquo;</a></li>-->
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+            <!-- content end -->
+        </div>
+
+
+		  </div>
+		  <!-- content end -->
+	</div>
+</div>
+</div>
+</div>
+<div id="footer"></div>
+
+</body>
+</html>

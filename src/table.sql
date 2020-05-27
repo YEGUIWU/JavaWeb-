@@ -18,7 +18,7 @@ create table tab_personal_user
    icon					varchar(32),
    school				varchar(32),
    education			varchar(4),
-   status               char(1) ,
+   status               char(1),
    code					varchar(50),
    
    primary key (pid),
@@ -80,10 +80,18 @@ create table tab_enterprise_user
    brief				varchar(128),
    status               char(1),
    
+   code					varchar(50),
    primary key (eid),
-   unique key AK_nq_username (username)
+   unique key AK_nq_username (username),
+   unique key AK_nq_code (code)
 );
-
+select * from tab_enterprise_user;
+-- ALTER TABLE tab_enterprise_user
+-- ADD code varchar(50);
+-- ALTER TABLE tab_enterprise_user
+-- ADD unique key AK_nq_code (code);
+update  tab_enterprise_user
+set status = "Y" where eid = 7;
 insert into tab_enterprise_user(username, password, status)
 value ("yeguiwu", "a123456", "Y");
 insert into tab_enterprise_user(username, password, status)
@@ -97,7 +105,6 @@ value ("weiruan", "a123456", "Y");
 insert into tab_enterprise_user(username, password, status)
 value ("huawei", "a123456", "Y");
 
-select * from tab_enterprise_user;
 -- update tab_personal_user set sex='男' where pid=1;
 -- delete from tab_user where uid = 3 or uid = 4; 
 
@@ -152,6 +159,7 @@ value (1, "C#实习生", "北京", "3-5k", "打杂", "熟练使用各种C#技术
 insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
 value (1, "go实习生", "北京", "3-5k", "打杂", "熟练使用各种Go技术", "英语6级优先", "五险一金");
 update tab_recruit set issue = date(now()) where rid = 1;
+update tab_recruit set status = "已发布" where rid = 1;
 -- ------------------------------------------------------------------------------
 -- 									应聘信息表								   --
 -- ------------------------------------------------------------------------------
@@ -212,6 +220,59 @@ select count(*) from tab_recruit;
 select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
 from tab_recruit tr
 join tab_enterprise_user teu on tr.eid = teu.eid 
-where tr.status = '已发布' 
+where tr.status = '已发布'
+order by tr.rid desc, tr.issue desc
 limit 0,11; 
 
+-- --------------------------------------------
+-- 				Redis RecruitBrief
+-- --------------------------------------------
+
+select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid 
+where tr.status = '已发布' and(tr.rid = 1 or tr.rid = 3 or tr.rid = 4);
+
+-- ------------------------------------------------------------------------------
+-- 									投诉信息表								   --
+-- ------------------------------------------------------------------------------
+create table tab_complain
+(
+   cid                  int not null auto_increment,
+   pid					int not null,
+   rid 					int not null,
+   title 				varchar(32),
+   content				varchar(256),
+   time             	datetime default now(),
+   status				varchar(16) default "待处理",
+   result				varchar(64),
+   primary key (cid), 
+   FOREIGN KEY (pid) REFERENCES tab_personal_user(pid),
+   FOREIGN KEY (rid) REFERENCES tab_recruit(rid)
+);
+select * from tab_complain;
+insert into tab_complain(pid, rid, title, content) value (1, 1, "薪资有问题", "钱太少");
+
+select *
+from tab_complain;
+-- --------------------------------------------
+-- 				ComplainInfo table
+-- --------------------------------------------
+select tc.cid, tc.pid, tc.rid, tc.title, tc.content, tc.time, tc.status, tc.result, teu.name, tr.title
+from tab_complain tc
+join tab_recruit tr on tc.rid = tr.rid
+join tab_enterprise_user teu on teu.eid = tr.eid;
+
+
+-- ------------------------------------------------------------------------------
+-- 									黑名单信息表	   						   --
+-- ------------------------------------------------------------------------------
+create table tab_complain
+(
+   bid                  int not null auto_increment,
+   pid					int not null,
+   eid					int not null,
+   primary key (cid), 
+   FOREIGN KEY (pid)    REFERENCES tab_personal_user(pid),
+   FOREIGN KEY (eid)    REFERENCES tab_enterprise_user(eid)
+);

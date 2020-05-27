@@ -25,11 +25,18 @@
         var g_ApplyInfo_list = [];
         var g_ChangeRecruit_list = [];
         var g_ChangeApply_list = [];
+        var g_Blacklist_list = [];
+        var g_cancelBlacklist_list = [];
+        var g_addBlacklist_list = [];
+
         var g_PerPage = 15;     //  每页15项
         var g_TotalPage = 0;
+        var g_MaxPages = 5;
         var g_ApplyInfoTotalPages = 0;
+        var g_BlacklistTotalPage = 0;
         var g_CurRecruitPage = 0;
         var g_CurApplyInfoPage = 0;
+        var g_CurBlacklistPage = 0;
 
         function GetPageInfo1()
         {
@@ -56,12 +63,12 @@
             var html_data = "";
             if (recruit.status == '已完成')
             {
-                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-success am-radius\">已完成</span></td></tr>';
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"jobdetail.html?rid=' + recruit.rid +'\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-success am-radius\">已完成</span></td></tr>';
 
             }
             else if (recruit.status == '已关闭')
             {
-                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge am-radius\">已关闭</span></td><td>' +
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"jobdetail.html?rid=' + recruit.rid +'\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge am-radius\">已关闭</span></td><td>' +
                     '<div class="am-dropdown" data-am-dropdown>\n' +
                     "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已发布\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
                     '               发布' +
@@ -74,7 +81,7 @@
             }
             else if (recruit.status == '已发布')
             {
-                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"#\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-secondary am-radius\">已发布</span></td>' +
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"jobdetail.html?rid=' + recruit.rid +'\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-secondary am-radius\">已发布</span></td>' +
                     '<td>' +
                     '<div class="am-dropdown" data-am-dropdown>' +
                     "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已关闭\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
@@ -89,10 +96,23 @@
             }
             else if (recruit.status == '未发布')
             {
-                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"jobdetail.html?rid=' + recruti.rid +'\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-warning am-radius\">未发布</span></td><td>' +
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"jobdetail.html?rid=' + recruit.rid +'\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-badge-warning am-radius\">未发布</span></td><td>' +
                     '<div class="am-dropdown" data-am-dropdown>\n' +
                     "           <button onclick=\"ChangeRecruitInfo(" + recruit.rid + ",\'已发布\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
                     '               发布' +
+                    '           </button>' +
+                    '           <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
+                    '           -----' +
+                    '           </button>' +
+                    '       </div>' +
+                    '</td></tr>';
+            }
+            else //被屏蔽
+            {
+                html_data = '<tr><td>' + recruit.issue +'</td><td><a href=\"jobdetail.html?rid=' + recruit.rid +'\">'+ recruit.title +'</a></td> <td><span class=\"am-badge am-radius\">被屏蔽</span></td><td>' +
+                    '<div class="am-dropdown" data-am-dropdown>\n' +
+                    '           <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
+                    '           -----' +
                     '           </button>' +
                     '           <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>' +
                     '           -----' +
@@ -150,6 +170,7 @@
         }
         function GetPage1(index)
         {
+            console.log("goto " + index);
             g_CurRecruitPage = index;
             if (index >= g_TotalPage || index < 0)
             {
@@ -172,20 +193,22 @@
 
         function ChangeRecruitInfo(rid, status)
         {
-            console.log("change: " + rid + " " + status);
-            var i;
+            var i, pid;
             for (i = 0; i < g_ChangeRecruit_list.length; ++i)
             {
                 if (g_ChangeRecruit_list[i].rid == rid)
                 {
                     console.log("change: " + i + " " +  rid + " " + status);
+                    pid = g_ChangeRecruit_list[i].pid;
                     g_ChangeRecruit_list[i].status = status;
+                    break;
                 }
             }
             if (i == g_ChangeRecruit_list.length)
             {
                 g_ChangeRecruit_list.push({rid: rid, status: status});
             }
+
             for (i = 0; i < g_Recruit_list.length; ++i)
             {
                 if (g_Recruit_list[i].rid == rid)
@@ -193,6 +216,7 @@
                     g_Recruit_list[i].status = status;
                 }
             }
+
             GetPage1(g_CurRecruitPage);
         }
 
@@ -224,8 +248,8 @@
                     "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'面试中\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
                     '面试' +
                     '</button>' +
-                    "<button onclick=\"ChangeApplyInfo1(" + applyInfo.aid + ",\'已完成\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
-                    '----' +
+                    "<button onclick=\"javascript:void(0)\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                    '-----' +
                     '</button>'
             }
             else if (applyInfo.status == "面试中")
@@ -238,7 +262,14 @@
                     '失败' +
                     '</button>'
             }
-
+            else
+            {
+                return "";
+            }
+            html_data +=
+                "<button onclick=\"ChangeApplyInfo(" + applyInfo.aid + ",\'被拉黑\')\""  +  'class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>\n' +
+                '拉黑' +
+                '</button>'
 
             html_data += " </div>" +
                 "  </td>" +
@@ -256,6 +287,7 @@
             }
             return html_data;
         }
+
         function MakePage2(index)
         {
             var g_CurApplyInfoPage = index;
@@ -315,27 +347,148 @@
         function ChangeApplyInfo(aid, status)
         {
             console.log("change: " + aid + " " + status);
-            var i;
+            var i, pid;
             for (i = 0; i < g_ChangeApply_list.length; ++i)
             {
                 if (g_ChangeApply_list[i].aid == aid)
                 {
                     console.log("change: " + i + " " +  rid + " " + status);
                     g_ChangeApply_list[i].status = status;
+                    break;
                 }
             }
             if (i == g_ChangeApply_list.length)
             {
                 g_ChangeApply_list.push({aid: aid, status: status});
             }
-            for (i = 0; i < g_ApplyInfo_list.length; ++i)
+            if (status == "被拉黑")
             {
-                if (g_ApplyInfo_list[i].aid == aid)
+                for (i = 0; i < g_ApplyInfo_list.length; ++i)
                 {
-                    g_ApplyInfo_list[i].status = status;
+                    if (g_ApplyInfo_list[i].aid == aid)
+                    {
+                        pid = g_ApplyInfo_list[i].pid;
+                        break;
+                    }
+                }
+                g_addBlacklist_list.push({pid:pid});
+                for (i = 0; i < g_ApplyInfo_list.length; ++i)
+                {
+                    // console.log("拉黑try " + pid);
+                    if (g_ApplyInfo_list[i].pid == pid)
+                    {
+                        // console.log("拉黑try " + pid);
+                        g_ApplyInfo_list[i].status = status;
+                        if (aid != g_ApplyInfo_list[i].aid)
+                        {
+                            g_ChangeApply_list.push({aid: g_ApplyInfo_list[i].aid, status: status});
+                        }
+                    }
+                }
+            }
+            else
+            {
+
+                for (i = 0; i < g_ApplyInfo_list.length; ++i)
+                {
+                    if (g_ApplyInfo_list[i].aid == aid)
+                    {
+                        g_ApplyInfo_list[i].status = status;
+                    }
                 }
             }
             GetPage2(g_CurApplyInfoPage);
+        }
+
+        //---------------------------------------------------------------------------------
+        //                  page 3
+
+
+
+        function MakeBlacklist(blacklist)
+        {
+            // var html_data = "<tr><td>"+complain.time+"</td><td>" +complain.enterprise + "</td><td><a href=\"jobdetail.html?rid=" + complain.rid +"\">" + complain.recruit  +"</a></td> <td><span class=\"am-badge am-badge-success am-radius\">" + complain.status +"</span></td><td>" + complain.result +"</td></tr>";
+            // return html_data;
+            return "<tr><td>" + blacklist.username + "</td><td><a href=\"resume.html?pid="+ blacklist.pid +"\">" +
+                blacklist.name  +
+                "</a></td><td><button onclick='CancelBlacklist("+ blacklist.pid +")' class=\"am-btn am-btn-default am-btn-xs am-dropdown-toggle\">取消</button></td></tr>"
+        }
+        function RefreshTheBlacklistList(offset, size)
+        {
+            console.log("refresh: " + g_Blacklist_list.length);
+            var html_data = "";
+            for (var i = offset; i < g_Blacklist_list.length && i < size; ++i)
+            {
+                html_data += MakeBlacklist(g_Blacklist_list[i]);
+                // console.log(html_data);
+            }
+            //console.log(html_data);
+            $('#blacklist_info').html(html_data);
+        }
+        function CancelBlacklist(pid) {
+            for (var i = 0; i < g_Blacklist_list.length; ++i)
+            {
+                if (g_Blacklist_list[i].pid == pid)
+                {
+                    g_cancelBlacklist_list.push({bid: g_Blacklist_list[i].bid} );
+                    g_Blacklist_list.splice(i, 1);
+                    GetTheBlacklistPage(g_CurBlacklistPage);
+                    break;
+                }
+            }
+        }
+        function MakeTheBlacklistPageInfo(index)
+        {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetTheBlacklistPage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_BlacklistTotalPage - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetTheBlacklistPage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetTheBlacklistPage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#black_page_info').html(html_data);
+        }
+        function GetTheBlacklistPage(index)
+        {
+            console.log("拉黑 index: " + index);
+            if (index * g_PerPage > g_BlacklistTotalPage)
+            {
+                return;
+            }
+            g_CurBlacklistPage = index;
+            RefreshTheBlacklistList(index * g_PerPage, g_PerPage);
+            MakeTheBlacklistPageInfo(index);
         }
 
 
@@ -364,9 +517,10 @@
             //
             $.get("apply/getApplyInfo",{},function (data) {
                 if (data.length) {
+
+                    g_ApplyInfo_list = data;
                     for (var i = 0; i < data.length; ++i)
                     {
-                        g_ApplyInfo_list.push(data[i]);
                         console.log(data[i].status);
                     }
                     GetPageInfo2();
@@ -391,7 +545,42 @@
                     $.post("apply/updateApply", g_ChangeApply_list[i],function () {
                     });
                 }
+                for (var i = 0; i < g_addBlacklist_list.length; ++i)
+                {
+                    // console.log("拉黑：" + g_addBlacklist_list[i].pid);
+                    $.post("blacklist/addBlacklist", g_addBlacklist_list[i],function () {
+                    });
+                }
             });
+
+            //-------------------------------------------------------------------------------------
+            //
+            $.get("blacklist/getBlacklist",{},function (data)
+            {
+                // console.log(data);
+                if (data.flag)
+                {
+                    g_BlacklistTotalPage = data.data.length;
+                    g_Blacklist_list = data.data;
+                    GetTheBlacklistPage(0);
+                    for (var i = 0; i < data.data.length; ++i)
+                    {
+                        console.log(data.data[i]);
+                    }
+                }
+                else if (data)
+                {
+                    alert(data.errorMsg);
+                }
+            });
+
+            $('#update_blacklist_btn').click(function (data) {
+                for (var i = 0; i < g_cancelBlacklist_list.length; ++i)
+                {
+                    $.post("blacklist/delBlacklist", g_cancelBlacklist_list[i],function () {
+                    });
+                }
+            })
         });
 
     </script>
@@ -414,22 +603,14 @@
 								<section class="amz-sidebar am-offcanvas-bar">
 									<ul class="am-nav">
 										<li><a href="companyhome.html">企业信息</a></li>
-										<li><a href="companyrecruit.html">招聘信息</a></li>
-										<li><a href="companyemail.html">邮件中心</a></li>
+										<li><a href="companyrecruit.html">招聘编辑</a></li>
+										<li><a href="companyemail.html">招聘管理</a></li>
 									</ul>
 								</section>
 							</div>
 
 			  			</div>
 					</div>
-
-					<div class="am-panel am-panel-default admin-sidebar-panel">
-				  		<div class="am-panel-bd">
-							<p><span class="am-icon-bookmark"></span> 公告</p>
-							<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
-				  		</div>
-					</div>
-
 					<div class="am-panel am-panel-default admin-sidebar-panel">
 				  		<div class="am-panel-bd">
 							<p><span class="am-icon-tag"></span> 招聘宣言</p>
@@ -452,6 +633,7 @@
 				  				<ul class="am-tabs-nav am-nav am-nav-tabs">
 									<li class="am-active"><a href="#tab1">招聘信息</a></li>
 									<li ><a href="#tab2">求职信息</a></li>
+									<li ><a href="#tab3">黑名单</a></li>
 				  				</ul>
 
 				  				<div class="am-tabs-bd">
@@ -470,7 +652,7 @@
                                         <button id="update_recruit_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
 									</div>
 
-
+                                    <!--求职信息-->
 									<div class="am-tab-panel am-fade" id="tab2">
 										<table class="am-table am-table-bd am-table-striped admin-content-table">
 				  							<thead><tr><th>接收时间</th><th>求职者姓名</th><th>职位名称</th><th>状态</th><th>管理</th></tr></thead>
@@ -483,6 +665,21 @@
 
 										</ul>
                                         <button id="update_apply_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
+		  							</div>
+
+									<!--黑名单-->
+									<div class="am-tab-panel am-fade" id="tab3">
+										<table class="am-table am-table-bd am-table-striped admin-content-table">
+				  							<thead><tr><th>用户名</th><th>姓名</th><th>管理</th></tr></thead>
+											<tbody id="blacklist_info">
+                                            <!--<tr><td>doubi</td><td><a href="#">逗比</a></td><td><button>取消</button></td></tr>-->
+											</tbody>
+										</table>
+										<br>
+										<ul id="black_page_info" class="am-pagination am-pagination-centered">
+
+										</ul>
+                                        <button id="update_blacklist_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>
 		  							</div>
 								</div>
 							</div>

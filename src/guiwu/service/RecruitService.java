@@ -2,6 +2,7 @@ package guiwu.service;
 import guiwu.domain.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface RecruitService
 {
@@ -14,6 +15,9 @@ public interface RecruitService
     List<RecruitBrief> getRecruitBrief(int start, int pageSize);
     List<RecruitBrief> getTheLatestRecruitBrief(int start, int pageSize);
     List<RecruitBrief> getTheHottestRecruitBrief(int start, int pageSize);
+    List<RecruitBrief> getSomeRecruitBrief(List<Integer> rids);
+    List<RecruitBrief> getSomeRecruitBrief(Set<String> rids);
+    List<RecruitBrief> searchBecruitBrief(String searchStr);
     int getTotalCount();
     int getTotatlCountOfStatus(String status);
     void addRecruit(EnterpriseUser enterpriseUser, Recruit recruit);

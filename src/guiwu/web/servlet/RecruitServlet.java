@@ -2,14 +2,16 @@ package guiwu.web.servlet;
 import guiwu.domain.*;
 import guiwu.service.RecruitService;
 import guiwu.service.impl.RecruitServiceImpl;
+import guiwu.util.JedisUtil;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLSyntaxErrorException;
 import java.util.List;
+import java.util.Set;
 
 @WebServlet("/recruit/*") //
 public class RecruitServlet extends BaseServlet
@@ -25,16 +27,19 @@ public class RecruitServlet extends BaseServlet
 
     public void add(HttpServletRequest request, HttpServletResponse response)
     {
-        EnterpriseUser personalUser = (EnterpriseUser) request.getSession().getAttribute("user");
-        recruitService.addRecruit(personalUser.getEid(),
-                request.getParameter("title"),
-                request.getParameter("position"),
-                request.getParameter("salary"),
-                request.getParameter("description"),
-                request.getParameter("requirement"),
-                request.getParameter("priority"),
-                request.getParameter("welfare")
-                );
+        EnterpriseUser user = (EnterpriseUser) request.getSession().getAttribute("user");
+        if (user.getStatus().equals(EnterpriseUser.kWell)) //状态良好的才能添加
+        {
+            recruitService.addRecruit(user.getEid(),
+                    request.getParameter("title"),
+                    request.getParameter("position"),
+                    request.getParameter("salary"),
+                    request.getParameter("description"),
+                    request.getParameter("requirement"),
+                    request.getParameter("priority"),
+                    request.getParameter("welfare")
+            );
+        }
     }
 
     public void del(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +49,6 @@ public class RecruitServlet extends BaseServlet
 
     public void update(HttpServletRequest request, HttpServletResponse response)
     {
-        EnterpriseUser personalUser = (EnterpriseUser) request.getSession().getAttribute("user");
         String status =  request.getParameter("status");
         int rid = Integer.parseInt(request.getParameter("rid"));
         if (status.equals("已发布"))
@@ -57,10 +61,18 @@ public class RecruitServlet extends BaseServlet
     public void  findOne(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String userType = (String) request.getSession().getAttribute("userType");
+        Jedis jedis = JedisUtil.getJedis();
+        Integer rid = Integer.parseInt(request.getParameter("rid"));
+        if (rid <= 0)
+        {
+            writeValue(null, response);
+            return;
+        }
+        jedis.zincrby("the_hottest_recruit", 1, rid.toString());
         if (userType == null)
         {
             System.out.println("还没登陆");
-            RecruitInfo recruitInfo = recruitService.getARecruitInfo(Integer.parseInt(request.getParameter("rid")), "已发布");
+            RecruitInfo recruitInfo = recruitService.getARecruitInfo(rid, "已发布");
             writeValue(recruitInfo, response);
         }
         else
@@ -103,7 +115,25 @@ public class RecruitServlet extends BaseServlet
         writeValue(recruitBriefs , response);
     }
 
+    public void getTheHottestRecruit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        Jedis jedis = JedisUtil.getJedis();
+        Set<String> set = jedis.zrevrange("the_hottest_recruit", 0, 4);
+//        for (String str : set)
+//        {
+//            System.out.println(str);
+//        }
+        List<RecruitBrief> recruitBriefs = recruitService.getSomeRecruitBrief(set);
+        //if (set.size() != )
+        writeValue(recruitBriefs , response);
+    }
 
-
+    public void  searchRecruitBrief(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        //int rid = Integer.parseInt(request.getParameter("rid"));
+        //Recruit recruit = recruitService.getARecruit(Integer.parseInt(request.getParameter("rid")));
+        List<RecruitBrief> recruitBriefs = recruitService.searchBecruitBrief(request.getParameter("searchStr"));
+        writeValue(recruitBriefs , response);
+    }
 
 }

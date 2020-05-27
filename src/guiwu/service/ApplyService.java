@@ -21,5 +21,7 @@ public interface ApplyService
     void addApply(int pid, int rid, String status);
     void delApply(int aid);
 
+    //add apply  with pid rid and status
+    void apply(int pid, int rid);
 
 }

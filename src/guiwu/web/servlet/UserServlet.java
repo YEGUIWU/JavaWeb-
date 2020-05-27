@@ -61,7 +61,11 @@ public class UserServlet extends BaseServlet {
             }
             else if (type.equals("enterprise"))
             {
-
+                EnterpriseUser enterpriseUser = new EnterpriseUser();
+                enterpriseUser.setUsername(request.getParameter("username"));
+                enterpriseUser.setPassword(request.getParameter("password"));
+                enterpriseUser.setEmail(request.getParameter("email"));
+                user = enterpriseUser;
             }
 
             try
@@ -134,14 +138,14 @@ public class UserServlet extends BaseServlet {
             {
                 PersonalUser u  = service.login((PersonalUser)user);
                 System.out.println(u);
-                if(u != null && !"Y".equals(u.getStatus()))
+                if(u != null && "N".equals(u.getStatus()))
                 {
                     //用户尚未激活
                     info.setFlag(false);
                     info.setErrorMsg("您尚未激活，请激活");
                     System.out.println("您尚未激活，请激活");
                 }
-                if(u != null && "Y".equals(u.getStatus()))
+                if(u != null && !"N".equals(u.getStatus()))
                 {
                     request.getSession().setAttribute("user",u);//登录成功标记
                     request.getSession().setAttribute("userType", "personal");//登录成功标记
@@ -156,14 +160,14 @@ public class UserServlet extends BaseServlet {
                 System.out.println("企业用户登陆");
                 EnterpriseUser u  = service.login((EnterpriseUser) user);
                 System.out.println(u);
-                if(u != null && !"Y".equals(u.getStatus()))
+                if(u != null && "N".equals(u.getStatus()))
                 {
                     //用户尚未激活
                     info.setFlag(false);
                     info.setErrorMsg("您尚未激活，请激活");
                     System.out.println("您尚未激活，请激活");
                 }
-                if(u != null && "Y".equals(u.getStatus()))
+                if(u != null && !"N".equals(u.getStatus()))
                 {
                     request.getSession().setAttribute("user",u);//登录成功标记
                     request.getSession().setAttribute("userType", "enterprise");//登录成功标记
@@ -195,11 +199,21 @@ public class UserServlet extends BaseServlet {
     public void active(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1.获取激活码
         String code = request.getParameter("code");
+        String type = request.getParameter("type");
         if(code != null){
             //2.调用service完成激活
             UserService service = new UserServiceImpl();
-            boolean flag = service.activePersonalUser(code);
-
+            boolean flag = false;
+            if (type.equals("personal"))
+            {
+                System.out.println("激活普通用户");
+                flag = service.activePersonalUser(code);
+            }
+            else if (type.equals("enterprise"))
+            {
+                System.out.println("激活企业用户");
+                flag = service.activeEnterpriseUser(code);
+            }
             //3.判断标记
             String msg = null;
             if(flag){
@@ -345,6 +359,22 @@ public class UserServlet extends BaseServlet {
         else //修改了密码
         {
             exit(request,response);
+        }
+    }
+
+    public void toHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String contextPath = request.getContextPath();
+        String type =(String)request.getSession().getAttribute("userType");
+        if (type != null)
+        {
+            if (type.equals("personal"))
+            {
+                response.sendRedirect(contextPath+"/userhome.html");
+            }
+            else
+            {
+                response.sendRedirect(contextPath+"/companyhome.html");
+            }
         }
     }
 

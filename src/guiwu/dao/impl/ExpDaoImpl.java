@@ -82,17 +82,19 @@ public class ExpDaoImpl implements ExpDao
     private void delExp(ReadWriteLock lock, String tableName, int expId)
     {
         //1.定义sql
-        String sql = "delete from  " + tableName + " where exp_id = ?";
-        try
-        {
-            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
-            pstmt.setInt(1, expId);
-            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
+//        String sql = "delete from  " + tableName + " where exp_id = ?";
+//        try
+//        {
+//            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+//            pstmt.setInt(1, expId);
+//            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+
+        JDBCUtils.delById(tableName, "exp_id", expId, lock.writeLock());
     }
 
     //-----------------------------------------------------------------------

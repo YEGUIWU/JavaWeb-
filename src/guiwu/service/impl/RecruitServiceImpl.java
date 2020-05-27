@@ -8,7 +8,9 @@ import guiwu.domain.RecruitBrief;
 import guiwu.domain.RecruitInfo;
 import guiwu.service.RecruitService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class RecruitServiceImpl implements RecruitService
 {
@@ -105,5 +107,28 @@ public class RecruitServiceImpl implements RecruitService
     public int getTotatlCountOfStatus(String status)
     {
         return recruitDao.getTotalCountByStatus(status);
+    }
+
+
+    @Override
+    public List<RecruitBrief> searchBecruitBrief(String searchStr)
+    {
+        return recruitDao.searchBecruitBrief(searchStr);
+    }
+
+    @Override
+    public List<RecruitBrief> getSomeRecruitBrief(List<Integer> rids)
+    {
+        return recruitDao.getSomeRecruitBrief(rids);
+    }
+    @Override
+    public List<RecruitBrief> getSomeRecruitBrief(Set<String> rids)
+    {
+        List<Integer> list = new ArrayList<>();
+        for (String rid : rids)
+        {
+            list.add(Integer.parseInt(rid));
+        }
+        return recruitDao.getSomeRecruitBrief(list);
     }
 }

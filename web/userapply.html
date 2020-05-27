@@ -43,9 +43,7 @@
             {
                 html_data += "<span class=\"am-badge am-badge-primary am-radius\">";
             }
-
-
-            html_data += applyInfo.status + "</span></td></tr>";
+            html_data += applyInfo.status + '</span></td><td><button onclick="DelApply(' + applyInfo.aid + ')">取消</button></td></tr>';
             return html_data;
         }
 
@@ -121,6 +119,24 @@
             MakePageInfo(index);
         }
 
+
+        function DelApply(aid)
+        {
+            $.post("apply/delPersonalApply", {aid : aid},function ()
+            {
+            });
+            for (var i = 0; i < g_Apply_list.length; ++i)
+            {
+                if (g_Apply_list[i].aid == aid)
+                {
+                    g_Apply_list.splice(i, 1);
+                    GetThePage(g_CurPage);
+                    break;
+                }
+            }
+
+        }
+
         $(function () {
             //-------------------------------------------------------------------------------------
             //
@@ -156,8 +172,8 @@
 								<section class="amz-sidebar am-offcanvas-bar">
 									<ul class="am-nav">
 										<li><a href="userhome.html">我的简历</a></li>
-										<li><a href="userqiuzhi.html">求职信息</a></li>
-										<li><a href="useremail.html">邮件中心</a></li>
+										<li><a href="userapply.html">求职管理</a></li>
+										<li><a href="usercomplain.html">投诉结果</a></li>
 									</ul>
 								</section>
 							</div>
@@ -165,12 +181,12 @@
 			  			</div>
 					</div>
 
-					<div class="am-panel am-panel-default admin-sidebar-panel">
-				  		<div class="am-panel-bd">
-							<p><span class="am-icon-bookmark"></span> 公告</p>
-							<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
-				  		</div>
-					</div>
+					<!--<div class="am-panel am-panel-default admin-sidebar-panel">-->
+				  		<!--<div class="am-panel-bd">-->
+							<!--<p><span class="am-icon-bookmark"></span> 公告</p>-->
+							<!--<p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>-->
+				  		<!--</div>-->
+					<!--</div>-->
 
 					<div class="am-panel am-panel-default admin-sidebar-panel">
 				  		<div class="am-panel-bd">
@@ -199,18 +215,18 @@
 				  				<div class="am-tabs-bd">
 									<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 										<table class="am-table am-table-bd am-table-striped admin-content-table">
-				  							<thead><tr><th>发送时间</th><th>公司名称</th><th>职位名称</th><th>状态</th></tr></thead>
+				  							<thead><tr><th>发送时间</th><th>公司名称</th><th>职位名称</th><th>状态</th><th>管理</th></tr></thead>
 											<tbody id="apply_info">
-											  <tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td></tr>
-											  <tr><td>2015.03.24 </td><td>谷歌</td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-badge-danger am-radius">面试中</span></td></tr>
-											  <tr><td>2015.02.26</td><td>腾讯</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.01.14</td><td>阿里巴巴</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-secondary am-radius">HR已阅</span></td></tr>
-											  <tr><td>2014.12.25</td><td>爱奇艺</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-radius">未通过</span></td></tr>
-											  <tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td></tr>
-											  <tr><td>2015.03.24 </td><td>谷歌</td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-badge-danger am-radius">面试中</span></td></tr>
-											  <tr><td>2015.02.26</td><td>腾讯</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>
-											  <tr><td>2015.01.14</td><td>阿里巴巴</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-secondary am-radius">HR已阅</span></td></tr>
-											  <tr><td>2014.12.25</td><td>爱奇艺</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-radius">未通过</span></td></tr>
+											  <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td><td><button>取消</button></td></tr>-->
+											  <!--<tr><td>2015.03.24 </td><td>谷歌</td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-badge-danger am-radius">面试中</span></td></tr>-->
+											  <!--<tr><td>2015.02.26</td><td>腾讯</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>-->
+											  <!--<tr><td>2015.01.14</td><td>阿里巴巴</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-secondary am-radius">HR已阅</span></td></tr>-->
+											  <!--<tr><td>2014.12.25</td><td>爱奇艺</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-radius">未通过</span></td></tr>-->
+											  <!--<tr><td>2015.06.01</td><td>百度</td><td><a href="#">软件工程师</a></td> <td><span class="am-badge am-badge-success am-radius">通过</span></td></tr>-->
+											  <!--<tr><td>2015.03.24 </td><td>谷歌</td><td><a href="#">Java工程师</a></td><td><span class="am-badge am-badge-danger am-radius">面试中</span></td></tr>-->
+											  <!--<tr><td>2015.02.26</td><td>腾讯</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-warning am-radius">感兴趣</span></td></tr>-->
+											  <!--<tr><td>2015.01.14</td><td>阿里巴巴</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-badge-secondary am-radius">HR已阅</span></td></tr>-->
+											  <!--<tr><td>2014.12.25</td><td>爱奇艺</td><td><a href="#">软件工程师</a></td><td><span class="am-badge am-radius">未通过</span></td></tr>-->
 											</tbody>
 										</table>
 										<br>

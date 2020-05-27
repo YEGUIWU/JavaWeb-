@@ -1,10 +1,14 @@
 package guiwu.service.impl;
 
 import guiwu.dao.ApplyDao;
+import guiwu.dao.BlacklistDao;
+import guiwu.dao.RecruitDao;
+import guiwu.dao.UserDao;
 import guiwu.dao.impl.ApplyDaoImpl;
-import guiwu.domain.Apply;
-import guiwu.domain.ApplyInfo;
-import guiwu.domain.PersonalUser;
+import guiwu.dao.impl.BlacklistDaoImpl;
+import guiwu.dao.impl.RecruitDaoImpl;
+import guiwu.dao.impl.UserDaoImpl;
+import guiwu.domain.*;
 import guiwu.service.ApplyService;
 
 import java.util.List;
@@ -12,6 +16,8 @@ import java.util.List;
 public class ApplyServiceImpl implements ApplyService
 {
     ApplyDao applyDao = new ApplyDaoImpl();
+    BlacklistDao blacklistDao = new BlacklistDaoImpl();
+    RecruitDao recruitDao = new RecruitDaoImpl();
     @Override
     public List<Apply> getPersonalApply(int pid)
     {
@@ -68,5 +74,19 @@ public class ApplyServiceImpl implements ApplyService
     public Apply getPersonalApply(int pid, int rid)
     {
         return applyDao.getPersonalApply(pid, rid);
+    }
+
+    @Override
+    public void apply(int pid, int rid)
+    {
+        Recruit recruit = recruitDao.getARecruit(rid);
+        if (recruit != null)
+        {
+            Blacklist blacklist = blacklistDao.find(recruit.getEid(), pid);
+            if (blacklist == null)
+            {
+                applyDao.addApply(pid, rid, "待接受");
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ public interface UserDao {
     void saveAdmin(AdminUser admin);
 
     PersonalUser findPersonalUserByCode(String code);
+    EnterpriseUser findEnterpriseUserByCode(String code);
 
     void updateStatus(PersonalUser personalUser);
     void updateStatus(EnterpriseUser enterpriseUser);

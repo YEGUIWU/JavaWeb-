@@ -1,9 +1,8 @@
 package guiwu.web.servlet;
 
-import guiwu.domain.Apply;
-import guiwu.domain.ApplyInfo;
-import guiwu.domain.EnterpriseUser;
-import guiwu.domain.PersonalUser;
+import guiwu.dao.BlacklistDao;
+import guiwu.dao.impl.BlacklistDaoImpl;
+import guiwu.domain.*;
 import guiwu.service.ApplyService;
 import guiwu.service.impl.ApplyServiceImpl;
 
@@ -23,18 +22,24 @@ public class ApplyServlet extends BaseServlet
     {
         EnterpriseUser enterpriseUser = (EnterpriseUser) request.getSession().getAttribute("user");
         List<ApplyInfo> applyInfos = applyService.getApplyInfo(enterpriseUser.getEid());
-        for (ApplyInfo applyInfo : applyInfos)
-        {
-            System.out.println(applyInfo);
-        }
         writeValue(applyInfos, response);
     }
     public void updateApply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         EnterpriseUser enterpriseUser = (EnterpriseUser) request.getSession().getAttribute("user");
-        String newStatus = request.getParameter("status");
-        int aid = Integer.parseInt(request.getParameter("aid"));
-        applyService.updateStatus(aid, newStatus);
+        ResultInfo resultInfo = new ResultInfo();
+        if (enterpriseUser != null && enterpriseUser.getStatus().equals("Y"))
+        {
+            resultInfo.setFlag(true);
+            String newStatus = request.getParameter("status");
+            int aid = Integer.parseInt(request.getParameter("aid"));
+            applyService.updateStatus(aid, newStatus);
+        }
+        else
+        {
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("权限不足");
+        }
     }
 
     public void getApply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -81,7 +86,26 @@ public class ApplyServlet extends BaseServlet
     public void addPersonalApply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
-        int rid = Integer.parseInt(request.getParameter("rid"));
-        applyService.addApply(personalUser.getPid(), rid, "待接受");
+        ResultInfo resultInfo = new ResultInfo();
+        if (personalUser != null && personalUser.getStatus().equals("Y"))
+        {
+            resultInfo.setFlag(true);
+            int rid = Integer.parseInt(request.getParameter("rid"));
+            //applyService.addApply(personalUser.getPid(), rid, "待接受");
+            applyService.apply(personalUser.getPid(), rid);
+        }
+        else
+        {
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("请先登陆");
+        }
+        writeValue(resultInfo, response);
+    }
+
+    public void delPersonalApply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
+        int aid = Integer.parseInt(request.getParameter("aid"));
+        applyService.delApply(aid);
     }
 }

@@ -16,9 +16,12 @@ public interface RecruitDao
     RecruitInfo getARecruitInfo(int rid);
     List<RecruitBrief> getRecruitBrief(String sql);
     List<RecruitBrief> getAllRecruitBrief();
+    List<RecruitBrief> getSomeRecruitBrief(List<Integer> rids);
     List<RecruitBrief> getRecruitBrief(int start, int pageSize);
     List<RecruitBrief> getTheLatestRecruitBrief(int start, int pageSize);
     List<RecruitBrief> getTheHottestRecruitBrief(int start, int pageSize);
+    List<RecruitBrief> searchBecruitBrief(String searchStr);
+
 
     void addRecruit(EnterpriseUser enterpriseUser, Recruit recruit);
     void addRecruit(int eid, Recruit recruit);
