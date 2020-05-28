@@ -15,6 +15,17 @@ public class AdminUser implements Serializable
     private String password;//密码
     private String name;
 
+    public AdminUser()
+    {
+    }
+
+    public AdminUser(int aid, String username, String password, String name)
+    {
+        this.aid = aid;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
 
     public int getAid()
     {

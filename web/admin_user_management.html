@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>管理员主页</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/amazeui.min.js"></script>
+    <script>
+        var g_PUser_Count;
+        var g_EUser_Count;
+        var g_PUser_list = [];
+        var g_EUser_list = [];
+
+        var g_PerPage = 5;
+        var g_MaxPages = 5;
+
+        function UpdateUser(type, id, status) {
+            $.post("user/updateUserStatus",{type:type, id: id, status:status}, function () {
+                if (type == "personal")
+                {
+                    for (var i = 0; i < g_PUser_list.length; ++i)
+                    {
+                        if (g_PUser_list[i].id == id)
+                        {
+                            g_PUser_list[i].status = status;
+                            RefreshThePersonalBriefList();
+                            break;
+                        }
+                    }
+                }
+                else if (type == "enterprise")
+                {
+                    for (var i = 0; i < g_EUser_list.length; ++i)
+                    {
+                        if (g_EUser_list[i].id == id)
+                        {
+                            g_EUser_list[i].status = status;
+                            RefreshTheEnterpriseBriefList();
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
+        function delUser(type, id) {
+            $.post("user/delUser",{type:type, id: id}, function () {
+                if (type == "personal")
+                {
+                    for (var i = 0; i < g_PUser_list.length; ++i)
+                    {
+                        if (g_PUser_list[i].id == id)
+                        {
+                            g_PUser_list.splice(i, 1);
+                            RefreshThePersonalBriefList();
+                            break;
+                        }
+                    }
+                }
+                else if (type == "enterprise")
+                {
+                    for (var i = 0; i < g_EUser_list.length; ++i)
+                    {
+                        if (g_EUser_list[i].id == id)
+                        {
+                            g_EUser_list.splice(i, 1);
+                            RefreshTheEnterpriseBriefList();
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+        //---------------------------------------------------------------------
+        //                              Personal
+        //---------------------------------------------------------------------
+
+        function MakePersonalBrief(user) {
+            var html_data =
+                "<tr>" +
+                "<td>" + user.id + "</td>" +
+                "<td><a href='resume.html?pid=" + user.id +"'>" + user.username + "</a></td>" +
+                "<td>" + user.email + "</td>" +
+                "<td>";
+            if (user.status == 'Y')
+            {
+                html_data += "<span class=\"am-badge am-badge-success am-radius\">正常";
+                html_data += "</span></td>" +
+                    "<td>" +
+                    "<button onclick='UpdateUser(\"personal\","+ user.id + "," + "\"C\"" +")' class=\"am-btn am-btn-warning am-btn-xs am-radius\">限制</button>" +
+                    "<button onclick='delUser(\"personal\","+ user.id + ")' class=\"am-btn am-btn-danger am-btn-xs am-radius\">删除</button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+            else if (user.status == 'N')
+            {
+                html_data += "<span class=\"am-badge am-radius\">未激活";
+                html_data += "</span></td>" +
+                    "<td>" +
+                    "<button class=\"am-btn am-btn-xs am-radius\" disabled>----</button>" +
+                    "<button onclick='delUser(\"personal\","+ user.id + ")'  class=\"am-btn am-btn-danger am-btn-xs am-radius\">删除</button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+            else
+            {
+                html_data += "<span class=\"am-badge am-badge-warning am-radius\">受限";
+                html_data += "</span></td>" +
+                    "<td>" +
+                    "<button  onclick='UpdateUser(\"personal\","+ user.id + "," + "\"Y\"" +")' class=\"am-btn am-btn-success am-btn-xs am-radius\">恢复</button>" +
+                    "<button onclick='delUser(\"personal\","+ user.id + ")'  class=\"am-btn am-btn-danger am-btn-xs am-radius\">删除</button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+
+            return html_data;
+        }
+        function RefreshThePersonalBriefList()
+        {
+            console.log("refresh: " + g_PUser_list.length);
+            var html_data = "";
+            for (var i = 0; i < g_PUser_list.length; ++i)
+            {
+                html_data += MakePersonalBrief(g_PUser_list[i]);
+            }
+            //console.log(html_data);
+            $('#personal_info').html(html_data);
+        }
+
+        function MakeThePersonalPageInfo(index)
+        {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetThePersonalPage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_PUser_Count - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetThePersonalPage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetThePersonalPage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#personal_page').html(html_data);
+            // alert(html_data);
+            // g_TheLatestPageInfo = html_data;
+        }
+
+        function GetThePersonalPage(index)
+        {
+            console.log("index: " + index);
+            if (index * g_PerPage > g_PUser_Count)
+            {
+                return;
+            }
+            $.get("user/getUserBriefByPage",{type:"personal", begin: index * g_PerPage, size: g_PerPage}, function (data) {
+                if (data)
+                {
+                    g_PUser_list = data;
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        console.log(data[i]);
+                    }
+                    RefreshThePersonalBriefList();
+                    MakeThePersonalPageInfo(index);
+                }
+            });
+        }
+        //---------------------------------------------------------------------
+        //                              Enterprise
+        //---------------------------------------------------------------------
+        function MakeEnterpriseBrief(user) {
+            var html_data =
+                "<tr>" +
+                "<td>" + user.id + "</td>" +
+                "<td><a href='enterprise.html?eid=" + user.id +"'>" + user.username + "</a></td>" +
+                "<td>" + user.email + "</td>" +
+                "<td>";
+            if (user.status == 'Y')
+            {
+                html_data += "<span class=\"am-badge am-badge-success am-radius\">正常";
+                html_data += "</span></td>" +
+                    "<td>" +
+                    "<button onclick='UpdateUser(\"enterprise\","+ user.id + "," + "\"C\"" +")' class=\"am-btn am-btn-warning am-btn-xs am-radius\">限制</button>" +
+                    "<button onclick='delUser(\"enterprise\","+ user.id + ")' class=\"am-btn am-btn-danger am-btn-xs am-radius\">删除</button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+            else if (user.status == 'N')
+            {
+                html_data += "<span class=\"am-badge am-radius\">未激活";
+                html_data += "</span></td>" +
+                    "<td>" +
+                    "<button onclick='UpdateUser(\"enterprise\","+ user.id + "," + "\"Y\"" +")' class=\"am-btn am-btn-success am-btn-xs am-radius\">激活</button>" +
+                    "<button onclick='delUser(\"enterprise\","+ user.id + ")' class=\"am-btn am-btn-danger am-btn-xs am-radius\">删除</button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+            else
+            {
+                html_data += "<span class=\"am-badge am-badge-warning am-radius\">受限";
+                html_data += "</span></td>" +
+                    "<td>" +
+                    "<button onclick='UpdateUser(\"enterprise\","+ user.id + "," + "\"Y\"" +")' class=\"am-btn am-btn-success am-btn-xs am-radius\">恢复</button>" +
+                    "<button onclick='delUser(\"enterprise\","+ user.id + ")' class=\"am-btn am-btn-danger am-btn-xs am-radius\">删除</button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+
+            return html_data;
+        }
+        function RefreshTheEnterpriseBriefList()
+        {
+            console.log("refresh: " + g_EUser_list.length);
+            var html_data = "";
+            for (var i = 0; i < g_EUser_list.length; ++i)
+            {
+
+                html_data += MakeEnterpriseBrief(g_EUser_list[i]);
+            }
+            //console.log(html_data);
+            $('#enterprise_info').html(html_data);
+        }
+
+        function MakeTheEnterprisePageInfo(index)
+        {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetTheEnterprisePage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_EUser_Count - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetTheEnterprisePage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetTheEnterprisePage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#enterprise_page').html(html_data);
+            // alert(html_data);
+            // g_TheLatestPageInfo = html_data;
+        }
+
+        function GetTheEnterprisePage(index)
+        {
+            console.log("index: " + index);
+            if (index * g_PerPage > g_PUser_Count)
+            {
+                return;
+            }
+            $.get("user/getUserBriefByPage",{type:"enterprise", begin: index * g_PerPage, size: g_PerPage}, function (data) {
+                if (data)
+                {
+                    g_EUser_list = data;
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        console.log(data[i]);
+                    }
+                    RefreshTheEnterpriseBriefList();
+                    MakeTheEnterprisePageInfo(index);
+                }
+            });
+        }
+
+        $(function () {
+            //-------------------------------------------------------------------------------------
+            // 获取数据总量
+            $.get("user/getUserCount",{type: "personal"}, function (size) {
+                g_PUser_Count = size;
+                console.log(g_PUser_Count);
+                GetThePersonalPage(0);
+            });
+            $.get("user/getUserCount",{type: "enterprise"}, function (size) {
+                g_EUser_Count = size;
+                console.log(g_EUser_Count);
+                GetTheEnterprisePage(0);
+            });
+            // $.get("user/getUserBrief",{type: "personal"}, function (data) {
+            //     if (data)
+            //     {
+            //         g_PUser_list = data;
+            //         for (var i = 0; i < g_PUser_list.length; ++i)
+            //         {
+            //             console.log(g_PUser_list[i]);
+            //         }
+            //     }
+            // });
+            // $.get("user/getUserBrief",{type: "enterprise"}, function (data) {
+            //     if (data)
+            //     {
+            //         g_EUser_list = data;
+            //         for (var i = 0; i < g_EUser_list.length; ++i)
+            //         {
+            //             console.log(g_EUser_list[i]);
+            //         }
+            //     }
+            // });
+
+            // $("#search_btn").click(function ()
+            // {
+            //     var searchStr = $('#search_bar').val();
+            //     if (searchStr.length)
+            //     {
+            //         console.log("search: " + searchStr);
+            //         $.get("recruit/searchRecruitBrief", {searchStr: searchStr}, function (data) {
+            //             if (data.length)
+            //             {
+            //                 g_TotalCount = data.length;
+            //                 g_TheLatestRecruitBrief_list = data;
+            //                 GetTheSearchPage(0);
+            //             }
+            //         })
+            //     }
+            //     else
+            //     {
+            //         $.get("recruit/getTotalCountOfReleased",{}, function (size) {
+            //             g_TotalCount = size;
+            //             GetTheLatestPage(0);
+            //         });
+            //     }
+            // });
+        });
+    </script>
+</head>
+
+<body>
+
+<br>
+
+<div class="am-g am-g-fixed blog-g-fixed">
+  <div class="am-cf admin-main">
+	<div class="am-u-md-3 blog-sidebar">
+
+		  <!-- sidebar start -->
+		  <div class="admin-sidebar">
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-bookmark"></span> 管理中心</p>
+					<div id="amz-offcanvas" class="am-offcanvas doc-offcanvas">
+					<section class="amz-sidebar am-offcanvas-bar">
+					<ul class="am-nav">
+						<li><a href="adminhome.html">管理员信息</a></li>
+						<li><a href="admin_user_management.html">用户管理</a></li>
+						<li><a href="admin_recruit_management.html">招聘管理</a></li>
+						<li><a href="admin_complain_management.html">投诉管理</a></li>
+						</ul>
+					</section>
+				</div>
+
+			  </div>
+			</div>
+		  </div>
+		  <!-- sidebar end -->
+		  </div>
+
+		  <div class="am-u-md-9">
+		  		<!-- content start -->
+		  		<div class="admin-content">
+					<div class="am-g">
+					   <div class="am-u-md-12">
+
+				       		<!---选项卡-->
+							<div class="am-tabs" data-am-tabs>
+				  				<ul class="am-tabs-nav am-nav am-nav-tabs">
+									<li class="am-active"><a href="#tab1">普通用户</a></li>
+									<li ><a href="#tab2">企业用户</a></li>
+				  				</ul>
+
+				  				<div class="am-tabs-bd">
+									<div class="am-tab-panel am-fade am-in am-active" id="tab1">
+										<table class="am-table am-table-bd am-table-striped admin-content-table">
+				  							<thead>
+				  								<tr>
+				  									<th>ID</th>
+				  									<th>用户名</th>
+				  									<th>邮箱</th>
+				  									<th>状态</th>
+													<th>管理</th>
+				  								</tr>
+				  							</thead>
+											<tbody id="personal_info">
+												 <!--<tr>-->
+												 	<!--<td>1</td>-->
+												 	<!--<td><a>baidu</a></td>-->
+												 	<!--<td>baidu@mail.com</td>-->
+												 	<!--<td><span class="am-badge am-badge-warning am-radius">受限</span></td>-->
+												 	<!--<td>-->
+												 		<!--<button class="am-btn am-btn-warning am-btn-xs am-radius">限制</button>-->
+												 		<!--<button class="am-btn am-btn-success am-btn-xs am-radius">恢复</button>-->
+												 		<!--<button class="am-btn am-btn-danger am-btn-xs am-radius">删除</button>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+												 <!--<tr>-->
+												 	<!--<td>1</td>-->
+												 	<!--<td><a>baidu</a></td>-->
+												 	<!--<td>baidu@mail.com</td>-->
+												 	<!--<td><span class="am-badge am-badge-success am-radius">正常</span></td>-->
+												 	<!--<td>-->
+												 		<!--<button class="am-btn am-btn-warning am-btn-xs am-radius">限制</button>-->
+												 		<!--<button class="am-btn am-btn-success am-btn-xs am-radius">恢复</button>-->
+												 		<!--<button class="am-btn am-btn-danger am-btn-xs am-radius">删除</button>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+											</tbody>
+										</table>
+										<br>
+										<ul  id="personal_page" class="am-pagination am-pagination-centered">
+
+										</ul>
+                                        <!--<button id="update_personal_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>-->
+									</div>
+
+
+                                    <!--求职信息-->
+                                    <div class="am-tab-panel am-fade" id="tab2">
+                                        <table class="am-table am-table-bd am-table-striped admin-content-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>用户名</th>
+                                                    <th>邮箱</th>
+                                                    <th>状态</th>
+                                                    <th>管理</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="enterprise_info">
+
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <ul id="enterprise_page" class="am-pagination am-pagination-centered">
+
+                                        </ul>
+                                        <!--<button id="update_enterprise_btn" type="button" class="am-btn am-btn-default"><span class="am-icon-pencil">更新</span></button>-->
+                                    </div>
+
+								</div>
+							</div>
+    					</div>
+  					</div>
+				</div>
+			</div>
+
+		  </div>
+		<!-- content end -->
+	</div>
+</div>
+</div>
+
+  </div>
+
+
+
+</body>
+</html>

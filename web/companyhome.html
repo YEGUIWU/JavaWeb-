@@ -20,7 +20,7 @@
     <script>
 
         //校验名字
-        //单词字符，长度8到20位
+        //单词字符，长度0-8位
         function checkName() {
             //1.获取用户名值
             var username = $("#name").val();
@@ -39,11 +39,11 @@
         //校验密码
         function checkPassword() {
             var psdVal = $("#password").val();
-            var regPsd = /^[0-9A-Za-z]{6,20}$/;
+            var regPsd = /^[0-9A-Za-z]{6,32}$/;
             if(psdVal== "" || !regPsd.test(psdVal))
             {
                 // $("#errPassword").html(" 密码为6-20位字母、数字的组合！");
-                alert(" 密码为6-20位字母、数字的组合！")
+                alert(" 密码为6-32位字母、数字的组合！")
                 return false;
             }
             else
@@ -112,7 +112,6 @@
                         } else {
                             //注册失败,给errorMsg添加提示信息
                             // $("#errorMsg").html(data.errorMsg);
-                            alert("修改成功");
                             alert(data.errorMsg);
                         }
                     });
@@ -163,7 +162,7 @@
 					<div class="am-panel am-panel-default admin-sidebar-panel">
 			  			<div class="am-panel-bd">
 							<p><span class="am-icon-tag"></span> 简介</p>
-							<p id="user_brief">Welcome!</p>
+							<p id="user_brief"></p>
 			  			</div>
 					</div>
 

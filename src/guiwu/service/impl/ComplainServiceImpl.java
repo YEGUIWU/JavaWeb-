@@ -3,6 +3,7 @@ package guiwu.service.impl;
 import guiwu.dao.ComplainDao;
 import guiwu.dao.impl.ComplainDaoImpl;
 import guiwu.domain.ComplainInfo;
+import guiwu.domain.ComplainMIBrief;
 import guiwu.service.ComplainService;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class ComplainServiceImpl implements ComplainService
 {
-    ComplainDao complainDao = new ComplainDaoImpl();
+    private ComplainDao complainDao = new ComplainDaoImpl();
     @Override
     public List<ComplainInfo> getComplainInfoByPid(int pid)
     {
@@ -47,5 +48,23 @@ public class ComplainServiceImpl implements ComplainService
     public void delComplain(int cid)
     {
         complainDao.delComplain(cid);
+    }
+
+
+    @Override
+    public List<ComplainMIBrief> getComplainMIBrief(int begin, int size)
+    {
+        return complainDao.getComplainMIBrief(begin, size);
+    }
+    @Override
+    public void updateStatusAndResult(int cid, String status, String result)
+    {
+        complainDao.updateStatusAndResult(cid, status, result);
+    }
+
+    @Override
+    public int getTotalCountOfStatus(String status)
+    {
+        return complainDao.getTotalCountOfStatus(status);
     }
 }

@@ -2,6 +2,7 @@ package guiwu.dao.impl;
 
 import guiwu.dao.ComplainDao;
 import guiwu.domain.ComplainInfo;
+import guiwu.domain.ComplainMIBrief;
 import guiwu.util.JDBCUtils;
 
 import java.sql.PreparedStatement;
@@ -81,7 +82,7 @@ public class ComplainDaoImpl implements ComplainDao
     public ComplainInfo getComplainInfo(int cid)
     {
         String sql ="select tc.cid, tc.pid, tc.rid, tc.title, tc.content, tc.time, tc.status, tc.result, teu.name, tr.title " +
-                "from " + complainTableName + " tc" +
+                "from " + complainTableName + " tc " +
                 "join "+ RecruitDaoImpl.recruitTableName +" tr on tc.rid = tr.rid " +
                 "join "+ UserDaoImpl.enterpriseUserTableName +" teu on teu.eid = tr.eid " +
                 "where cid = " + cid;
@@ -172,6 +173,97 @@ public class ComplainDaoImpl implements ComplainDao
 //            e.printStackTrace();
 //        }
         JDBCUtils.delById(complainTableName, "cid", cid, lock.writeLock());
+    }
+
+
+    private ComplainMIBrief toComplainMIBrief(ResultSet resultSet) throws SQLException
+    {
+        return new ComplainMIBrief(
+                resultSet.getInt(1),
+                resultSet.getInt(2),
+                resultSet.getInt(3),
+                resultSet.getInt(4),
+                resultSet.getString(5),
+                resultSet.getString(6),
+                resultSet.getString(7),
+                resultSet.getString(8),
+                resultSet.getString(9)
+        );
+    }
+
+    private List<ComplainMIBrief> getComplainMIBrief(String sql)
+    {
+        List<ComplainMIBrief> complainList = new ArrayList<>();
+        try
+        {
+            ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
+
+            while (resultSet.next())
+            {
+                complainList.add(toComplainMIBrief(resultSet));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return complainList;
+    }
+
+    @Override
+    public List<ComplainMIBrief> getComplainMIBrief(int begin, int size)
+    {
+        String sql = "select tc.cid, tc.pid, tc.rid, teu.eid, tc.time, tpu.username, teu.username, tr.title, tc.status\n" +
+//                "from tab_complain tc\n" +
+                "from " + complainTableName + " tc\n" +
+//                "join tab_personal_user tpu on tc.pid = tpu.pid\n" +
+                "join " + UserDaoImpl.personalUserTableName + " tpu on tc.pid = tpu.pid\n" +
+//                "join tab_recruit tr on tc.rid = tr.eid \n" +
+                "join " + RecruitDaoImpl.recruitTableName + " tr on tc.rid = tr.rid \n" +
+//                "join tab_enterprise_user teu on tr.eid = teu.eid\n" +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid\n" +
+                "where tc.status = '待处理'\n" +
+                "limit " + begin + "," + size;
+        return getComplainMIBrief(sql);
+    }
+
+    @Override
+    public void updateStatusAndResult(int cid, String status, String result)
+    {
+        String sql =
+                " update " + complainTableName +
+                " set status=?, result=?" +
+                " where cid=?";
+//        System.out.println(sql);
+        try
+        {
+            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
+            pstmt.setString(1, status);
+            pstmt.setString(2, result);
+            pstmt.setInt(3, cid);
+
+            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+//        System.out.println("finish");
+    }
+
+
+    @Override
+    public int getTotalCountOfStatus(String status)
+    {
+        try
+        {
+            return JDBCUtils.getCountOfAField(complainTableName, "status", status, lock.readLock());
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

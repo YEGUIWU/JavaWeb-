@@ -134,6 +134,18 @@ public class JDBCUtils {
 		}
 		return 0;
 	}
+    public static int getCountOfAField(String tableName, String feild, String val, Lock lock) throws SQLException
+	{
+		String sql = "select count(*) from " + tableName + " where " + feild + "=\'" + val + "\'";
+		lock.lock();
+		ResultSet resultSet = ds.getConnection().createStatement().executeQuery(sql);
+		lock.unlock();
+		if (resultSet.next())
+		{
+			return resultSet.getInt(1);
+		}
+		return 0;
+	}
     public static ResultSet getAll(String tableName,  Lock lock) throws SQLException
     {
         return getResultSet("select * from " + tableName, lock);

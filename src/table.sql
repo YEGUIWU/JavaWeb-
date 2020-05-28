@@ -31,8 +31,25 @@ insert into tab_personal_user(username,password,name,birthday,sex, telephone, em
 values("yeguiwu", "a123456", "叶贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "709394");
 insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
 values("guiwu", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848");
+insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
+values("test1", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848_1");
+insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
+values("test2", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848_2");
+insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
+values("test3", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848_4");
+insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
+values("test4", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848_3");
+insert into tab_personal_user(username,password,name,birthday,sex, telephone, email, brief, status,code)
+values("test5", "a123456", "贵鋈", "1999-11-3","男", "15815994727","yeguiwu@qq.com", "nothing is impossible!!!", 'Y', "8848_5");
 -- delete from tab_user where uid = 3 or uid = 4; 
 
+-- update tab_personal_user set sex='男' where pid=1;
+-- delete from tab_user where uid = 3 or uid = 4; 
+
+-- --------------------------------------------
+-- 				PersonalBrief
+-- --------------------------------------------
+select pid, username, email, status from tab_personal_user;
 
 -- ------------------------------------------------------------------------------
 -- 								work exp
@@ -48,6 +65,8 @@ CREATE TABLE tab_work_exp(
 insert into tab_work_exp(pid, title, content) 
 value (1, "实验室工作", "打杂");
 select * from tab_work_exp;
+
+
 
 -- ------------------------------------------------------------------------------
 -- 									project exp
@@ -105,10 +124,17 @@ value ("weiruan", "a123456", "Y");
 insert into tab_enterprise_user(username, password, status)
 value ("huawei", "a123456", "Y");
 
--- update tab_personal_user set sex='男' where pid=1;
--- delete from tab_user where uid = 3 or uid = 4; 
+-- --------------------------------------------
+-- 				EnterpriseBrief
+-- --------------------------------------------
+select eid, username, email, status from tab_enterprise_user limit 2,2;
 
--- ------------------------------------------------------------------------------
+
+
+-- update tab_enterprise_user set email='test@mail.com' where eid=6;
+
+
+------------------------------------------------------------------------------
 -- admin user
 -- ------------------------------------------------------------------------------
 create table tab_admin_user
@@ -146,6 +172,7 @@ create table tab_recruit
    FOREIGN KEY (eid) REFERENCES tab_enterprise_user(eid) 
 );
 select * from tab_recruit;
+ update tab_recruit set status = "已关闭" where rid = 1;
 insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
 value (1, "Java实习生", "北京", "3-5k", "打杂", "熟练使用各种Java技术", "英语6级优先", "五险一金");
 insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
@@ -160,6 +187,18 @@ insert into tab_recruit(eid, title, position, salary, description, requirement,p
 value (1, "go实习生", "北京", "3-5k", "打杂", "熟练使用各种Go技术", "英语6级优先", "五险一金");
 update tab_recruit set issue = date(now()) where rid = 1;
 update tab_recruit set status = "已发布" where rid = 1;
+
+
+-- --------------------------------------------
+-- 			recrut management info
+-- --------------------------------------------
+
+select tr.rid, tr.eid, teu.username, teu.name, tr.issue, tr.title ,tr.status
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid
+where tr.status = "已发布";
+
+
 -- ------------------------------------------------------------------------------
 -- 									应聘信息表								   --
 -- ------------------------------------------------------------------------------
@@ -178,6 +217,8 @@ insert into tab_apply(pid, rid) value(1, 1);
 insert into tab_apply(pid, rid) value(1, 3);
 insert into tab_apply(pid, rid) value(2, 1);
 insert into tab_apply(pid, rid) value(2, 3);
+
+update tab_apply set status = "待面试" where aid = 15;
 
 select * from tab_apply;
 -- --------------------------------------------
@@ -267,12 +308,25 @@ join tab_enterprise_user teu on teu.eid = tr.eid;
 -- ------------------------------------------------------------------------------
 -- 									黑名单信息表	   						   --
 -- ------------------------------------------------------------------------------
-create table tab_complain
+create table tab_blacklist
 (
    bid                  int not null auto_increment,
    pid					int not null,
    eid					int not null,
-   primary key (cid), 
+   primary key (bid), 
    FOREIGN KEY (pid)    REFERENCES tab_personal_user(pid),
-   FOREIGN KEY (eid)    REFERENCES tab_enterprise_user(eid)
+   FOREIGN KEY (eid)    REFERENCES tab_enterprise_user(eid),
+   UNIQUE KEY `eid` (`eid`, `pid`)
 );
+
+select * from tab_blacklist;
+
+insert into tab_blacklist(pid, eid) value(4,1);
+-- --------------------------------------------
+-- 				BlackInfo table
+-- --------------------------------------------
+select tb.bid, tb.pid, tb.eid, tpu.username, tpu.name
+from tab_blacklist tb
+join tab_personal_user tpu on tb.pid = tpu.pid;
+
+select * from tab_admin_user where username = 'yeguiwu'

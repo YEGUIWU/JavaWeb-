@@ -104,13 +104,13 @@
 
 	<script>
         //校验用户名
-        //单词字符，长度8到20位
+        //单词字符，长度2到20位
         function checkUsername() {
             var nameVal = $("#username").val();
             var regName = /[~#^$@%&!*()<>:;'"{}【】  ]/;
-            if(nameVal == "" || nameVal.length < 2 || regName.test(nameVal))
+            if(nameVal == "" || nameVal.length < 2 || nameVal.length > 20 || regName.test(nameVal))
             {
-                $("#errUsername").html(" 姓名非空，长度2-20位，不包含特殊字符！");
+                $("#errUsername").html(" 用户名非空，长度2-20位，不包含特殊字符！");
                 return false;
             }
             else
@@ -126,7 +126,7 @@
             var regPsd = /^[0-9A-Za-z]{6,20}$/;
             if(psdVal== "" || !regPsd.test(psdVal))
             {
-                $("#errPassword").html(" 密码为6-20位字母、数字的组合！");
+                $("#errPassword").html(" 密码为6-32位字母、数字的组合！");
                 return false;
             }
             else

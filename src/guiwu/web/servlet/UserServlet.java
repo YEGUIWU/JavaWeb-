@@ -121,6 +121,10 @@ public class UserServlet extends BaseServlet {
         }
         else if (type.equals("admin"))
         {
+            AdminUser adminUser = new AdminUser();
+            adminUser.setUsername(request.getParameter("username"));
+            adminUser.setPassword(request.getParameter("password"));
+            user = adminUser;
             System.out.println("管理用户");
         }
         else // do nothing
@@ -176,6 +180,31 @@ public class UserServlet extends BaseServlet {
                     info.setFlag(true);
                     info.setData("companyhome.html");
                 }
+            }
+            else if (type.equals("admin"))
+            {
+                System.out.println("管理员用户登陆");
+                AdminUser adminUser = service.login((AdminUser)user);
+                System.out.println(adminUser);
+                if (adminUser != null)
+                {
+                    request.getSession().setAttribute("user",adminUser);//登录成功标记
+                    request.getSession().setAttribute("userType", "admin");//登录成功标记
+                    System.out.println("登录成功");
+                    //登录成功
+                    info.setFlag(true);
+                    info.setData("adminhome.html");
+                }
+                else
+                {
+                    info.setFlag(false);
+                    info.setErrorMsg("登陆失败");
+                }
+            }
+            else
+            {
+                info.setFlag(false);
+                info.setErrorMsg("错误登陆类型");
             }
         }
         catch (Exception e)
@@ -236,11 +265,22 @@ public class UserServlet extends BaseServlet {
      * @throws IOException
      */
     public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+        String type = (String)request.getSession().getAttribute("userType");
+
         //1.销毁session
         request.getSession().invalidate();
 
         //2.跳转登录页面
-        response.sendRedirect(request.getContextPath()+"/login.html");
+        if (type.equals("admin"))
+        {
+            response.sendRedirect(request.getContextPath()+"/admin.html");
+        }
+        else
+        {
+            response.sendRedirect(request.getContextPath()+"/login.html");
+        }
     }
 
 
@@ -291,7 +331,7 @@ public class UserServlet extends BaseServlet {
 //            personalUser.setPid(curUser.getPid());
 //            personalUser.setUsername(curUser.getUsername());
             System.out.println(personalUser);
-            userService.update(personalUser);
+            userService.updateInfo(personalUser);
 //            user  = service.login(personalUser);
             info.setFlag(true);
             System.out.println("更新成功");
@@ -326,39 +366,85 @@ public class UserServlet extends BaseServlet {
     public void updateEnterpriseUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         EnterpriseUser user = (EnterpriseUser) request.getSession().getAttribute("user");
-        String srcPassword = user.getPassword();
-        user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
-        user.setEmail(request.getParameter("email"));
-        user.setSize(request.getParameter("size"));
-        user.setLocation(request.getParameter("location"));
-        user.setLogo(request.getParameter("logo"));
-        user.setBrief(request.getParameter("brief"));
-        System.out.println(user.getLogo());
-        ResultInfo info = new ResultInfo();
-        try
+        if (user != null)
         {
-            System.out.println(user);
-            userService.update(user);
-            info.setFlag(true);
-            System.out.println("更新成功");
-        }
-        catch (Exception e)
-        {
-            //用户名密码或错误
-            System.out.println(e.toString().substring(20));
-            info.setFlag(false);
-            info.setErrorMsg(e.toString().substring(20));
+            String srcPassword = user.getPassword();
+            user.setPassword(request.getParameter("password"));
+            user.setName(request.getParameter("name"));
+            user.setEmail(request.getParameter("email"));
+            user.setSize(request.getParameter("size"));
+            user.setLocation(request.getParameter("location"));
+            user.setLogo(request.getParameter("logo"));
+            user.setBrief(request.getParameter("brief"));
+            System.out.println(user.getLogo());
+            ResultInfo info = new ResultInfo();
+            try
+            {
+                System.out.println(user);
+                userService.updateInfo(user);
+                info.setFlag(true);
+                System.out.println("更新成功");
+            }
+            catch (Exception e)
+            {
+                //用户名密码或错误
+                System.out.println(e.toString().substring(20));
+                info.setFlag(false);
+                info.setErrorMsg(e.toString().substring(20));
+            }
+
+            if (srcPassword.equals(user.getPassword())) //没有修改密码
+            {
+                request.getSession().setAttribute("user",user);//登录成功标记
+                writeValue(info, response);
+            }
+            else //修改了密码
+            {
+                exit(request,response);
+            }
         }
 
-        if (srcPassword.equals(user.getPassword())) //没有修改密码
+    }
+    /**
+     * 更新管理员用户
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void updateAdminUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        AdminUser user = (AdminUser) request.getSession().getAttribute("user");
+        if (user != null)
         {
-            request.getSession().setAttribute("user",user);//登录成功标记
-            writeValue(info, response);
-        }
-        else //修改了密码
-        {
-            exit(request,response);
+            String srcPassword = user.getPassword();
+            user.setPassword(request.getParameter("password"));
+            user.setName(request.getParameter("name"));
+            ResultInfo info = new ResultInfo();
+            try
+            {
+                System.out.println(user);
+                userService.updateInfo(user);
+                info.setFlag(true);
+                System.out.println("更新成功");
+            }
+            catch (Exception e)
+            {
+                //用户名密码或错误
+                System.out.println(e.toString().substring(20));
+                info.setFlag(false);
+                info.setErrorMsg(e.toString().substring(20));
+            }
+
+            if (srcPassword.equals(user.getPassword())) //没有修改密码
+            {
+                request.getSession().setAttribute("user",user);//登录成功标记
+                writeValue(info, response);
+            }
+            else //修改了密码
+            {
+                exit(request,response);
+            }
         }
     }
 
@@ -375,6 +461,93 @@ public class UserServlet extends BaseServlet {
             {
                 response.sendRedirect(contextPath+"/companyhome.html");
             }
+        }
+    }
+
+
+    public void getUserCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String type = request.getParameter("type");
+        if (type.equals("personal"))
+        {
+            writeValue(userService.getPersonalCount(), response);
+        }
+        else if (type.equals("enterprise"))
+        {
+            writeValue(userService.getEnterpriseCount(), response);
+        }
+    }
+
+    public void getUserBrief(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String type = request.getParameter("type");
+        if (type.equals("personal"))
+        {
+            writeValue(userService.getPersonalUserBrief(), response);
+        }
+        else if (type.equals("enterprise"))
+        {
+            writeValue(userService.getEnterpriseUserBrief(), response);
+        }
+    }
+
+    public void getUserBriefByPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String type = request.getParameter("type");
+        int begin = Integer.parseInt(request.getParameter("begin"));
+        int size = Integer.parseInt(request.getParameter("size"));
+        if (type.equals("personal"))
+        {
+            writeValue(userService.getPersonalUserBrief(begin, size), response);
+        }
+        else if (type.equals("enterprise"))
+        {
+            writeValue(userService.getEnterpriseUserBrief(begin, size), response);
+        }
+    }
+
+    public void updateUserStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String type = request.getParameter("type");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String status = request.getParameter("status");
+        ResultInfo resultInfo = new ResultInfo();
+        if (type.equals("personal"))
+        {
+            resultInfo.setFlag(true);
+            userService.updatePersonalUserStatus(id, status);
+        }
+        else if (type.equals("enterprise"))
+        {
+            resultInfo.setFlag(true);
+            userService.updateEnterpriseUserStatus(id, status);
+        }
+        else
+        {
+
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("修改失败");
+        }
+    }
+    public void delUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String type = request.getParameter("type");
+        int id = Integer.parseInt(request.getParameter("id"));
+        ResultInfo resultInfo = new ResultInfo();
+        if (type.equals("personal"))
+        {
+            resultInfo.setFlag(true);
+            userService.delPersonalUserById(id);
+        }
+        else if (type.equals("enterprise"))
+        {
+            resultInfo.setFlag(true);
+            userService.delEnterpriseUserById(id);
+        }
+        else
+        {
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("删除失败");
         }
     }
 

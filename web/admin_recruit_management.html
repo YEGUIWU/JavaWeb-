@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>管理员主页</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/personal.css"/>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/amazeui.min.js"></script>
+    <script>
+        var g_RecruitMIBrief_Count;
+        var g_RecruitMIBrief_list = [];
+
+        var g_PerPage = 5;
+        var g_MaxPages = 5;
+
+        function changeRecruit(rid, type) {
+            var flag = false;
+            if (type == "shield")
+            {
+                $.post("recruit/update",{rid: rid, status:"被屏蔽"}, function () {
+                });
+                flag = true;
+            }
+            else if (type = "delete")
+            {
+                $.post("recruit/del",{rid: rid}, function () {
+                });
+                flag = true;
+            }
+            if (flag)
+            {
+                for (var i = 0; i < g_RecruitMIBrief_list.length; ++i)
+                {
+                    if (g_RecruitMIBrief_list[i].rid == rid)
+                    {
+                        g_RecruitMIBrief_list.splice(i, 1);
+                        RefreshTheRecruitMIBriefList();
+                        break;
+                    }
+                }
+            }
+        }
+        //---------------------------------------------------------------------
+        //                              Recruit
+        //---------------------------------------------------------------------
+
+        function MakeRecruitMIBrief(recruitMIBrief) {
+            var html_data =
+                "<tr>" +
+                "<td>" + recruitMIBrief.rid + "</td>" +
+                "<td>" + recruitMIBrief.time + "</td>" +
+                "<td><a href='enterprise.html?eid=" + recruitMIBrief.eid + "'>" + recruitMIBrief.username + "</a></td>" +
+                "<td>" + recruitMIBrief.name + "</td>" +
+                "<td> <a href='jobdetail.html?rid=" + recruitMIBrief.rid + "'>" + recruitMIBrief.title + "</a></td>" +
+                "<td>" +
+                "<button onclick='changeRecruit("+ recruitMIBrief.rid + "," + "\"shield\"" +")'  class=\"am-btn am-btn-secondary am-btn-xs am-radius\">屏蔽</button>" +
+                // "<button  onclick='changeRecruit("+ recruitMIBrief.rid + "," + "\"delete\"" +")'  class=\"am-btn am-btn-warning am-btn-xs am-radius\">删除</button>" +
+                "</td>" +
+                "</tr>";
+            return html_data;
+        }
+
+        function RefreshTheRecruitMIBriefList()
+        {
+            console.log("refresh: " + g_RecruitMIBrief_list.length);
+            var html_data = "";
+            for (var i = 0; i < g_RecruitMIBrief_list.length; ++i)
+            {
+                html_data += MakeRecruitMIBrief(g_RecruitMIBrief_list[i]);
+            }
+            //console.log(html_data);
+            $('#recruit_info').html(html_data);
+        }
+
+        function MakeTheRecruitMIBriefPageInfo(index)
+        {
+            var html_data = "";
+            if (index == 0)
+            {
+                html_data += "<li class=\"am-disabled\"><a href=\"#\">&laquo;</a></li>";
+            }
+            else
+            {
+                html_data  = '<li onclick="GetTheRecruitMIBriefPage(' + (index - 1) + ')"><a href="#">&laquo;</a></li>';
+            }
+            var residue = g_RecruitMIBrief_Count - index * g_PerPage;// 18 - 0 * 4
+            var pages;
+            if (residue % g_PerPage)
+            {
+                pages = (0 | residue / g_PerPage) + 1;//18 / 4 + 1 = 5
+            }
+            else
+            {
+                pages = residue / g_PerPage;
+            }
+
+            console.log("residue: " + residue + "; pages: " + pages);
+            if (pages > g_MaxPages)
+            {
+                pages = g_MaxPages;
+            }
+            html_data += "<li class=\"am-active\"><a href=\"#\">" + (index + 1) +"</a></li>";
+            for (var i = 1; i < pages; ++i)
+            {
+                html_data += '<li onclick="GetTheRecruitMIBriefPage(' + (index + i) + ')"><a href="#">'  + (index + i + 1) + '</a></li>';
+            }
+            if (pages == 1)
+            {
+                html_data  += "<li class=\"am-disabled\"><a href=\"#\">&raquo;</a></li>";
+            }
+            else
+            {
+                html_data  += '<li onclick="GetTheRecruitMIBriefPage(' + (index + 1) + ')"><a href="#">&raquo;</a></li>';
+            }
+            $('#recruit_page').html(html_data);
+            // alert(html_data);
+            // g_TheLatestPageInfo = html_data;
+        }
+
+        function GetTheRecruitMIBriefPage(index)
+        {
+            console.log("index: " + index);
+            if (index * g_PerPage > g_RecruitMIBrief_Count)
+            {
+                return;
+            }
+            $.get("recruit/getRecruitMIBriefByPage",{begin: index * g_PerPage, size: g_PerPage}, function (data) {
+                if (data)
+                {
+                    g_RecruitMIBrief_list = data;
+                    for (var i = 0; i < data.length; ++i)
+                    {
+                        console.log(data[i]);
+                    }
+                    RefreshTheRecruitMIBriefList();
+                    MakeTheRecruitMIBriefPageInfo(index);
+                }
+            });
+        }
+
+
+        $(function () {
+            //-------------------------------------------------------------------------------------
+            // 获取数据总量
+            $.get("recruit/getTotalCountOfReleased",{}, function (size) {
+                g_RecruitMIBrief_Count = size;
+                GetTheRecruitMIBriefPage(0);
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<br>
+
+		<div class="am-g am-g-fixed blog-g-fixed">
+		  <div class="am-cf admin-main">
+			<div class="am-u-md-3 blog-sidebar">
+
+		  <!-- sidebar start -->
+		  <div class="admin-sidebar">
+
+			<div class="am-panel am-panel-default admin-sidebar-panel">
+			  <div class="am-panel-bd">
+				<p><span class="am-icon-bookmark"></span> 管理中心</p>
+					<div id="amz-offcanvas" class="am-offcanvas doc-offcanvas">
+					<section class="amz-sidebar am-offcanvas-bar">
+					<ul class="am-nav">
+						<li><a href="adminhome.html">管理员信息</a></li>
+						<li><a href="admin_user_management.html">用户管理</a></li>
+						<li><a href="admin_recruit_management.html">招聘管理</a></li>
+						<li><a href="admin_complain_management.html">投诉管理</a></li>
+						</ul>
+					</section>
+				</div>
+
+			  </div>
+			</div>
+		  </div>
+		  <!-- sidebar end -->
+		  </div>
+
+		  <div class="am-u-md-9">
+		  		<!-- content start -->
+		  		<div class="admin-content">
+					<div class="am-g">
+					   <div class="am-u-md-12">
+
+				       		<!---选项卡-->
+							<div class="am-tabs" data-am-tabs>
+				  				<ul class="am-tabs-nav am-nav am-nav-tabs">
+									<li class="am-active"><a href="#tab1">企业招聘</a></li>
+									<!--<li ><a href="#tab2">招聘投诉</a></li>-->
+				  				</ul>
+
+				  				<div class="am-tabs-bd">
+									<div class="am-tab-panel am-fade am-in am-active" id="tab1">
+										<table class="am-table am-table-bd am-table-striped admin-content-table">
+				  							<thead><tr><th>ID</th><th>时间</th><th>用户名</th><th>企业名</th><th>岗位</th><th>管理</th></tr></thead>
+											<tbody id="recruit_info">
+												 <!--<tr>-->
+												 	<!--<td>1</td>-->
+													 <!--<td>2015.06.01</td>-->
+												 	<!--<td>zhitao</td>-->
+												 	<!--<td>zhitao</td>-->
+												 	<!--<td>C++开发</td>-->
+												 	<!--<td>-->
+												 		<!--<button class="am-btn am-btn-secondary am-btn-xs am-radius">屏蔽</button>-->
+												 		<!--<button class="am-btn am-btn-warning am-btn-xs am-radius">删除</button>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+											</tbody>
+										</table>
+										<br>
+										<ul id="recruit_page" class="am-pagination am-pagination-centered">
+
+										</ul>
+									</div>
+
+
+									<!--<div class="am-tab-panel am-fade" id="tab2">-->
+										<!--<table class="am-table am-table-bd am-table-striped admin-content-table">-->
+				  							<!--<thead><tr><th>ID</th><th>用户名</th><th>注册日期</th><th>管理</th></tr></thead>-->
+											<!--<tbody>-->
+												 <!--<tr>-->
+												 	<!--<td>爱奇艺</td>-->
+												 	<!--<td>软件工程师</td>-->
+												 	<!--<td>2015.06.01</td>-->
+												 	<!--<td>-->
+												 		<!--<button class="am-btn am-btn-warning am-btn-xs am-radius">删除</button>-->
+												 	<!--</td>-->
+												 <!--</tr>-->
+											<!--</tbody>-->
+										<!--</table>-->
+										<!--<br>-->
+										<!--<ul class="am-pagination am-pagination-centered">-->
+										<!--</ul>-->
+
+		  							<!--</div>-->
+								</div>
+							</div>
+    					</div>
+  					</div>
+				</div>
+			</div>
+
+		  </div>
+		  <!-- content end -->
+	</div>
+</div>
+</div>
+
+  </div>
+
+<!--<![endif]-->
+</body>
+</html>

@@ -21,14 +21,17 @@ public class RecruitServlet extends BaseServlet
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         EnterpriseUser enterpriseUser = (EnterpriseUser) request.getSession().getAttribute("user");
-        List<Recruit> recruits = recruitService.getRecruit(enterpriseUser.getEid());
-        writeValue(recruits, response);
+        if (enterpriseUser != null)
+        {
+            List<Recruit> recruits = recruitService.getRecruit(enterpriseUser.getEid());
+            writeValue(recruits, response);
+        }
     }
 
     public void add(HttpServletRequest request, HttpServletResponse response)
     {
         EnterpriseUser user = (EnterpriseUser) request.getSession().getAttribute("user");
-        if (user.getStatus().equals(EnterpriseUser.kWell)) //状态良好的才能添加
+        if (user != null && user.getStatus().equals(EnterpriseUser.kWell)) //状态良好的才能添加
         {
             recruitService.addRecruit(user.getEid(),
                     request.getParameter("title"),
@@ -136,4 +139,13 @@ public class RecruitServlet extends BaseServlet
         writeValue(recruitBriefs , response);
     }
 
+    public void  getRecruitMIBriefByPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        //int rid = Integer.parseInt(request.getParameter("rid"));
+        //Recruit recruit = recruitService.getARecruit(Integer.parseInt(request.getParameter("rid")));
+        List<RecruitMIBrief> recruitMIBriefs = recruitService.getRecruitMIBrief(
+                Integer.parseInt(request.getParameter("begin")),
+                Integer.parseInt(request.getParameter("size")));
+        writeValue(recruitMIBriefs, response);
+    }
 }

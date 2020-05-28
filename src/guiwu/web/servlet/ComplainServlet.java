@@ -1,6 +1,7 @@
 package guiwu.web.servlet;
 
 import guiwu.domain.ComplainInfo;
+import guiwu.domain.ComplainMIBrief;
 import guiwu.domain.PersonalUser;
 import guiwu.domain.ResultInfo;
 import guiwu.service.ComplainService;
@@ -46,5 +47,50 @@ public class ComplainServlet extends BaseServlet
         }
         writeValue(resultInfo, response);
     }
+
+
+    public void getComplainMIBriefByPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        List<ComplainMIBrief> complainMIBriefs = complainService.getComplainMIBrief(
+                Integer.parseInt(request.getParameter("begin")),
+                Integer.parseInt(request.getParameter("size")));
+        writeValue(complainMIBriefs, response);
+    }
+
+    public void  getTotalCountOfStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String status = request.getParameter("status");
+        int size = complainService.getTotalCountOfStatus(status);
+        writeValue(size , response);
+    }
+
+
+    public void ignore(HttpServletRequest request, HttpServletResponse response)
+    {
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        if (cid > 0)
+        {
+            complainService.updateStatus(cid, "已忽略");
+        }
+    }
+    public void handle(HttpServletRequest request, HttpServletResponse response)
+    {
+        String result = request.getParameter("result");
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        if (cid > 0)
+        {
+            complainService.updateStatusAndResult(cid, "已处理", result);
+            //System.out.println(result);
+        }
+    }
+
+    public void findComplainInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        int cid  = Integer.parseInt(request.getParameter("cid"));
+        System.out.println("Cid = " + cid);
+        ComplainInfo complainInfo = complainService.getComplainInfo(cid);
+        writeValue(complainInfo, response);
+    }
+
 
 }

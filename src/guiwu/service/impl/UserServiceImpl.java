@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService
         if(user != null)
         {
             //2.调用dao的修改激活状态的方法
-            userDao.updateStatus(user);
+            userDao.updateStatus(user, "Y");
             return true;
         }
         else
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService
         if(user != null)
         {
             //2.调用dao的修改激活状态的方法
-            userDao.updateStatus(user);
+            userDao.updateStatus(user, "Y");
             return true;
         }
         else
@@ -140,20 +140,85 @@ public class UserServiceImpl implements UserService
      */
 
     @Override
-    public void update(PersonalUser user)
+    public void updateInfo(PersonalUser user)
     {
         userDao.updateInfo(user);
     }
     @Override
-    public void update(EnterpriseUser user)
+    public void updateInfo(EnterpriseUser user)
     {
         userDao.updateInfo(user);
     }
     @Override
-    public void update(AdminUser user)
+    public void updateInfo(AdminUser user)
     {
         userDao.updateInfo(user);
     }
 
+    @Override
+    public void updateStatus(PersonalUser user, String status)
+    {
+        userDao.updateStatus(user, status);
+    }
+    @Override
+    public void updateStatus(EnterpriseUser user, String status)
+    {
+        userDao.updateStatus(user, status);
+    }
 
+    @Override
+    public int getPersonalCount()
+    {
+        return userDao.getPersonalCount();
+    }
+    @Override
+    public int getEnterpriseCount()
+    {
+        return userDao.getEnterpriseCount();
+    }
+    @Override
+    public List<UserBrief> getPersonalUserBrief()
+    {
+        return userDao.getPersonalUserBrief();
+    }
+    @Override
+    public List<UserBrief> getEnterpriseUserBrief()
+    {
+        return userDao.getEnterpriseUserBrief();
+    }
+
+
+
+    @Override
+    public List<UserBrief> getPersonalUserBrief(int begin, int size)
+    {
+        return userDao.getPersonalUserBrief(begin, size);
+    }
+    @Override
+    public List<UserBrief> getEnterpriseUserBrief(int begin, int size)
+    {
+        return userDao.getEnterpriseUserBrief(begin, size);
+    }
+
+    @Override
+    public void updatePersonalUserStatus(int pid, String status)
+    {
+        userDao.updatePersonalUserStatus(pid, status);
+    }
+    @Override
+    public void updateEnterpriseUserStatus(int eid, String status)
+    {
+        userDao.updateEnterpriseUserStatus(eid, status);
+    }
+
+    @Override
+    public void delPersonalUserById(int pid)
+    {
+        userDao.delPersonalUserById(pid);
+    }
+    @Override
+    public void delEnterpriseUserById(int eid)
+    {
+        userDao.delEnterpriseUserById(eid);
+    }
 }

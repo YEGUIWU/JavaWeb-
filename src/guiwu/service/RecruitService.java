@@ -28,4 +28,6 @@ public interface RecruitService
     void delRecruit(int rid);
     void updateStatus(int rid, String status);
     void issueRecruit(int rid);
+
+    List<RecruitMIBrief> getRecruitMIBrief(int begin,int size);
 }

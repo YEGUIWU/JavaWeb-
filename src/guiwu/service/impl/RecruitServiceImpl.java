@@ -2,10 +2,7 @@ package guiwu.service.impl;
 
 import guiwu.dao.RecruitDao;
 import guiwu.dao.impl.RecruitDaoImpl;
-import guiwu.domain.EnterpriseUser;
-import guiwu.domain.Recruit;
-import guiwu.domain.RecruitBrief;
-import guiwu.domain.RecruitInfo;
+import guiwu.domain.*;
 import guiwu.service.RecruitService;
 
 import java.util.ArrayList;
@@ -106,7 +103,7 @@ public class RecruitServiceImpl implements RecruitService
     @Override
     public int getTotatlCountOfStatus(String status)
     {
-        return recruitDao.getTotalCountByStatus(status);
+        return recruitDao.getTotalCountOfStatus(status);
     }
 
 
@@ -130,5 +127,11 @@ public class RecruitServiceImpl implements RecruitService
             list.add(Integer.parseInt(rid));
         }
         return recruitDao.getSomeRecruitBrief(list);
+    }
+
+    @Override
+    public List<RecruitMIBrief> getRecruitMIBrief(int begin,int size)
+    {
+        return recruitDao.getRecruitMIBrief(begin, size);
     }
 }

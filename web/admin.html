@@ -169,28 +169,50 @@
       }
     }
   </style>
-
+    <script src="./assets/js/jquery.min.js"></script>
+  <script>
+      $(function(){
+          $("#login_btn").click(function(){
+              var param = {
+                  username: $('#username').val(),
+                  password: $('#password').val(),
+                  type: "admin"
+              };
+              // console.log(param);
+              $.post("user/login", param, function (data) {
+                  //data : {flag:false,errorMsg:''}
+                  if(data.flag) {
+                      //登录成功
+                      // alert(data.data);
+                      location.href=data.data;
+                  } else {
+                      alert(data.errorMsg);
+                  }
+              });
+          });
+      })
+  </script>
 </head>
 
 <body>
   <div class="loginBox">
     <h2>Login</h2>
-    <form action="">
+    <!--<form action="">-->
       <div class="item">
-        <input type="text" required>
+        <input id="username" type="text" required>
         <label for="">UserName</label>
       </div>
       <div class="item">
-        <input type="password" required>
+        <input id="password" type="password" required>
         <label for="">PassWord</label>
       </div>
-      <button class="btn">submit
+      <button id="login_btn" class="btn">submit
         <span></span>
         <span></span>
         <span></span>
         <span></span>
       </button>
-    </form>
+    <!--</form>-->
   </div>
 
 </body>

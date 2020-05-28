@@ -279,27 +279,36 @@ public class RecruitDaoImpl implements RecruitDao
     }
 
     @Override
-    public int getTotalCountByStatus(String status)
+    public int getTotalCountOfStatus(String status)
     {
+//        try
+//        {
+//            String sql = "select count(*) from " + recruitTableName + " where status = \'" + status + "\'";
+//            lock.readLock().lock();
+//            ResultSet resultSet = JDBCUtils.getDataSource() .getConnection().createStatement().executeQuery(sql);
+//            lock.readLock().unlock();
+//            if (resultSet.next())
+//            {
+//                return resultSet.getInt(1);
+//            }
+//            //return 0;
+//            //return JDBCUtils.getCount(recruitTableName + " where status = " + status, lock.readLock());
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return 0;
         try
         {
-            String sql = "select count(*) from " + recruitTableName + " where status = \'" + status + "\'";
-            System.out.println(sql  );
-            lock.readLock().lock();
-            ResultSet resultSet = JDBCUtils.getDataSource() .getConnection().createStatement().executeQuery(sql);
-            lock.readLock().unlock();
-            if (resultSet.next())
-            {
-                return resultSet.getInt(1);
-            }
-            //return 0;
-            //return JDBCUtils.getCount(recruitTableName + " where status = " + status, lock.readLock());
+
+            return JDBCUtils.getCountOfAField(recruitTableName, "status", status, lock.readLock());
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 
     @Override
@@ -417,44 +426,47 @@ public class RecruitDaoImpl implements RecruitDao
         return null;
     }
 
+    private RecruitMIBrief toRecruitMIBrief(ResultSet resultSet) throws SQLException
+    {
+        return new RecruitMIBrief(
+                resultSet.getInt(1),
+                resultSet.getInt(2),
+                resultSet.getString(3),
+                resultSet.getString(4),
+                resultSet.getString(5),
+                resultSet.getString(6)
+        );
+    }
 
-//    /**
-//     * 根据start,pageSize查询当前页的数据集合
-//     */
-//    @Override
-//    public List<RecruitBrief> findRecruitBriefByPage(int start, int pageSize)
-//    {
-//        String sql = "select tr.rid, teu.name, tr.title, tr.position, tr.salary " +
-//                "from " + recruitTableName +" tr " +
-//                "join " + enterpriseUserTableName + " teu on tr.eid = teu.eid " +
-//                "where tr.status = '已发布' " +
-//                "limit " + start + "," + pageSize;
-//        List<RecruitBrief> recruitList = new ArrayList<>();
-//        try
-//        {
-//            ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
-//
-//            while (resultSet.next())
-//            {
-//                recruitList.add(toRecruitBrief(resultSet));
-//            }
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-//
-//        return recruitList;
-//    }
+    @Override
+    public List<RecruitMIBrief> getRecruitMIBrief(String sql)
+    {
+        List<RecruitMIBrief> recruitList = new ArrayList<>();
+        try
+        {
+            ResultSet resultSet = JDBCUtils.getResultSet(sql, lock.readLock());
 
-//    List<RecruitBrief> getRecruitBrief(String sql)
-//    {
-//
-//    }
-//    List<RecruitBrief> getAllRecruitBrief()
-//    {
-//
-//    }
-
-
+            while (resultSet.next())
+            {
+                recruitList.add(toRecruitMIBrief(resultSet));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return recruitList;
+    }
+    @Override
+    public List<RecruitMIBrief> getRecruitMIBrief(int begin,int size)
+    {
+        String sql = "select tr.rid, tr.eid, teu.username, teu.name, tr.issue, tr.title " +
+//                "from tab_recruit tr " +
+                "from " + recruitTableName + " tr " +
+//                "join tab_enterprise_user teu on tr.eid = teu.eid " +
+                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
+                "where tr.status = \"已发布\" " +
+                "limit " + begin + "," + size;
+        return getRecruitMIBrief(sql);
+    }
 }
