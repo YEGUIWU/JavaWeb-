@@ -87,6 +87,7 @@ public class ApplyServlet extends BaseServlet
     {
         PersonalUser personalUser = (PersonalUser) request.getSession().getAttribute("user");
         ResultInfo resultInfo = new ResultInfo();
+        System.out.println(personalUser);
         if (personalUser != null && personalUser.getStatus().equals("Y"))
         {
             resultInfo.setFlag(true);
@@ -97,7 +98,7 @@ public class ApplyServlet extends BaseServlet
         else
         {
             resultInfo.setFlag(false);
-            resultInfo.setErrorMsg("请先登陆");
+            resultInfo.setErrorMsg("无权限");
         }
         writeValue(resultInfo, response);
     }

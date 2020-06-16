@@ -10,7 +10,7 @@ public class EnterpriseUser implements Serializable
     public static final int kNameIndex = 4;
     public static final int kCodeIndex = 11;
     public static final String kDisabled = "N";
-    public static final String kWell = "W";
+    public static final String kWell = "Y";
     private int eid;
     private String username;
     private String password;

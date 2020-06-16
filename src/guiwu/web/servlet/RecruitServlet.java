@@ -31,8 +31,11 @@ public class RecruitServlet extends BaseServlet
     public void add(HttpServletRequest request, HttpServletResponse response)
     {
         EnterpriseUser user = (EnterpriseUser) request.getSession().getAttribute("user");
+
+        System.out.println(user + " add recruit");
         if (user != null && user.getStatus().equals(EnterpriseUser.kWell)) //状态良好的才能添加
         {
+            System.out.println(user + " add recruit");
             recruitService.addRecruit(user.getEid(),
                     request.getParameter("title"),
                     request.getParameter("position"),
@@ -122,12 +125,7 @@ public class RecruitServlet extends BaseServlet
     {
         Jedis jedis = JedisUtil.getJedis();
         Set<String> set = jedis.zrevrange("the_hottest_recruit", 0, 4);
-//        for (String str : set)
-//        {
-//            System.out.println(str);
-//        }
         List<RecruitBrief> recruitBriefs = recruitService.getSomeRecruitBrief(set);
-        //if (set.size() != )
         writeValue(recruitBriefs , response);
     }
 

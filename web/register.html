@@ -45,7 +45,7 @@
                     <div class="verify">
                         <input name="check" type="text" placeholder="请输入验证码" autocomplete="off">
                         <span><img src="checkCodeServlet" alt="" onclick="changeCheckCode(this)"></span>
-                        <span id="errCheckCode1" class = "msg onError"></span>
+                        <span id="errCheckCode" class = "msg onError"></span>
                         <script type="text/javascript">
                             //图片点击事件
                             function changeCheckCode(img)
@@ -170,6 +170,7 @@
                         }
                         else
                         {
+                            console.log(data.errorMsg);
                             //登录失败
                             if (data.errorMsg == "账号已存在")
                             {

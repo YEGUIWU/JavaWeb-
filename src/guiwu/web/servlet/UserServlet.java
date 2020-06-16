@@ -33,7 +33,7 @@ public class UserServlet extends BaseServlet {
         //从sesion中获取验证码
         HttpSession session = request.getSession();
         String checkcode_server = (String) session.getAttribute("CHECKCODE_SERVER");
-        session.removeAttribute("CHECKCODE_SERVER");//为了保证验证码只能使用一次
+
 
 
         ResultInfo info = new ResultInfo();//响应结果
@@ -48,6 +48,7 @@ public class UserServlet extends BaseServlet {
         }
         else    //验证码正确
         {
+            session.removeAttribute("CHECKCODE_SERVER");//为了保证验证码只能使用一次
             //封装对象
             String type = request.getParameter("type");
             Object user = null;
@@ -247,7 +248,7 @@ public class UserServlet extends BaseServlet {
             String msg = null;
             if(flag){
                 //激活成功
-                msg = "激活成功，请<a href='login.html'>登录</a>";
+                msg = "激活成功!!!";
             }else{
                 //激活失败
                 msg = "激活失败，请联系管理员!";
@@ -265,13 +266,9 @@ public class UserServlet extends BaseServlet {
      * @throws IOException
      */
     public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         String type = (String)request.getSession().getAttribute("userType");
-
         //1.销毁session
         request.getSession().invalidate();
-
         //2.跳转登录页面
         if (type.equals("admin"))
         {

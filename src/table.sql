@@ -185,6 +185,8 @@ insert into tab_recruit(eid, title, position, salary, description, requirement,p
 value (1, "C#实习生", "北京", "3-5k", "打杂", "熟练使用各种C#技术", "英语6级优先", "五险一金");
 insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
 value (1, "go实习生", "北京", "3-5k", "打杂", "熟练使用各种Go技术", "英语6级优先", "五险一金");
+insert into tab_recruit(eid, title, position, salary, description, requirement,priority,welfare)
+value (1, "vb实习生", "北京", "3-5k", "打杂", "熟练使用各种vb技术", "英语6级优先", "五险一金");
 update tab_recruit set issue = date(now()) where rid = 1;
 update tab_recruit set status = "已发布" where rid = 1;
 
@@ -193,13 +195,85 @@ update tab_recruit set status = "已发布" where rid = 1;
 -- 			recrut management info
 -- --------------------------------------------
 
-select tr.rid, tr.eid, teu.username, teu.name, tr.issue, tr.title ,tr.status
+explain select tr.rid, tr.eid, teu.username, teu.name, tr.issue, tr.title
 from tab_recruit tr
 join tab_enterprise_user teu on tr.eid = teu.eid
-where tr.status = "已发布";
+where tr.status = "已发布"
+limit 0,3;
 
 
--- ------------------------------------------------------------------------------
+create index idx_status on tab_recruit(status);
+-- drop index idx_status on tab_recruit;
+show index from tab_recruit;
+
+explain select tr.rid, tr.eid, teu.username, teu.name, tr.issue, tr.title
+from tab_recruit tr, tab_enterprise_user teu
+where tr.eid = teu.eid and tr.status = "已发布";
+
+explain select * from tab_recruit where status = '已发布';
+explain select * from tab_recruit where eid = '1' and status = '已发布';
+
+
+-- --------------------------------------------
+-- 					RecruitInfo(detail)
+-- --------------------------------------------
+explain select tr.rid, tr.title, tr.position, tr.salary, tr.description, tr.requirement, tr.priority, tr.welfare, tr.issue, tr.status, teu.brief
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid 
+where tr.status = '已发布'
+order by tr.rid desc;
+
+
+select count(*) from tab_recruit where tab_recruit.status = "已发布";
+-- limit 0,11;
+
+-- --------------------------------------------
+-- 					 RecruitBrief
+-- --------------------------------------------
+select count(*) from tab_recruit;
+
+explain select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid 
+where tr.status = '已发布'
+order by tr.rid desc, tr.issue desc
+limit 0,11; 
+
+explain select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
+from tab_recruit tr ,tab_enterprise_user teu
+where tr.eid = teu.eid  and tr.status = '已发布'
+order by tr.rid desc
+limit 0,11; 
+
+-- --------------------------------------------
+-- 				Redis RecruitBrief
+-- --------------------------------------------
+
+explain select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
+from tab_recruit tr
+join tab_enterprise_user teu on tr.eid = teu.eid 
+where tr.status = '已发布' and(tr.rid = 1 or tr.rid = 3 or tr.rid = 4);
+
+-- -------------------------------------------------- 
+-- 						查外键
+-- -------------------------------------------------- 
+create index idx_eid_status on tab_recruit(eid,status);
+SELECT
+  constraint_name
+FROM
+  information_schema.REFERENTIAL_CONSTRAINTS
+WHERE
+  constraint_schema = 'my_web' AND table_name = 'tab_recruit';
+  
+ALTER TABLE tab_recruit
+DROP FOREIGN KEY tab_recruit_ibfk_3;
+drop index idx_rid_status on tab_recruit;
+
+ALTER TABLE tab_recruit
+ADD FOREIGN KEY (eid)
+REFERENCES tab_enterprise_user(eid);
+
+------------------------------------------------------------------------------
 -- 									应聘信息表								   --
 -- ------------------------------------------------------------------------------
 create table tab_apply
@@ -221,58 +295,40 @@ insert into tab_apply(pid, rid) value(2, 3);
 update tab_apply set status = "待面试" where aid = 15;
 
 select * from tab_apply;
+
+delete from tab_apply where aid = 17;
 -- --------------------------------------------
 -- 					apply info
 -- --------------------------------------------
-select ta.aid, ta.pid, ta.rid, tr.eid, ta.time ,ta.status, tr.title, tpu.name, teu.name
+show index from tab_apply;
+create index idx_status on tab_apply(status);
+explain select ta.aid, ta.pid, ta.rid, tr.eid, ta.time ,ta.status, tr.title, tpu.name, teu.name
 from tab_apply ta
 join tab_personal_user tpu on ta.pid = tpu.pid
 join tab_recruit tr on tr.rid = ta.rid
 join tab_enterprise_user teu on tr.eid = teu.eid
 order by ta.time desc; 
+-- order by ta.aid desc; 
 
--- select ta.aid, ta.pid, ta.rid, ta.status, tr.title, tpu.name 
--- from tab_apply ta 
--- join tab_personal_user tpu on ta.pid = tpu.pid 
--- join tab_recruit tr on tr.rid = ta.rid;
+explain select ta.aid, ta.pid, ta.rid, tr.eid, ta.time ,ta.status, tr.title, tpu.name, teu.name
+from tab_apply ta, tab_personal_user tpu,tab_recruit tr, tab_enterprise_user teu
+where ta.pid = tpu.pid and tr.rid = ta.rid and tr.eid = teu.eid
+-- order by ta.time desc; 
+order by ta.aid desc; 
+
+explain select ta.aid, ta.pid, ta.rid, ta.status, tr.title, tpu.name 
+from tab_apply ta 
+join tab_personal_user tpu on ta.pid = tpu.pid 
+join tab_recruit tr on tr.rid = ta.rid;
+
+explain select ta.aid, ta.pid, ta.rid, ta.status, tr.title, tpu.name 
+from tab_apply ta, tab_personal_user tpu,tab_recruit tr
+where ta.pid = tpu.pid and tr.rid = ta.rid;
 
 
 -- select date(now());
 -- select curdate();
 
--- --------------------------------------------
--- 					RecruitInfo(detail)
--- --------------------------------------------
-select tr.rid, tr.title, tr.position, tr.salary, tr.description, tr.requirement, tr.priority, tr.welfare, tr.issue, tr.status, teu.brief
-from tab_recruit tr
-join tab_enterprise_user teu on tr.eid = teu.eid 
-where tr.status = '已发布'
-order by tr.rid desc, tr.issue desc;
-
-
-select count(*) from tab_recruit where tab_recruit.status = "已发布";
--- limit 0,11;
-
--- --------------------------------------------
--- 					 RecruitBrief
--- --------------------------------------------
-select count(*) from tab_recruit;
-
-select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
-from tab_recruit tr
-join tab_enterprise_user teu on tr.eid = teu.eid 
-where tr.status = '已发布'
-order by tr.rid desc, tr.issue desc
-limit 0,11; 
-
--- --------------------------------------------
--- 				Redis RecruitBrief
--- --------------------------------------------
-
-select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary
-from tab_recruit tr
-join tab_enterprise_user teu on tr.eid = teu.eid 
-where tr.status = '已发布' and(tr.rid = 1 or tr.rid = 3 or tr.rid = 4);
 
 -- ------------------------------------------------------------------------------
 -- 									投诉信息表								   --
@@ -294,16 +350,27 @@ create table tab_complain
 select * from tab_complain;
 insert into tab_complain(pid, rid, title, content) value (1, 1, "薪资有问题", "钱太少");
 
-select *
-from tab_complain;
+
+
 -- --------------------------------------------
 -- 				ComplainInfo table
 -- --------------------------------------------
-select tc.cid, tc.pid, tc.rid, tc.title, tc.content, tc.time, tc.status, tc.result, teu.name, tr.title
+explain select tc.cid, tc.pid, tc.rid, tc.title, tc.content, tc.time, tc.status, tc.result, teu.name, tr.title
 from tab_complain tc
 join tab_recruit tr on tc.rid = tr.rid
 join tab_enterprise_user teu on teu.eid = tr.eid;
 
+-- --------------------------------------------
+-- 		Complain Management Info table
+-- --------------------------------------------
+-- select tc.cid, tc.pid, tc.rid, teu.eid, tc.time, tpu.username, teu.username, tr.title, tc.status
+explain select *
+from tab_complain tc
+join tab_personal_user tpu on tc.pid = tpu.pid
+join tab_recruit tr on tc.rid = tr.rid 
+join tab_enterprise_user teu on tr.eid = teu.eid
+where tc.status = '已处理';
+-- limit 0, 5;
 
 -- ------------------------------------------------------------------------------
 -- 									黑名单信息表	   						   --
@@ -325,7 +392,7 @@ insert into tab_blacklist(pid, eid) value(4,1);
 -- --------------------------------------------
 -- 				BlackInfo table
 -- --------------------------------------------
-select tb.bid, tb.pid, tb.eid, tpu.username, tpu.name
+explain select tb.bid, tb.pid, tb.eid, tpu.username, tpu.name
 from tab_blacklist tb
 join tab_personal_user tpu on tb.pid = tpu.pid;
 

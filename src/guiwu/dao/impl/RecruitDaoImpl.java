@@ -151,19 +151,6 @@ public class RecruitDaoImpl implements RecruitDao
     @Override
     public void delRecruit(int rid)
     {
-        //1.定义sql
-//        String sql = "delete from  " + recruitTableName + " where rid = ?";
-//        try
-//        {
-//            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
-//            pstmt.setInt(1, rid);
-//            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-
         JDBCUtils.delById(recruitTableName, "rid", rid, lock.writeLock());
     }
 
@@ -171,20 +158,6 @@ public class RecruitDaoImpl implements RecruitDao
     @Override
     public void updateStatus(int rid, String status)
     {
-//        String sql = "run: update " + recruitTableName + " set status = ? where rid=?";
-//        System.out.println(sql);
-//        try
-//        {
-//            PreparedStatement pstmt = JDBCUtils.getDataSource().getConnection().prepareStatement(sql);
-//            pstmt.setString(1, status);
-//            pstmt.setInt(2, rid);
-//            JDBCUtils.executeUpdate(pstmt, lock.writeLock());
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-
         JDBCUtils.updateOneById(recruitTableName, "status", status, "rid", rid, lock.writeLock());
     }
 
@@ -281,27 +254,8 @@ public class RecruitDaoImpl implements RecruitDao
     @Override
     public int getTotalCountOfStatus(String status)
     {
-//        try
-//        {
-//            String sql = "select count(*) from " + recruitTableName + " where status = \'" + status + "\'";
-//            lock.readLock().lock();
-//            ResultSet resultSet = JDBCUtils.getDataSource() .getConnection().createStatement().executeQuery(sql);
-//            lock.readLock().unlock();
-//            if (resultSet.next())
-//            {
-//                return resultSet.getInt(1);
-//            }
-//            //return 0;
-//            //return JDBCUtils.getCount(recruitTableName + " where status = " + status, lock.readLock());
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return 0;
         try
         {
-
             return JDBCUtils.getCountOfAField(recruitTableName, "status", status, lock.readLock());
         }
         catch (SQLException e)
@@ -345,9 +299,8 @@ public class RecruitDaoImpl implements RecruitDao
     public List<RecruitBrief> getRecruitBrief(int start, int pageSize)
     {
         String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
-                "from " + recruitTableName +" tr " +
-                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
-                "where tr.status = '已发布' " +
+                "from " + recruitTableName +" tr, "+ UserDaoImpl.enterpriseUserTableName + " teu " +
+                "where tr.eid = teu.eid and tr.status = '已发布' " +
                 "limit " + start + "," + pageSize;
         return getRecruitBrief(sql);
     }
@@ -356,10 +309,10 @@ public class RecruitDaoImpl implements RecruitDao
     public List<RecruitBrief> getTheLatestRecruitBrief(int start, int pageSize)
     {
         String sql = "select tr.rid, teu.eid, teu.name, teu.logo, tr.title, tr.issue, tr.position, tr.salary " +
-                "from " + recruitTableName +" tr " +
-                "join " + UserDaoImpl.enterpriseUserTableName + " teu on tr.eid = teu.eid " +
-                "where tr.status = '已发布' " +
-                "order by tr.rid desc, tr.issue desc "  +
+                "from " + recruitTableName +" tr, "+ UserDaoImpl.enterpriseUserTableName + " teu " +
+                "where tr.eid = teu.eid and tr.status = '已发布' " +
+//                "order by tr.rid desc, tr.issue desc "  +
+                "order by tr.rid desc "  +
                 "limit " + start + "," + pageSize;
         System.out.println(sql);
         return getRecruitBrief(sql);

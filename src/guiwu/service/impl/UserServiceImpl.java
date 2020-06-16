@@ -59,11 +59,12 @@ public class UserServiceImpl implements UserService
         user.setStatus("N");//2.2设置激活状态
         userDao.saveEnterprise(user);
 
+        //企业用户不需要激活邮件
         //激活邮件发送，邮件正文
-        String content="<a href='http://localhost:8080/user/active?code="+user.getCode()+"&type=enterprise'>点我激活【YeGuiWu-招聘网】</a>";
-        System.out.println("发送邮件：" + user.getEmail());
-        MailUtils.sendMail(user.getEmail(),content,"激活邮件");
-        System.out.println("发送成功：" + user.getEmail());
+//        String content="<a href='http://localhost:8080/user/active?code="+user.getCode()+"&type=enterprise'>点我激活【YeGuiWu-招聘网】</a>";
+//        System.out.println("发送邮件：" + user.getEmail());
+//        MailUtils.sendMail(user.getEmail(),content,"激活邮件");
+//        System.out.println("发送成功：" + user.getEmail());
     }
 
     @Override

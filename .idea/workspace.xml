@@ -5,313 +5,75 @@
       <artifact name="web:war exploded" />
     </artifacts-to-build>
   </component>
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/web/header.html" line="36" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="41fc51f7-6048-4d09-b4f6-e8bd0c1e1ee4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/web_war_exploded.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/project-template.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JobsWeb.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/druid.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/dao/UserDao.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/dao/impl/UserDaoImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/AdminUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/EnterpriseUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/PersonalUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/ResultInfo.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/service/UserService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/JDBCUtils.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/MailUtils$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/MailUtils.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/Md5Util.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/UuidUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/ActiveUserServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/CheckCodeServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/FindUserServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/LoginServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/RegistUserServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/druid-1.0.9.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/hamcrest-core-1.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/jackson-annotations-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/jackson-core-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/jackson-databind-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/junit-4.12.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/mail-1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/lib/mysql-connector-java-8.0.19.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminhome.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/admininfo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminlink.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminuser.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.flat.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.flat.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/base.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/personal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/success.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/app-icon72x72@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/admin-chrome.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/admin-firefox.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/admin-ie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/admin-opera.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/admin-safari.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/adminPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/blogPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/landing.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/landingPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/loginPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/examples/sidebarPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/src.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/startup-640x1096.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/icon/yeguiwu_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/banner/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/banner/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/58.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/aiqiyi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/baidu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/google.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/tengxun.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/tianmao.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/wangyi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/company/xinlang.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/51job.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/58.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/dajie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/ganji.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/lagou.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/liepin.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/neitui.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/qiaobu.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/yingcai.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/yingjiesheng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/link/zhilian.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/us/weixin.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/1.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/10.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/2.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/3.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/4.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/5.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/6.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/7.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/8.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/img/users/9.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/amazeui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/amazeui.legacy.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/amazeui.legacy.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/amazeui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/amazeui.widgets.helper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/amazeui.widgets.helper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/handlebars.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/include.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/polyfill/rem.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/polyfill/respond.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/sendeamil.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/particles/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/particles/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/particles/js/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/particles/js/lib/stats.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/particles/particles.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/sweetalert2/sweetalert2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/libs/sweetalert2/sweetalert2.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyemail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyhome.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyzhaopin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/job.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/jobdetail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/login_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/man.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/mandetail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/register_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/useremail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/userhome.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/userqiuzhi.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/druid.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/dao/UserDao.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/dao/impl/UserDaoImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/AdminUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/EnterpriseUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/PersonalUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/ResultInfo.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/service/UserService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/JDBCUtils.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/MailUtils$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/MailUtils.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/Md5Util.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/UuidUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/ActiveUserServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/CheckCodeServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/FindUserServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/LoginServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/RegistUserServlet.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/JobsWeb/table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/druid.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/dao/ExpDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/dao/impl/ExpDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/dao/impl/UserDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/domain/AdminUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/domain/Exp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/domain/PersonalUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/domain/ResultInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/util/JDBCUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/util/MailUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/util/Md5Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/util/UuidUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/ActiveUserServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/CheckCodeServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/FindUserServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/LoginServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/RegistUserServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/druid-1.0.9.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/hamcrest-core-1.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/jackson-annotations-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/jackson-core-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/jackson-databind-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/junit-4.12.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/mail-1.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-8.0.19.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/adminhome.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/admininfo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/adminlink.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/adminuser.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/amazeui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/amazeui.flat.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/amazeui.flat.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/amazeui.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/base.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/personal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/css/success.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/app-icon72x72@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/admin-chrome.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/admin-firefox.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/admin-ie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/admin-opera.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/admin-safari.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/adminPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/blogPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/landing.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/landingPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/loginPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/examples/sidebarPage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/src.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/startup-640x1096.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/icon/yeguiwu_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/banner/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/banner/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/58.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/aiqiyi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/baidu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/google.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/tengxun.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/tianmao.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/wangyi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/company/xinlang.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/51job.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/58.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/dajie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/ganji.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/lagou.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/liepin.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/neitui.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/qiaobu.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/yingcai.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/yingjiesheng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/link/zhilian.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/us/weixin.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/1.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/10.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/2.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/3.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/4.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/5.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/6.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/7.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/8.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/img/users/9.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/amazeui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/amazeui.legacy.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/amazeui.legacy.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/amazeui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/amazeui.widgets.helper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/amazeui.widgets.helper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/handlebars.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/include.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/polyfill/rem.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/polyfill/respond.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/js/sendeamil.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/particles/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/particles/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/particles/js/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/particles/js/lib/stats.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/particles/particles.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/sweetalert2/sweetalert2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/assets/libs/sweetalert2/sweetalert2.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/companyemail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/companyhome.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/companyzhaopin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/footer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/job.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/jobdetail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/login_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/man.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/mandetail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/register_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/useremail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/userhome.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/userqiuzhi.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobsWeb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JobsWeb.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/druid.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/druid.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/dao/UserDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/dao/impl/UserDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/dao/impl/UserDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/AdminUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/AdminUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/EnterpriseUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/EnterpriseUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/PersonalUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/domain/PersonalUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/JDBCUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/util/JDBCUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/ActiveUserServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/FindUserServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/LoginServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/guiwu/web/servlet/RegistUserServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/WEB-INF/classes/table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminhome.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminhome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/admininfo.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminlink.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/adminuser.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/admin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.flat.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.flat.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.flat.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.flat.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/css/amazeui.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/include.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/include.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/assets/js/sendeamil.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyemail.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyemail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyhome.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyhome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/companyzhaopin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/jobdetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/jobdetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/mandetail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/useremail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/userhome.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_war_exploded/userhome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web_war_exploded/userqiuzhi.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/druid.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/druid.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/dao/UserDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/dao/impl/UserDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/dao/impl/UserDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/AdminUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/AdminUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/EnterpriseUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/EnterpriseUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/PersonalUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/domain/PersonalUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/JDBCUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/util/JDBCUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/ActiveUserServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/FindUserServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/LoginServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/guiwu/web/servlet/RegistUserServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JobsWeb/table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JobsWeb/table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/druid.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/druid.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/dao/impl/RecruitDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/dao/impl/RecruitDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/web/servlet/ApplyServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/ApplyServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/web/servlet/RecruitServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/RecruitServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/companyhome.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/companyhome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/companyrecruit.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/companyrecruit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/jobdetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/jobdetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/register_success.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/register_success.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -324,48 +86,98 @@
     <SUITE FILE_PATH="coverage/JobsWeb$JDBCUtils_teset.ic" NAME="JDBCUtils.teset Coverage Results" MODIFIED="1589505697056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>guiwu.util.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/JobsWeb$Tomcat_8_5_31.ic" NAME="Tomcat 8.5.31 Coverage Results" MODIFIED="1590410462942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="734492173">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.closed" value="27" />
+          <entry key="project.open.time.1" value="9" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.5" value="3" />
+          <entry key="project.open.time.6" value="11" />
+          <entry key="project.open.time.7" value="4" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="25" />
-          <entry key="java" value="52" />
-          <entry key="js" value="2" />
+          <entry key="class" value="4" />
+          <entry key="css" value="1" />
+          <entry key="html" value="143" />
+          <entry key="java" value="379" />
+          <entry key="js" value="6" />
           <entry key="jsp" value="1" />
-          <entry key="properties" value="1" />
-          <entry key="rnc" value="2" />
+          <entry key="properties" value="4" />
+          <entry key="rnc" value="4" />
+          <entry key="sql" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="25" />
-          <entry key="JAVA" value="52" />
+          <entry key="CLASS" value="4" />
+          <entry key="CSS" value="1" />
+          <entry key="HTML" value="143" />
+          <entry key="JAVA" value="379" />
           <entry key="JSP" value="1" />
-          <entry key="JavaScript" value="2" />
-          <entry key="Properties" value="1" />
-          <entry key="RNG Compact" value="2" />
+          <entry key="JavaScript" value="6" />
+          <entry key="Properties" value="4" />
+          <entry key="RNG Compact" value="4" />
+          <entry key="SQL" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="5868" />
-          <entry key="java" value="7175" />
+          <entry key="html" value="26670" />
+          <entry key="java" value="31309" />
+          <entry key="js" value="18" />
+          <entry key="properties" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="5868" />
-          <entry key="JAVA" value="7171" />
+          <entry key="HTML" value="26670" />
+          <entry key="JAVA" value="31305" />
+          <entry key="JavaScript" value="18" />
+          <entry key="Properties" value="6" />
           <entry key="SQL" value="4" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="1336156445">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.7" value="4" />
+          <entry key="project.opened" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="html" value="4" />
+          <entry key="java" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="4" />
+          <entry key="JAVA" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="html" value="43" />
+          <entry key="java" value="26" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="HTML" value="43" />
+          <entry key="JAVA" value="26" />
         </counts>
       </usages-collector>
     </session>
@@ -373,71 +185,49 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/userhome.html">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="324" column="61" selection-start-line="324" selection-start-column="61" selection-end-line="324" selection-end-column="61" />
+            <state relative-caret-position="-1034">
+              <caret line="61" column="21" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="43" column="18" lean-forward="true" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="484">
+              <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
               <folding>
-                <element signature="n#style#0;n#table#0;n#form#0;n#ul#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#textarea#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#textarea#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/register.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="181" column="71" lean-forward="true" selection-start-line="181" selection-start-column="71" selection-end-line="181" selection-end-column="71" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java">
+        <entry file="file://$PROJECT_DIR$/web/register_success.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="323" column="26" selection-start-line="323" selection-start-column="25" selection-end-line="323" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/dao/ExpDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/ExpDaoImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="90" column="18" lean-forward="true" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1234#1235#0" expanded="true" />
-                <element signature="e#1278#1279#0" expanded="true" />
-                <element signature="e#2312#2313#0" expanded="true" />
-                <element signature="e#2346#2347#0" expanded="true" />
-                <element signature="e#2452#2453#0" expanded="true" />
-                <element signature="e#2500#2501#0" expanded="true" />
-                <element signature="e#2635#2636#0" expanded="true" />
-                <element signature="e#2669#2670#0" expanded="true" />
-                <element signature="e#2318#2319#0" expanded="true" />
-                <element signature="e#2372#2373#0" expanded="true" />
-                <element signature="e#2437#2438#0" expanded="true" />
-                <element signature="e#2506#2507#0" expanded="true" />
-                <element signature="e#3987#3988#0" expanded="true" />
-                <element signature="e#4048#4049#0" expanded="true" />
-                <element signature="e#4120#4121#0" expanded="true" />
-                <element signature="e#4196#4197#0" expanded="true" />
-                <element signature="e#5277#5278#0" expanded="true" />
-                <element signature="e#5301#5302#0" expanded="true" />
-                <element signature="e#5398#5399#0" expanded="true" />
-                <element signature="e#5422#5423#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="176">
+              <caret line="35" column="27" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -445,8 +235,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/UserDaoImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3544">
-              <caret line="159" selection-start-line="159" selection-end-line="179" selection-end-column="9" />
+            <state relative-caret-position="-9">
+              <caret line="380" lean-forward="true" selection-start-line="380" selection-end-line="380" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -455,99 +245,41 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/domain/PersonalUser.java">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/RecruitDaoImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="23" column="22" lean-forward="true" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+            <state relative-caret-position="827">
+              <caret line="223" column="32" selection-start-line="223" selection-start-column="32" selection-end-line="223" selection-end-column="32" />
               <folding>
-                <element signature="e#2412#2413#0" expanded="true" />
-                <element signature="e#2443#2444#0" expanded="true" />
-                <element signature="e#2940#2941#0" expanded="true" />
-                <element signature="e#2969#2970#0" expanded="true" />
+                <element signature="e#4510#4511#0" expanded="true" />
+                <element signature="e#4591#4592#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/service/UserService.java">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/RecruitServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="506">
+              <caret line="35" column="70" selection-start-line="35" selection-start-column="70" selection-end-line="35" selection-end-column="70" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/dao/RecruitDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="214" column="31" lean-forward="true" selection-start-line="214" selection-start-column="31" selection-end-line="214" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3349#3350#0" expanded="true" />
-                <element signature="e#3399#3400#0" expanded="true" />
-                <element signature="e#3465#3466#0" expanded="true" />
-                <element signature="e#3514#3515#0" expanded="true" />
-                <element signature="e#3606#3607#0" expanded="true" />
-                <element signature="e#3666#3667#0" expanded="true" />
-                <element signature="e#3877#3878#0" expanded="true" />
-                <element signature="e#3935#3936#0" expanded="true" />
-                <element signature="e#4083#4084#0" expanded="true" />
-                <element signature="e#4127#4128#0" expanded="true" />
-                <element signature="e#4196#4197#0" expanded="true" />
-                <element signature="e#4224#4225#0" expanded="true" />
-                <element signature="e#4334#4335#0" expanded="true" />
-                <element signature="e#4393#4394#0" expanded="true" />
-                <element signature="e#4465#4466#0" expanded="true" />
-                <element signature="e#4496#4497#0" expanded="true" />
-                <element signature="e#4597#4598#0" expanded="true" />
-                <element signature="e#4628#4629#0" expanded="true" />
-                <element signature="e#4708#4709#0" expanded="true" />
-                <element signature="e#4736#4737#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="352">
+              <caret line="18" column="58" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Exp.java">
+        <entry file="file://$PROJECT_DIR$/src/guiwu/service/RecruitService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-730">
-              <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-              <folding>
-                <element signature="e#457#458#0" expanded="true" />
-                <element signature="e#485#486#0" expanded="true" />
-                <element signature="e#528#529#0" expanded="true" />
-                <element signature="e#562#563#0" expanded="true" />
-                <element signature="e#593#594#0" expanded="true" />
-                <element signature="e#619#620#0" expanded="true" />
-                <element signature="e#658#659#0" expanded="true" />
-                <element signature="e#688#689#0" expanded="true" />
-                <element signature="e#724#725#0" expanded="true" />
-                <element signature="e#752#753#0" expanded="true" />
-                <element signature="e#798#799#0" expanded="true" />
-                <element signature="e#832#833#0" expanded="true" />
-                <element signature="e#870#871#0" expanded="true" />
-                <element signature="e#900#901#0" expanded="true" />
-                <element signature="e#950#951#0" expanded="true" />
-                <element signature="e#988#989#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/guiwu/domain/ResultInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="528">
+              <caret line="27" column="19" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -557,6 +289,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -566,6 +299,19 @@
       <find>art</find>
       <find>update_user_base_info</find>
       <find>FreshExpList</find>
+      <find>tab_u</find>
+      <find>id</find>
+      <find>con</find>
+      <find>success</find>
+      <find>工作职位</find>
+      <find>splice</find>
+      <find>Search</find>
+      <find>详细描述</find>
+      <find>lock</find>
+      <find>next</find>
+      <find>push</find>
+      <find>g_addBlack</find>
+      <find>g_Total</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -574,39 +320,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/guiwu/util/JDBCUtils.java" />
-        <option value="$PROJECT_DIR$/web/js/include.js" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/Company.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/Admin.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/Enterprise.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/Personal.java" />
+        <option value="$PROJECT_DIR$/web/usercomplain.html" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/BlackListInfo.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/BlacklistInfo.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/BacklistDao.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/ExpDaoImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/BlacklistService.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/impl/BlacklistServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/Blacklist.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/BlacklistDao.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/ApplyDaoImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/ApplyService.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/impl/ApplyServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/BlacklistDaoImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/BlacklistServlet.java" />
+        <option value="$PROJECT_DIR$/web/adminuser.html" />
         <option value="$PROJECT_DIR$/src/guiwu/domain/AdminUser.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/UserType.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/RegistUserServlet.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/ActiveUserServlet.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/LoginServlet.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java" />
-        <option value="$PROJECT_DIR$/web/login.html" />
-        <option value="$PROJECT_DIR$/web/register.html" />
-        <option value="$PROJECT_DIR$/web/footer.html" />
-        <option value="$PROJECT_DIR$/web/header.html" />
-        <option value="$PROJECT_DIR$/web/index.html" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/PersonalUser.java" />
+        <option value="$PROJECT_DIR$/web/userhome.html" />
+        <option value="$PROJECT_DIR$/web/admin.html" />
+        <option value="$PROJECT_DIR$/web/companyemail.html" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/PersonalBrief.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/UserBrief.java" />
         <option value="$PROJECT_DIR$/src/guiwu/dao/UserDao.java" />
         <option value="$PROJECT_DIR$/src/guiwu/dao/impl/UserDaoImpl.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/WorkExpDaoImpl.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/dao/ProjectExpDao.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/ProjectExp.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/Exp.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/domain/WorkExp.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/dao/WorkExpDao.java" />
-        <option value="$PROJECT_DIR$/src/guiwu/dao/ExpDao.java" />
         <option value="$PROJECT_DIR$/src/guiwu/service/UserService.java" />
-        <option value="$PROJECT_DIR$/web/userhome.html" />
-        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/ExpDaoImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/RecruitService.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/RecruitMIBrief.java" />
+        <option value="$PROJECT_DIR$/web/admin_user_management.html" />
+        <option value="$PROJECT_DIR$/web/adminhome.html" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/ComplainMIBrief.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/util/JDBCUtils.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/RecruitDao.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/impl/RecruitServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/ComplainDao.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/ComplainService.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/service/impl/ComplainServiceImpl.java" />
+        <option value="$PROJECT_DIR$/web/admin_recruit_management.html" />
+        <option value="$PROJECT_DIR$/web/admin_complain_management.html" />
+        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/ComplainServlet.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/ComplainDaoImpl.java" />
+        <option value="$PROJECT_DIR$/web/companyhome.html" />
+        <option value="$PROJECT_DIR$/web/companyrecruit.html" />
+        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/RecruitServlet.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/ApplyServlet.java" />
+        <option value="$PROJECT_DIR$/web/jobdetail.html" />
+        <option value="$PROJECT_DIR$/src/guiwu/dao/impl/RecruitDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java" />
         <option value="$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java" />
+        <option value="$PROJECT_DIR$/web/register.html" />
+        <option value="$PROJECT_DIR$/web/register_success.html" />
       </list>
     </option>
   </component>
@@ -626,53 +390,31 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="alwaysUpdateSnapshots" value="false" />
         <option name="checksumPolicy" value="FAIL" />
         <option name="failureBehavior" value="FAST" />
-        <option name="localRepository" value="" />
-        <option name="mavenHome" value="" />
-        <option name="nonRecursive" value="false" />
-        <option name="outputLevel" value="INFO" />
-        <option name="pluginUpdatePolicy" value="DEFAULT" />
-        <option name="printErrorStackTraces" value="false" />
-        <option name="usePluginRegistry" value="false" />
-        <option name="userSettingsFile" value="" />
-        <option name="workOffline" value="false" />
       </MavenGeneralSettings>
     </option>
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="createModuleGroups" value="false" />
-        <option name="createModulesForAggregators" value="true" />
-        <option name="dedicatedModuleDir" value="" />
-        <option name="downloadDocsAutomatically" value="false" />
-        <option name="downloadSourcesAutomatically" value="false" />
-        <option name="excludeTargetFolder" value="true" />
-        <option name="generatedSourcesFolder" value="AUTODETECT" />
-        <option name="importAutomatically" value="false" />
-        <option name="keepSourceFolders" value="true" />
-        <option name="lookForNested" value="false" />
-        <option name="updateFoldersOnImportPhase" value="process-resources" />
-        <option name="useMavenOutput" value="true" />
-      </MavenImportingSettings>
-    </option>
-    <option name="enabledProfiles">
-      <list />
-    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="98" />
-    <option name="y" value="56" />
-    <option name="width" value="1281" />
-    <option name="height" value="1056" />
+    <option name="x" value="612" />
+    <option name="y" value="41" />
+    <option name="width" value="1094" />
+    <option name="height" value="916" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -733,6 +475,13 @@
               <item name="JobsWeb" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="guiwu" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JobsWeb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JobsWeb" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="guiwu" type="462c0819:PsiDirectoryNode" />
               <item name="servlet" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -746,10 +495,31 @@
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="JobsWeb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JobsWeb" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JobsWeb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JobsWeb" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JobsWeb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JobsWeb" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -760,14 +530,17 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589709337357" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1590923599009" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="guiwu.util" />
       <recent name="guiwu.web.servlet" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Code\Java\JobsWeb\web\WEB-INF\lib" />
+      <recent name="C:\Code\Java\JobsWeb\web\assets\js" />
       <recent name="C:\Code\Java\JobsWeb\web\WEB-INF" />
       <recent name="C:\Code\Java\JobsWeb\src" />
     </key>
@@ -785,6 +558,22 @@
     </option>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.31">
+    <configuration name="ApplyDaoImpl.Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JobsWeb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="guiwu.dao.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="guiwu.dao.impl" />
+      <option name="MAIN_CLASS_NAME" value="guiwu.dao.impl.ApplyDaoImpl" />
+      <option name="METHOD_NAME" value="Test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JDBCUtils.teset" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JobsWeb" />
       <extension name="coverage">
@@ -801,8 +590,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="JedisUtil.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JobsWeb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="guiwu.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="guiwu.util" />
+      <option name="MAIN_CLASS_NAME" value="guiwu.util.JedisUtil" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 8.5.31" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.31" ALTERNATIVE_JRE_ENABLED="false">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/login.html" />
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/index.html" />
       <deployment>
         <artifact name="web:war exploded">
           <settings>
@@ -819,7 +624,7 @@
       <predefined_log_file id="Tomcat Host Manager" enabled="false" />
       <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="6647" />
+        <option name="DEBUG_PORT" value="6648" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -876,9 +681,13 @@
     <list>
       <item itemvalue="Tomcat Server.Tomcat 8.5.31" />
       <item itemvalue="JUnit.JDBCUtils.teset" />
+      <item itemvalue="JUnit.ApplyDaoImpl.Test" />
+      <item itemvalue="JUnit.JedisUtil.test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.JedisUtil.test" />
+        <item itemvalue="JUnit.ApplyDaoImpl.Test" />
         <item itemvalue="JUnit.JDBCUtils.teset" />
       </list>
     </recent_temporary>
@@ -896,67 +705,108 @@
       <workItem from="1589505318953" duration="38550000" />
       <workItem from="1589591173578" duration="28729000" />
       <workItem from="1589692445249" duration="9402000" />
+      <workItem from="1589709197090" duration="1699000" />
+      <workItem from="1589765450200" duration="9085000" />
+      <workItem from="1589791308080" duration="8514000" />
+      <workItem from="1589858169429" duration="5524000" />
+      <workItem from="1589878951496" duration="20916000" />
+      <workItem from="1589935201581" duration="14315000" />
+      <workItem from="1589971965274" duration="9380000" />
+      <workItem from="1590052202852" duration="19030000" />
+      <workItem from="1590231321155" duration="18859000" />
+      <workItem from="1590281255748" duration="30409000" />
+      <workItem from="1590374506173" duration="19143000" />
+      <workItem from="1590410500981" duration="8173000" />
+      <workItem from="1590466236475" duration="2492000" />
+      <workItem from="1590485205755" duration="17583000" />
+      <workItem from="1590539879962" duration="11083000" />
+      <workItem from="1590567802837" duration="19608000" />
+      <workItem from="1590660276343" duration="17857000" />
+      <workItem from="1590747151597" duration="2474000" />
+      <workItem from="1590757701553" duration="5147000" />
+      <workItem from="1590764930650" duration="2380000" />
+      <workItem from="1590768328389" duration="4778000" />
+      <workItem from="1590923084435" duration="1091000" />
+      <workItem from="1590926012141" duration="633000" />
+      <workItem from="1590926667707" duration="937000" />
+      <workItem from="1590985191602" duration="183000" />
+      <workItem from="1590985502150" duration="100000" />
+      <workItem from="1591009319157" duration="625000" />
+      <workItem from="1591082617451" duration="526000" />
+      <workItem from="1591582711823" duration="261000" />
+      <workItem from="1591624390493" duration="421000" />
+      <workItem from="1591962957834" duration="2690000" />
+      <workItem from="1592282471290" duration="823000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 23m 47s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 24m 17s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 24m 33s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 25m 03s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 25m 06s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 25m 13s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 26m 28s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 26m 38s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 27m 02s.xml">
-      <configuration name="JDBCUtils.teset" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="JDBCUtils_teset - 2020.05.15 at 09h 27m 34s.xml">
       <configuration name="JDBCUtils.teset" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 35m 50s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 36m 04s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 37m 24s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 37m 40s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 40m 12s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 40m 59s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 41m 07s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplyDaoImpl_Test - 2020.05.20 at 23h 41m 25s.xml">
+      <configuration name="ApplyDaoImpl.Test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="JedisUtil_test - 2020.05.25 at 17h 14m 03s.xml">
+      <configuration name="JedisUtil.test" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76681000" />
+    <option name="totallyTimeSpent" value="333420000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18230277" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49819493" visible="true" weight="0.18017058" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Capture Tool" order="6" />
-      <window_info id="Web" order="7" side_tool="true" />
+      <window_info id="Web" order="7" sideWeight="0.50180507" side_tool="true" weight="0.141258" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.330076" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.32899022" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4968017" visible="true" weight="0.55266017" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32899022" />
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32899022" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50319827" side_tool="true" weight="0.39869988" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4989339" weight="0.32790446" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
@@ -966,31 +816,31 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.32995737" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18070363" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49819493" visible="true" weight="0.15245202" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Capture Tool" order="6" />
-      <window_info id="Web" order="7" side_tool="true" />
+      <window_info id="Web" order="7" sideWeight="0.50180507" side_tool="true" weight="0.141258" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.330076" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.32899022" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.4968017" visible="true" weight="0.3984799" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32899022" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50319827" side_tool="true" weight="0.39869988" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4989339" weight="0.32790446" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
@@ -1000,7 +850,7 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.32995737" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
@@ -1017,384 +867,354 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/EnterpriseBrief.java" />
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/PersonalBrief.java" />
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/UserBrief.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/druid.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/util/JDBCUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="790">
-          <caret line="63" column="27" selection-start-line="63" selection-start-column="27" selection-end-line="63" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/adminhome.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3586">
-          <caret line="166" selection-start-line="166" selection-end-line="166" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/include.js" />
-    <entry file="file://$PROJECT_DIR$/web/man.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Admin.java" />
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Company.java" />
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Enterprise.java" />
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/User.java" />
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Personal.java" />
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/block.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="88" column="16" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/UserType.java" />
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/AdminUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/js/include.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/ActiveUserServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="17" selection-start-line="17" selection-end-line="35" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/FindUserServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="19" column="15" lean-forward="true" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/RegistUserServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="20" selection-start-line="20" selection-end-line="83" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/footer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="27" column="11" selection-start-line="7" selection-start-column="8" selection-end-line="27" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="33" column="64" selection-start-line="33" selection-start-column="54" selection-end-line="33" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="122" selection-start-line="122" selection-end-line="152" selection-end-column="9" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/useremail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1802" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/common.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-463">
-          <caret line="127" column="18" selection-start-line="127" selection-start-column="18" selection-end-line="127" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="88" column="66" lean-forward="true" selection-start-line="88" selection-start-column="28" selection-end-line="88" selection-end-column="66" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/LoginServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="25" column="51" selection-start-line="25" selection-start-column="51" selection-end-line="25" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/WorkExpDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="82" column="11" selection-start-line="82" selection-start-column="11" selection-end-line="82" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2098#2099#0" expanded="true" />
-            <element signature="e#2171#2172#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="440">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/guiwu/dao/UserDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+        <state relative-caret-position="902">
+          <caret line="43" selection-start-line="43" selection-end-line="44" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/ProjectExpDao.java">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/RecruitBrief.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="27" lean-forward="true" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+        <state relative-caret-position="220">
+          <caret line="13" column="21" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/ResultInfo.java">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/service/ResumeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/RecruitInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/RecruitMIBrief.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="88" column="18" selection-start-line="88" selection-start-column="18" selection-end-line="88" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/companyemail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="14" selection-start-line="14" selection-end-line="15" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2420">
+          <caret line="211" column="70" selection-start-line="211" selection-start-column="12" selection-end-line="211" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/admin_user_management.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="447" column="114" selection-start-line="447" selection-start-column="114" selection-end-line="447" selection-end-column="114" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/ComplainInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/BlacklistDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-970">
+          <caret line="52" column="7" selection-start-line="52" selection-start-column="7" selection-end-line="52" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/util/JDBCUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="143" column="9" lean-forward="true" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/service/impl/RecruitServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="105" column="35" selection-start-line="105" selection-start-column="35" selection-end-line="105" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/service/ComplainService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/tables.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="216" column="16" selection-start-line="216" selection-start-column="16" selection-end-line="216" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/WorkExp.java">
+    <entry file="file://$PROJECT_DIR$/web/admin_recruit_management.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="48" selection-start-line="3" selection-start-column="48" selection-end-line="3" selection-end-column="48" />
+        <state relative-caret-position="-1608">
+          <caret line="63" column="96" selection-start-line="63" selection-start-column="25" selection-end-line="63" selection-end-column="96" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/WorkExpDao.java">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/service/impl/ComplainServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="61" column="58" lean-forward="true" selection-start-line="61" selection-start-column="58" selection-end-line="61" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/ProjectExp.java">
+    <entry file="file://$PROJECT_DIR$/web/adminhome.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="3036">
+          <caret line="138" column="16" selection-start-line="138" selection-start-column="16" selection-end-line="159" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Exp.java">
+    <entry file="file://$PROJECT_DIR$/src/druid.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/admin_complain_management.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-730">
-          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding>
-            <element signature="e#457#458#0" expanded="true" />
-            <element signature="e#485#486#0" expanded="true" />
-            <element signature="e#528#529#0" expanded="true" />
-            <element signature="e#562#563#0" expanded="true" />
-            <element signature="e#593#594#0" expanded="true" />
-            <element signature="e#619#620#0" expanded="true" />
-            <element signature="e#658#659#0" expanded="true" />
-            <element signature="e#688#689#0" expanded="true" />
-            <element signature="e#724#725#0" expanded="true" />
-            <element signature="e#752#753#0" expanded="true" />
-            <element signature="e#798#799#0" expanded="true" />
-            <element signature="e#832#833#0" expanded="true" />
-            <element signature="e#870#871#0" expanded="true" />
-            <element signature="e#900#901#0" expanded="true" />
-            <element signature="e#950#951#0" expanded="true" />
-            <element signature="e#988#989#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1188">
+          <caret line="54" column="17" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/PersonalUser.java">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/ComplainMIBrief.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="23" column="22" lean-forward="true" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-          <folding>
-            <element signature="e#2412#2413#0" expanded="true" />
-            <element signature="e#2443#2444#0" expanded="true" />
-            <element signature="e#2940#2941#0" expanded="true" />
-            <element signature="e#2969#2970#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="462">
+          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/ComplainDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="9" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/ComplainDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5170">
+          <caret line="246" column="30" selection-start-line="246" selection-start-column="30" selection-end-line="246" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/login_success.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/ExpServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="22" column="84" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="84" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/guiwu/dao/ExpDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="88">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/userhome.html">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Resume.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="324" column="61" selection-start-line="324" selection-start-column="61" selection-end-line="324" selection-end-column="61" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#form#0;n#ul#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/UserDaoImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/ResumeSerlvet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3544">
-          <caret line="159" selection-start-line="159" selection-end-line="179" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="264">
+          <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/ExpDaoImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/Recruit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="90" column="18" lean-forward="true" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="18" />
+        <state relative-caret-position="352">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/BlacklistServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="17" selection-start-line="17" selection-end-line="67" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/ComplainServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1364">
+          <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/companyhome.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5654">
+          <caret line="257" column="2" selection-start-line="257" selection-start-column="2" selection-end-line="261" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/companyrecruit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4796">
+          <caret line="218" column="50" selection-start-line="218" selection-start-column="50" selection-end-line="218" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/domain/EnterpriseUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/ApplyServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1958">
+          <caret line="100" column="39" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/jobdetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="31" column="39" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1234#1235#0" expanded="true" />
-            <element signature="e#1278#1279#0" expanded="true" />
-            <element signature="e#2312#2313#0" expanded="true" />
-            <element signature="e#2346#2347#0" expanded="true" />
-            <element signature="e#2452#2453#0" expanded="true" />
-            <element signature="e#2500#2501#0" expanded="true" />
-            <element signature="e#2635#2636#0" expanded="true" />
-            <element signature="e#2669#2670#0" expanded="true" />
-            <element signature="e#2318#2319#0" expanded="true" />
-            <element signature="e#2372#2373#0" expanded="true" />
-            <element signature="e#2437#2438#0" expanded="true" />
-            <element signature="e#2506#2507#0" expanded="true" />
-            <element signature="e#3987#3988#0" expanded="true" />
-            <element signature="e#4048#4049#0" expanded="true" />
-            <element signature="e#4120#4121#0" expanded="true" />
-            <element signature="e#4196#4197#0" expanded="true" />
-            <element signature="e#5277#5278#0" expanded="true" />
-            <element signature="e#5301#5302#0" expanded="true" />
-            <element signature="e#5398#5399#0" expanded="true" />
-            <element signature="e#5422#5423#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#article#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#article#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/guiwu/service/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="1210">
+          <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/ApplyDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1738">
+          <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/RecruitServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="35" column="70" selection-start-line="35" selection-start-column="70" selection-end-line="35" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/RecruitDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="18" column="58" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/service/RecruitService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="27" column="19" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/guiwu/service/impl/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="214" column="31" lean-forward="true" selection-start-line="214" selection-start-column="31" selection-end-line="214" selection-end-column="31" />
+        <state relative-caret-position="-1034">
+          <caret line="61" column="21" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/RecruitDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="827">
+          <caret line="223" column="32" selection-start-line="223" selection-start-column="32" selection-end-line="223" selection-end-column="32" />
+          <folding>
+            <element signature="e#4510#4511#0" expanded="true" />
+            <element signature="e#4591#4592#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/dao/impl/UserDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="380" lean-forward="true" selection-start-line="380" selection-end-line="380" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3349#3350#0" expanded="true" />
-            <element signature="e#3399#3400#0" expanded="true" />
-            <element signature="e#3465#3466#0" expanded="true" />
-            <element signature="e#3514#3515#0" expanded="true" />
-            <element signature="e#3606#3607#0" expanded="true" />
-            <element signature="e#3666#3667#0" expanded="true" />
-            <element signature="e#3877#3878#0" expanded="true" />
-            <element signature="e#3935#3936#0" expanded="true" />
-            <element signature="e#4083#4084#0" expanded="true" />
-            <element signature="e#4127#4128#0" expanded="true" />
-            <element signature="e#4196#4197#0" expanded="true" />
-            <element signature="e#4224#4225#0" expanded="true" />
-            <element signature="e#4334#4335#0" expanded="true" />
-            <element signature="e#4393#4394#0" expanded="true" />
-            <element signature="e#4465#4466#0" expanded="true" />
-            <element signature="e#4496#4497#0" expanded="true" />
-            <element signature="e#4597#4598#0" expanded="true" />
-            <element signature="e#4628#4629#0" expanded="true" />
-            <element signature="e#4708#4709#0" expanded="true" />
-            <element signature="e#4736#4737#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/BaseServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="761">
+          <caret line="78" selection-start-line="78" selection-end-line="94" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/guiwu/web/servlet/UserServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="323" column="26" selection-start-line="323" selection-start-column="25" selection-end-line="323" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="418">
+          <caret line="43" column="18" lean-forward="true" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="181" column="71" lean-forward="true" selection-start-line="181" selection-start-column="71" selection-end-line="181" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/register_success.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="35" column="27" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
         </state>
       </provider>
     </entry>
